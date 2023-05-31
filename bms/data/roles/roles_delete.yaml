@@ -1,0 +1,31 @@
+epic: 系统管理
+feature: 权限管理-角色配置
+story: 角色删除接口
+case:
+  roles_delete_01:
+    name: 角色删除成功
+    base_url: ${config(bms_env,host)}
+    request:
+      method: delete
+      url: /api/auth/v1/role/${relevance(role_id)}
+      headers:
+        Content-Type: application/x-www-form-urlencoded
+        token: ${extract(token)}
+        Referer: ${config(bms_env,host)}/sub-app-unity/systemAdminLog
+      verify: False
+    expect:
+      code: 200
+      jsonpath:
+        - path: $.statusCode
+          value: 0
+          asserttype: ==
+        - path: $.msg
+          value: success
+          asserttype: ==
+    relevance:
+      - api: bms.data.roles.roles_list
+        caseid: roles_list_01
+        relevance_data:
+          - relevance_type: response
+            value: $.data.list[0].id
+            name: role_id

@@ -1,0 +1,23 @@
+epic: 系统管理
+feature: 权限管理-角色配置
+story: 角色列表接口
+case:
+  roles_list_01:
+    name: 角色列表查看
+    base_url: ${config(bms_env,host)}
+    request:
+      method: get
+      url: /api/auth/v1/roles
+      headers:
+        Content-Type: application/x-www-form-urlencoded
+        token: ${extract(token)}
+        Referer: ${config(bms_env,host)}/sub-app-unity/systemAdminLog
+    expect:
+      code: 200
+      jsonpath:
+        - path: $.statusCode
+          value: 0
+          asserttype: ==
+        - path: $.msg
+          value: success
+          asserttype: ==

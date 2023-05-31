@@ -1,0 +1,23 @@
+epic: 用户登录
+feature: 用户登录模块
+story: 用户登录接口
+case:
+  login_01:
+    name: 用户成功登录获取token
+    base_url: ${config(bms_env,host)}
+    request:
+      method: post
+      url: /api/auth/v1/auth/login
+      headers:
+        Content-Type: application/json
+        Referer: ${config(bms_env,host)}/sub-app-unity/systemAdminLog
+      data:
+        unityId: false
+        username: admin
+        gossip: jFeEBQGDnfE4IMMGTWf88ZjaMl2+Vt0uGYU4MctTKW7snUfnxxEgttM1ZpeuJnTVCsLtU+jYypJV0wP5j1wjr2i9h5NklnQtAjtTeaeN0mqWR4LlwgK49qcvl39okSPSGXC1Hq8irpzx4jvm5SJT8Fzwl8uBj2AIfH2++958jQo=
+    expect:
+      code: 200
+      jsonpath:
+        - path: $.data.realName
+          value: admin
+          asserttype: ==
