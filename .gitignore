@@ -1,8 +1,6 @@
 venv
 .idea
 __pycache__/
-/logs/
-/report/
 .pytest_cache/
 /bms_back/
 test.py

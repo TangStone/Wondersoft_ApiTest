@@ -1,0 +1,25 @@
+INFO     root:apisend.py:26 -·-·-·-·-·-·-·-·-·-发送请求并接受信息 START-·-·-·-·-·-·-·-·-·-
+INFO     root:apiinit.py:36 Yaml测试用例基础架构检查通过
+INFO     root:handleyaml.py:43 yaml_data:{'bms_env': {'host': 'https://192.168.148.174:31000'}}
+INFO     root:handleyaml.py:44 expect_str:bms_env,host
+INFO     root:handleyaml.py:43 yaml_data:{'bms_env': {'host': 'https://192.168.148.174:31000'}}
+INFO     root:handleyaml.py:44 expect_str:bms_env,host
+INFO     root:apisend.py:28 重组后的用例信息：{'name': '用户成功登录获取token', 'base_url': 'https://192.168.148.174:31000', 'request': {'method': 'post', 'url': '/api/auth/v1/auth/login', 'headers': {'Content-Type': 'application/json', 'Referer': 'https://192.168.148.174:31000/sub-app-unity/systemAdminLog'}, 'data': {'unityId': False, 'username': 'admin', 'gossip': 'jFeEBQGDnfE4IMMGTWf88ZjaMl2+Vt0uGYU4MctTKW7snUfnxxEgttM1ZpeuJnTVCsLtU+jYypJV0wP5j1wjr2i9h5NklnQtAjtTeaeN0mqWR4LlwgK49qcvl39okSPSGXC1Hq8irpzx4jvm5SJT8Fzwl8uBj2AIfH2++958jQo='}}, 'expect': {'code': 200, 'jsonpath': [{'path': '$.data.realName', 'value': 'admin', 'asserttype': '=='}]}}
+INFO     root:apisend.py:67 请求地址：https://192.168.148.174:31000/api/auth/v1/auth/login
+INFO     root:apisend.py:68 请求方法：post
+INFO     root:apisend.py:69 请求头：{'Content-Type': 'application/json', 'Referer': 'https://192.168.148.174:31000/sub-app-unity/systemAdminLog'}
+INFO     root:apisend.py:75 请求参数：{'unityId': False, 'username': 'admin', 'gossip': 'jFeEBQGDnfE4IMMGTWf88ZjaMl2+Vt0uGYU4MctTKW7snUfnxxEgttM1ZpeuJnTVCsLtU+jYypJV0wP5j1wjr2i9h5NklnQtAjtTeaeN0mqWR4LlwgK49qcvl39okSPSGXC1Hq8irpzx4jvm5SJT8Fzwl8uBj2AIfH2++958jQo='}
+DEBUG    urllib3.connectionpool:connectionpool.py:1003 Starting new HTTPS connection (1): 192.168.148.174:31000
+DEBUG    urllib3.connectionpool:connectionpool.py:456 https://192.168.148.174:31000 "POST /api/auth/v1/auth/login HTTP/1.1" 200 1862
+INFO     root:apisend.py:131 请求接口结果： {'statusCode': 0, 'msg': 'success', 'data': {'userId': 'B5A33586-15104954-9B752AE1-53333EC10', 'token': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJhdWQiOiJhcHBsaWNhdGlvbiIsInN1YiI6IjMxOTA3NWFkLTdhZDItNGQwMC1hMTc3LTM4NDdiZGI2MmUxYSIsImlzcyI6ImJtc19zZXJ2ZXIiLCJzZXNzaW9uSWQiOiIzMTkwNzVhZC03YWQyLTRkMDAtYTE3Ny0zODQ3YmRiNjJlMWEiLCJleHAiOjE2ODU3MDQ5NjQsImlhdCI6MTY4NTUyNDk2NH0.I85lDxxYC5_yeq5w1QlVNZfYgwzU5zVyLYqyJqIGbp_UGIpCvuaMVdmshMPZH0LzPQae_DpqLlBUGnnde_p54A', 'roleId': '1', 'roleName': '开发角色', 'groupIds': '1', 'realName': 'admin', 'menuList': [{'id': 10, 'systemType': 'wondersoft', 'menuName': '终端管理', 'seq': 1, 'parentId': 0, 'parentCode': 'wondersoft_00', 'menuCode': 'wondersoft_01', 'isDisplay': 1, 'url': 'bms', 'urlComponent': 'bms', 'urlRelation': '/platform', 'menuIcon': '', 'modeType': 0, 'menuType': 0}, {'id': 30, 'systemType': 'wondersoft', 'menuName': '审批协同', 'seq': 3, 'parentId': 0, 'parentCode': 'wondersoft_00', 'menuCode': 'wondersoft_03', 'isDisplay': 1, 'url': 'approve', 'urlComponent': 'approve', 'urlRelation': '', 'menuIcon': '', 'modeType': 0, 'menuType': 0}, {'id': 50, 'systemType': 'wondersoft', 'menuName': '规则管理', 'seq': 5, 'parentId': 0, 'parentCode': 'wondersoft_00', 'menuCode': 'wondersoft_05', 'isDisplay': 1, 'url': 'dlpparam', 'urlComponent': 'dlpparam', 'urlRelation': '', 'menuIcon': '', 'modeType': 0, 'menuType': 0}, {'id': 80, 'systemType': 'wondersoft', 'menuName': '用户管理', 'seq': 8, 'parentId': 0, 'parentCode': 'wondersoft_00', 'menuCode': 'wondersoft_08', 'isDisplay': 1, 'url': 'unity', 'urlComponent': 'unity', 'urlRelation': '/platform', 'menuIcon': '', 'modeType': 0, 'menuType': 0}, {'id': 90, 'systemType': 'wondersoft', 'menuName': '系统管理', 'seq': 9, 'parentId': 0, 'parentCode': 'wondersoft_00', 'menuCode': 'wondersoft_09', 'isDisplay': 1, 'url': 'unity', 'urlComponent': 'unity', 'urlRelation': '/platform', 'menuIcon': '', 'modeType': 0, 'menuType': 0}], 'isForceModifyDefaultPwd': False, 'systemConnectionType': 1}}
+INFO     root:checkresult.py:88 code断言通过, 期望状态码:200, 实际状态码:200
+INFO     root:checkresult.py:45 json断言通过, 期望结果'{'path': '$.data.realName', 'value': 'admin', 'asserttype': '=='}', 实际结果'admin'
+INFO     root:apisend.py:38 -·-·-·-·-·-·-·-·-·-发送请求并接受信息 END-·-·-·-·-·-·-·-·-·-
+INFO     root:apisend.py:26 -·-·-·-·-·-·-·-·-·-发送请求并接受信息 START-·-·-·-·-·-·-·-·-·-
+INFO     root:apiinit.py:36 Yaml测试用例基础架构检查通过
+INFO     root:handleyaml.py:43 yaml_data:{'bms_env': {'host': 'https://192.168.148.174:31000'}}
+INFO     root:handleyaml.py:44 expect_str:bms_env,host
+INFO     root:handleyaml.py:43 yaml_data:{'bms_env': {'host': 'https://192.168.148.174:31000'}}
+INFO     root:handleyaml.py:44 expect_str:bms_env,host
+INFO     root:handleyaml.py:43 yaml_data:{'bms_env': {'host': 'https://192.168.148.174:31000'}}
+INFO     root:handleyaml.py:44 expect_str:token
