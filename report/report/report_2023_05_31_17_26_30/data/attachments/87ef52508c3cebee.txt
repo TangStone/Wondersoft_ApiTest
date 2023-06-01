@@ -1,2 +1,0 @@
-INFO     root:apisend.py:26 -·-·-·-·-·-·-·-·-·-发送请求并接受信息 START-·-·-·-·-·-·-·-·-·-
-INFO     root:apiinit.py:36 Yaml测试用例基础架构检查通过

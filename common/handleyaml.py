@@ -7,8 +7,7 @@
 @time: 2023-04-04 14:26
 @description: yaml文件处理
 """
-import logging
-
+import logging, os
 import yaml
 
 def read_yaml_data(filepath):
@@ -90,7 +89,44 @@ def clear_yaml_data(filepath):
         f.truncate()
 
 
+def read_case(path):
+    """
+    获取测试用例数据
+    :param path:
+    :return:
+    """
+    all_case_data = {}
+    # 获取yaml文件路径
+    file_path_list = file_execute_list(path)
 
+    #遍历读取yaml文件
+    for file_path in file_path_list:
+        file_data = read_yaml_data(file_path)
 
+        #获取用例数据
+        case_dict = file_data.pop('case')
+        for caseid, casedata in case_dict.items():
+            new_casedata = {**casedata, **file_data}
+            all_case_data[caseid] = new_casedata
 
+    return all_case_data
 
+def file_execute_list(path):
+    """
+    获取当前目录下所有的测试用例文件路径
+    :param path: 文件夹路/文件路径
+    :return:
+    """
+    # 获取当前路径下所有文件
+    file_path_list = []
+
+    if os.path.isdir(path):   #文件夹
+        for root, dirs, files in os.walk(path):
+            if files:
+                for file in files:
+                    if '.yaml' in file:
+                        file_path_list.append(root + '/' + file)
+    else:
+        file_path_list.append(path)
+
+    return file_path_list

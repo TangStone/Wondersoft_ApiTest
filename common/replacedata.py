@@ -12,6 +12,15 @@ import json, re
 from config import *
 from common import handleyaml
 
+class RepaceData:
+    "递归重组用例数据字典"
+
+    def __int__(self, casedata, relevance_dict):
+        self.case_data = casedata     # 用例信息
+        self.re_dict = relevance_dict  # 替换信息
+
+
+
 def config_value(index_str):
     """
     获取配置文件参数值

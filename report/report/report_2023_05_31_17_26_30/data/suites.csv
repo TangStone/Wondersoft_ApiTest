@@ -1,6 +1,0 @@
-"Status","Start Time","Stop Time","Duration in ms","Parent Suite","Suite","Sub Suite","Test Class","Test Method","Name","Description"
-"broken","Wed May 31 17:26:30 CST 2023","Wed May 31 17:26:30 CST 2023","2","bms.testcases.roles","test_roles_list","TestRoles","","","test_roles_list[casedata0]",""
-"broken","Wed May 31 17:26:30 CST 2023","Wed May 31 17:26:30 CST 2023","32","bms.testcases.roles","test_roles_update","TestRoles","","","test_roles_list[casedata0]",""
-"broken","Wed May 31 17:26:30 CST 2023","Wed May 31 17:26:30 CST 2023","4","bms.testcases.roles","test_roles_delete","TestRoles","","","test_roles_list[casedata0]",""
-"broken","Wed May 31 17:26:30 CST 2023","Wed May 31 17:26:30 CST 2023","3","bms.testcases.roles","test_roles_add","TestRoles","","","test_roles_list[casedata0]",""
-"broken","Wed May 31 17:26:30 CST 2023","Wed May 31 17:26:30 CST 2023","6","bms.testcases.roles","test_roles_details","TestRoles","","","test_roles_list[casedata0]",""

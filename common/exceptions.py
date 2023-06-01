@@ -9,7 +9,6 @@
 """
 import traceback
 
-
 def get_error_info(ex_type, ex_val, ex_stack):
     error_info = str(ex_type) + '\n' + str(ex_val) + '\n'
     for stack in traceback.extract_tb(ex_stack):
