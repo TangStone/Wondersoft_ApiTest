@@ -1,0 +1,14 @@
+INFO     root:test_cases.py:35 ==========开始执行用例：usersync_config_list_01==========
+INFO     root:runcase.py:28 -·-·-·-·-·-·-·-·-·-发送请求并接受信息 START-·-·-·-·-·-·-·-·-·-
+INFO     root:handleyaml.py:91 Yaml测试用例基础架构检查通过
+INFO     root:runcase.py:45 重组后的用例信息：{'name': '数据源列表搜索成功', 'base_url': 'https://192.168.148.174:31000', 'request': {'method': 'get', 'url': '/api/usersync/v1/configs', 'headers': {'Content-Type': 'application/json', 'token': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJhdWQiOiJhcHBsaWNhdGlvbiIsInN1YiI6ImI1MzMxNDk3LTQ5Y2QtNGUzOC1iYTMxLWFlYWZkNjdlZjA2MCIsImlzcyI6ImJtc19zZXJ2ZXIiLCJzZXNzaW9uSWQiOiJiNTMzMTQ5Ny00OWNkLTRlMzgtYmEzMS1hZWFmZDY3ZWYwNjAiLCJleHAiOjE2ODYzMTcyMDUsImlhdCI6MTY4NjEzNzIwNX0.58UxFi_W_f6TMSB94m6Ub3NorLnx3DwKC1QLGvBfx6jCI2QX8YvLrTPtVsgMGd1aZKrJJkMm0sTXaZvSDGDXjg', 'Referer': 'https://192.168.148.174:31000/sub-app-unity/userSync'}}, 'expect': {'code': 200, 'jsonpath': [{'path': '$.statusCode', 'value': 0, 'asserttype': '=='}, {'path': '$.msg', 'value': 'success', 'asserttype': '=='}]}}
+INFO     root:runcase.py:77 请求地址：https://192.168.148.174:31000/api/usersync/v1/configs
+INFO     root:runcase.py:78 请求方法：get
+INFO     root:runcase.py:79 请求头：{'Content-Type': 'application/json', 'token': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJhdWQiOiJhcHBsaWNhdGlvbiIsInN1YiI6ImI1MzMxNDk3LTQ5Y2QtNGUzOC1iYTMxLWFlYWZkNjdlZjA2MCIsImlzcyI6ImJtc19zZXJ2ZXIiLCJzZXNzaW9uSWQiOiJiNTMzMTQ5Ny00OWNkLTRlMzgtYmEzMS1hZWFmZDY3ZWYwNjAiLCJleHAiOjE2ODYzMTcyMDUsImlhdCI6MTY4NjEzNzIwNX0.58UxFi_W_f6TMSB94m6Ub3NorLnx3DwKC1QLGvBfx6jCI2QX8YvLrTPtVsgMGd1aZKrJJkMm0sTXaZvSDGDXjg', 'Referer': 'https://192.168.148.174:31000/sub-app-unity/userSync'}
+DEBUG    urllib3.connectionpool:connectionpool.py:1003 Starting new HTTPS connection (1): 192.168.148.174:31000
+DEBUG    urllib3.connectionpool:connectionpool.py:456 https://192.168.148.174:31000 "GET /api/usersync/v1/configs HTTP/1.1" 200 66
+INFO     root:runcase.py:154 请求接口结果： {'statusCode': 0, 'msg': 'success', 'data': {'totalCount': 0, 'list': []}}
+INFO     root:checkresult.py:88 code断言通过, 期望状态码:200, 实际状态码:200
+INFO     root:checkresult.py:45 json断言通过, 期望结果'{'path': '$.statusCode', 'value': 0, 'asserttype': '=='}', 实际结果'0'
+INFO     root:checkresult.py:45 json断言通过, 期望结果'{'path': '$.msg', 'value': 'success', 'asserttype': '=='}', 实际结果'success'
+INFO     root:runcase.py:61 -·-·-·-·-·-·-·-·-·-发送请求并接受信息 END-·-·-·-·-·-·-·-·-·-
