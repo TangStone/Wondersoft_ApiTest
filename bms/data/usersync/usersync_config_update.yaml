@@ -1,0 +1,30 @@
+epic: 用户管理
+feature: 用户同步管理-用户同步
+story: 修改数据源配置接口
+case:
+  usersync_config_update_01:
+    name: 修改数据源配置成功
+    base_url: ${config(bms_env,host)}
+    request:
+      method: put
+      url: /api/usersync/v1/config/${relevance(config_id)}
+      headers:
+        Content-Type: application/json
+        token: ${extract(token)}
+        Referer: ${config(bms_env,host)}/sub-app-unity/userSync
+      data: {"type": "domain","name": "235","configs": "{\"name\":\"235\",\"host\":\"192.168.70.235\",\"port\":\"389\",\"username\":\"xiantest\\\\administrator\",\"password\":\"Ws-123456abc\",\"base\":\"DC=xiantest,DC=com\",\"org\":\"ou=北京明朝万达\",\"isEncrypt\":false,\"userFilter\":\"\",\"groupFilter\":\"\",\"isIncrement\":false}","id": 4}
+    relevance:
+      - caseid: usersync_config_add_01
+      - caseid: usersync_config_list_01
+        response:
+          - value: $.data.list[0].id
+            name: config_id
+    expect:
+      code: 200
+      jsonpath:
+        - path: $.statusCode
+          value: 0
+          asserttype: ==
+        - path: $.msg
+          value: success
+          asserttype: ==

@@ -2,7 +2,7 @@ epic: 系统管理
 feature: 权限管理-角色配置
 story: 角色删除接口
 case:
-  roles_delete_01:
+  role_delete_01:
     name: 角色删除成功
     base_url: ${config(bms_env,host)}
     request:
@@ -13,7 +13,7 @@ case:
         token: ${extract(token)}
         Referer: ${config(bms_env,host)}/sub-app-unity/systemAdminLog
     relevance:
-      - caseid: roles_list_01
+      - caseid: role_list_01
         response:
           - value: $.data.list[0].id
             name: role_id

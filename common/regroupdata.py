@@ -7,9 +7,11 @@
 @time: 2023-06-04 20:19
 @description: 参数替换
 """
-from config import *
 import json, re
-import handleyaml
+
+from config import *
+
+from common import handleyaml
 
 
 class RegroupData:
@@ -78,3 +80,11 @@ class RegroupData:
                 pattern = re.compile(r'\$\{relevance\(' + i + r'\)\}')
                 value = self.get_value(i, self.relevance_dict)
                 str_data = re.sub(pattern, str(value), str_data, count=1)
+
+        # 还原数据类型
+        if isinstance(self.casedata, dict) or isinstance(self.casedata, list):
+            casedata = json.loads(str_data)
+        else:
+            casedata = data_type(str_data)
+
+        return casedata

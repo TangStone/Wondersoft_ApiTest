@@ -18,3 +18,6 @@ CONFIG_DIR = ROOT_DIR + 'config/config.yml'
 
 # 中间件参数传递文件路径
 EXTRACT_DIR = ROOT_DIR + 'bms/extract.yaml'
+
+# 所有用例caseid文件
+CASE_DIR = ROOT_DIR + 'bms/case.yaml'

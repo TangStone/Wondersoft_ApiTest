@@ -5,5 +5,43 @@
 @File: basefunc.py
 @IDE: PyCharm
 @time: 2023-06-02 17:36
-@description:
+@description: 基础处理函数
 """
+import os
+
+def clean_dir(path):
+    """清空目录下所有文件，保留文件夹"""
+    for i in os.listdir(path):
+        c_path = os.path.join(path, i)
+        if os.path.isdir(c_path):
+            clean_dir(c_path)
+        else:
+            os.remove(c_path)
+    for i in os.listdir(path):
+        dir_path = os.path.join(path, i)
+        if os.listdir(dir_path):
+            clean_dir(path)
+        else:
+            os.rmdir(dir_path)
+
+def file_execute_list(rootpath, filetype):
+    """
+    获取当前目录下所有的文件
+    :param rootpath: 文件夹路/文件路径
+    :param filetype: 文件类型
+    :return: 文件绝对路径列表
+    """
+    # 获取当前路径下所有文件
+    file_path_list = []
+
+    if os.path.isdir(rootpath):   #文件夹
+        for root, dirs, files in os.walk(rootpath):
+            if files:
+                for file in files:
+                    if filetype in file:
+                        file_path_list.append(root + '/' + file)
+    else:
+        if filetype in rootpath:
+            file_path_list.append(rootpath)
+
+    return file_path_list
