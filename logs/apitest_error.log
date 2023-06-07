@@ -1,1 +1,1 @@
-ERROR[2023-06-06 17:47:19,435][16392][checkresult.py checkresult assert_code 90]：code断言未通过, 期望状态码:200, 实际状态码:400
+ERROR[2023-06-07 10:16:49,659][9228][checkresult.py checkresult assert_code 90]：code断言未通过, 期望状态码:200, 实际状态码:400
