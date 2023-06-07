@@ -1,6 +1,0 @@
-"Status","Start Time","Stop Time","Duration in ms","Parent Suite","Suite","Sub Suite","Test Class","Test Method","Name","Description"
-"passed","Thu Jun 01 14:03:32 CST 2023","Thu Jun 01 14:03:32 CST 2023","251","bms","test_cases","","","","新增角色成功",""
-"passed","Thu Jun 01 14:03:33 CST 2023","Thu Jun 01 14:03:33 CST 2023","62","bms","test_cases","","","","角色列表查看",""
-"passed","Thu Jun 01 14:03:32 CST 2023","Thu Jun 01 14:03:33 CST 2023","162","bms","test_cases","","","","角色详情查看",""
-"passed","Thu Jun 01 14:03:32 CST 2023","Thu Jun 01 14:03:32 CST 2023","161","bms","test_cases","","","","角色删除成功",""
-"passed","Thu Jun 01 14:03:33 CST 2023","Thu Jun 01 14:03:33 CST 2023","772","bms","test_cases","","","","修改角色成功",""

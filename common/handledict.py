@@ -2,8 +2,8 @@
 
 """
 @author: gaojie
-@File: basefunc.py
+@File: handledict.py
 @IDE: PyCharm
-@time: 2023-06-02 17:36
+@time: 2023-06-04 18:00
 @description:
 """
