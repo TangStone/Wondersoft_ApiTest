@@ -15,11 +15,11 @@ from config import *
 from common import readcase
 from common import runcase
 
-# all_case = copy.deepcopy(readcase.ReadCase().read_all_case([ROOT_DIR + 'bms/data']))
+all_case = copy.deepcopy(readcase.ReadCase().read_all_case([ROOT_DIR + 'bms/data']))
 
-all_case = copy.deepcopy(readcase.ReadCase().read_all_case([ROOT_DIR + 'bms/data/login']))
+# all_case = copy.deepcopy(readcase.ReadCase().read_all_case([ROOT_DIR + 'bms/data/login']))
 
-# all_case.pop('user_group_add_01')
+all_case.pop('user_group_add_01')
 all_case.pop('login_01')
 
 @pytest.mark.parametrize('caseid', all_case.keys())
