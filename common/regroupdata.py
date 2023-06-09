@@ -12,7 +12,7 @@ import json, re, sys, logging
 from config import *
 
 from common import exceptions
-
+from common import encryption
 
 class RegroupData:
     "参数替换"
@@ -45,6 +45,15 @@ class RegroupData:
                 return data
             else:
                 return data[param]
+    @staticmethod
+    def get_enc_value(param):
+        """
+        参数加密
+        :param param: key
+        :return:
+        """
+        data = encryption.encryption(param)
+        return data
 
     # def replace_value(self):
     #     """
@@ -151,6 +160,7 @@ class RegroupData:
         relevance_list = re.findall(r"\$\{relevance\((.*?)\)\}", str_data)  # 关联参数替换
         config_list = re.findall(r"\$\{config\((.*?)\)\}", str_data)  # 配置文件参数替换
         extract_list = re.findall(r"\$\{extract\((.*?)\)\}", str_data)  # 配置文件参数替换
+        enc_list = re.findall(r"\$\{enc\((.*?)\)\}", str_data)  # 加密替换
 
         if len(config_list):
             for i in config_list:
@@ -169,6 +179,12 @@ class RegroupData:
             for i in relevance_list:
                 pattern = re.compile(r'\$\{relevance\(' + i + r'\)\}')
                 value = self.get_value(i, self.relevance_dict)
+                str_data = re.sub(pattern, str(value), str_data, count=1)
+
+        if len(enc_list):
+            for i in enc_list:
+                pattern = re.compile(r'\$\{enc\(' + i + r'\)\}')
+                value = self.get_enc_value(i)
                 str_data = re.sub(pattern, str(value), str_data, count=1)
 
         return str_data

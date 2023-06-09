@@ -5,4 +5,4 @@ PyYAML==6.0
 PyYAML==6.0
 Requests==2.31.0
 requests_toolbelt==1.0.0
-11=11
+pycryptodome=3.18.0

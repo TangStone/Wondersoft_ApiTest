@@ -18,6 +18,7 @@ from common import exceptions
 from common import checkresult
 from common import teardowncase
 from common import relevancecase
+from common import extract
 
 def excute_case(case_data):
     """
@@ -26,9 +27,8 @@ def excute_case(case_data):
     :return:
     """
     logging.info('-·-·-·-·-·-·-·-·-·-发送请求并接受信息 START-·-·-·-·-·-·-·-·-·-')
-
     # 校验用例格式
-    flag = handleyaml.standard_yaml(case_data)
+    flag, msg = handleyaml.standard_yaml(case_data)
     if flag:  # 用例格式无误
 
         relevance_dict = {}  # 关联参数
@@ -52,14 +52,18 @@ def excute_case(case_data):
             checkresult.check_result(hope_result, recv_data, recv_code)
 
             # 取值
-            if 'expect' in casedata.keys():
-                pass
+            if 'extract' in casedata.keys():
+                extract.handle_extarct(casedata['extract'], recv_data)
 
             # 执行后置接口
             teardowncase.case_teardown(casedata)
 
-    logging.info('-·-·-·-·-·-·-·-·-·-发送请求并接受信息 END-·-·-·-·-·-·-·-·-·-')
-    return casedata, recv_data
+            logging.info('-·-·-·-·-·-·-·-·-·-发送请求并接受信息 END-·-·-·-·-·-·-·-·-·-')
+            return casedata, recv_data
+        else:
+            raise Exception(casedata)
+    else:
+        raise Exception("用例格式校验失败，" + msg)
 
 
 def send_request(casedata):

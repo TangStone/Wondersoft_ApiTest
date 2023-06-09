@@ -1,5 +1,5 @@
 epic: 用户登录
-feature: 用户登录模块
+feature: 用户登录模块i
 story: 用户登录接口
 case:
   login_01:
@@ -14,7 +14,7 @@ case:
       data:
         unityId: false
         username: admin
-        gossip: jFeEBQGDnfE4IMMGTWf88ZjaMl2+Vt0uGYU4MctTKW7snUfnxxEgttM1ZpeuJnTVCsLtU+jYypJV0wP5j1wjr2i9h5NklnQtAjtTeaeN0mqWR4LlwgK49qcvl39okSPSGXC1Hq8irpzx4jvm5SJT8Fzwl8uBj2AIfH2++958jQo=
+        gossip: ${enc(Ws-123456)}
     expect:
       code: 200
       jsonpath:

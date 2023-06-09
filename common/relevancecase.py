@@ -34,7 +34,10 @@ class Relevance:
                     case_data = readcase.ReadCase().get_case_data(caseid, readcase.all_case[caseid]['casepath'])
 
                     # 发送请求
-                    case_send_data, recv_data = runcase.excute_case(case_data)
+                    try:
+                        case_send_data, recv_data = runcase.excute_case(case_data)
+                    except Exception as e:
+                        raise Exception("关联用例：" + caseid + '执行失败，' + str(e))
 
                     if 'response' in rele_case.keys():
                         for param in rele_case['response']:

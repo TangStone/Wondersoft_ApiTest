@@ -81,6 +81,7 @@ def standard_yaml(casedata):
     :return:
     """
     flag = True
+    msg = ''
     try:
         casedata_key = casedata.keys()
         # 判断一级关键字是否包含有：name, base_url, request, validate
@@ -91,14 +92,17 @@ def standard_yaml(casedata):
                 logging.info("Yaml测试用例基础架构检查通过")
             else:
                 flag = False
+                msg = '用例编写有误，request下必须包含：method，url，headers'
                 logging.error("用例编写有误，request下必须包含：method，url，headers")
         else:
             flag = False
+            msg = '用例编写有误，一级关键字必须包含：name，base_url，request，expect'
             logging.error("用例编写有误，一级关键字必须包含：name，base_url，request，expect")
     except:
         ex_type, ex_val, ex_stack = sys.exc_info()
         error_info = exceptions.get_error_info(ex_type, ex_val, ex_stack)
-        logging.error("规范Yaml测试用例异常：%s", error_info)
         flag = False
-    return flag
+        msg = '规范Yaml测试用例异常：' + error_info
+        logging.error("规范Yaml测试用例异常：%s", error_info)
+    return flag, msg
 
