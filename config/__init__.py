@@ -20,4 +20,4 @@ CONFIG_DIR = ROOT_DIR + 'config/config.yml'
 EXTRACT_DIR = ROOT_DIR + 'bms/extract.yaml'
 
 # 所有用例caseid文件
-CASE_DIR = ROOT_DIR + 'bms/case.yaml'
+# CASE_DIR = ROOT_DIR + 'bms/case.yaml'

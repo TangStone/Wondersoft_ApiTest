@@ -1,0 +1,44 @@
+- epic: 用户管理   # 一级模块
+  feature: 用户同步管理-用户同步  # 二级模块
+  story: 根据taskID查询任务日志接口    # 接口名称
+  # 接口基本信息
+  case_info:
+    # 基础URL:https://192.168.148.174:31000
+    base_url: ${config(host)}
+    # 请求信息
+    request:
+      # 请求类型
+      method: GET
+      # 请求地址
+      address: /api/usersync/v1/log/${relevance(taskId)}
+      # 请求头
+      headers:
+        Content-Type: application/json
+        token: ${extract(token)}
+        Referer: ${config(host)}/sub-app-unity/userSync
+  # 用例信息，可包含多个用例，用例id需唯一
+  case_data:
+    # 用例id
+    usersync_tasks_log_01:
+      # 用例名称
+      name: 查询近7次的同步状态
+      # 用例描述
+      description: 查询近7次的同步状态
+      # 请求信息，包括data，file
+      request:
+        data:
+          pageNum: 1
+          pageSize: 20
+      # 关联用例
+      relevance:
+        - caseid: usersync_tasks_list_01  #用例id
+          # 取值类型，response(从返回值中取值)，request(从发送值中取值)
+          response:
+            - value: $.data.list[0].id
+              name: taskId
+      # 校验
+      validate:
+        # 状态码校验
+        code: 200
+        # 返回值校验
+        response: {"statusCode": 0,"msg": "success"}

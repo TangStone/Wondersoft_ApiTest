@@ -1,0 +1,32 @@
+- epic: 用户管理   # 一级模块
+  feature: 基础数据管理-用户与机构管理  # 二级模块
+  story: 地域列表查询接口    # 接口名称
+  # 接口基本信息
+  case_info:
+    # 基础URL:https://192.168.148.174:31000
+    base_url: ${config(host)}
+    # 请求信息
+    request:
+      # 请求类型
+      method: GET
+      # 请求地址
+      address: /api/user/v1/area/queryAreaList
+      # 请求头
+      headers:
+        Content-Type: application/json
+        token: ${extract(token)}
+        Referer: ${config(host)}/sub-app-unity/group
+  # 用例信息，可包含多个用例，用例id需唯一
+  case_data:
+    # 用例id
+    user_area_list_01:
+      # 用例名称
+      name: 地域列表查询
+      # 用例描述
+      description: 地域列表查询
+      # 校验
+      validate:
+        # 状态码校验
+        code: 200
+        # 返回值校验
+        response: {"statusCode": 0,"msg": "success"}

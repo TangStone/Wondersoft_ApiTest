@@ -1,0 +1,26 @@
+- epic: 用户管理
+  feature: 用户同步管理-用户同步
+  story: 根据数据源ID精确查找数据源接口
+  case_info:
+    base_url: ${config(host)}
+    request:
+      method: get
+      address: /api/usersync/v1/config/${relevance(id)}
+      headers:
+        Content-Type: application/json
+        token: ${extract(token)}
+        Referer: ${config(host)}/sub-app-unity/userSync
+  case_data:
+    usersync_config_searchbyid_01:
+      name: 根据id查看数据源配置成功
+      description: 输入正确的数据源id，查看数据源配置
+      relevance:
+        - caseid: usersync_config_list_02
+          response:
+            - value: $.data.list[0].id
+              name: id
+            - value: $.data.list[0].name
+              name: name
+      validate:
+        code: 200
+        response: { "statusCode": 0,"msg": "success" , "data": {"id": '${relevance(id)}', "name": '${relevance(name)}'}}

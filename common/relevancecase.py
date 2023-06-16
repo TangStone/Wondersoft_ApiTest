@@ -11,12 +11,14 @@ import logging
 
 import allure, jsonpath
 
+from config import *
 from common import readcase
 from common import runcase
 
 class Relevance:
-    "关联信息"
-
+    """
+    关联信息
+    """
 
     def get_relevance_data(self, relevance):
         """
@@ -31,7 +33,9 @@ class Relevance:
                     caseid = rele_case['caseid']  # 关联用例id
 
                     #关联用例信息
-                    case_data = readcase.ReadCase().get_case_data(caseid, readcase.all_case[caseid]['casepath'])
+                    # case_data = readcase.ReadCase().get_case_data(caseid, readcase.all_case[caseid]['casepath'])
+                    case_data = readcase.ReadCase().get_case_dict(readcase.all_case[caseid])[caseid]
+
 
                     # 发送请求
                     try:
@@ -43,10 +47,16 @@ class Relevance:
                         for param in rele_case['response']:
                             value = jsonpath.jsonpath(recv_data, param['value'])
                             name = param['name']
-                            relevance_dict[name] = value[0]
+                            if value:
+                                relevance_dict[name] = value[0]
+                            else:
+                                raise Exception("关联参数：" + name + "获取失败，请检查用例！")
                     elif 'request' in rele_case.keys():
                         for param in rele_case['request']:
                             value = jsonpath.jsonpath(case_send_data, param['value'])
                             name = param['name']
-                            relevance_dict[name] = value[0]
+                            if value:
+                                relevance_dict[name] = value[0]
+                            else:
+                                raise Exception("关联参数：" + name + "获取失败，请检查用例！")
         return relevance_dict

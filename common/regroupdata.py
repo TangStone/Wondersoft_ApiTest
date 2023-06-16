@@ -15,7 +15,9 @@ from common import exceptions
 from common import encryption
 
 class RegroupData:
-    "参数替换"
+    """
+    参数替换
+    """
 
     def __init__(self, casedata, relevance_dict, extract_dict, config_dict):
         """
@@ -41,7 +43,7 @@ class RegroupData:
             if ',' in param:
                 expect_value_list = param.split(',')
                 for i in expect_value_list:
-                    data = data[i]
+                    data = data[i.strip()]
                 return data
             else:
                 return data[param]
@@ -135,10 +137,14 @@ class RegroupData:
                                     rawDict = tem_rawDict
                                     break
                             elif isinstance(list_value, str):
+                                logging.info("=========:%s",list_value)
+                                logging.info("========:%s", self.relevance_dict)
                                 tem_str = self.replace_value(list_value)
+                                logging.info("====:%s",tem_str)
                                 tem_raw_list.append(tem_str)
                             else:
                                 tem_raw_list.append(list_value)
+                        rawDict[dict_key] = tem_raw_list
                     elif isinstance(rawDict[dict_key], str):
                         tem_str = self.replace_value(rawDict[dict_key])
                         rawDict[dict_key] = tem_str
@@ -171,7 +177,6 @@ class RegroupData:
         if len(extract_list):
             for i in extract_list:
                 pattern = re.compile(r'\$\{extract\(' + i + r'\)\}')
-                # print("conf_patt: ", pattern)
                 value = self.get_value(i, self.extract_dict)
                 str_data = re.sub(pattern, str(value), str_data, count=1)
 
@@ -188,3 +193,13 @@ class RegroupData:
                 str_data = re.sub(pattern, str(value), str_data, count=1)
 
         return str_data
+
+    @staticmethod
+    def restore_datatype(data, str_data):
+        """
+        还原数据类型
+        :param data: 取值数据
+        :param str_data: 原始字符串数据
+        :return:
+        """
+        pass

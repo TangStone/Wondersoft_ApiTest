@@ -48,12 +48,12 @@ def excute_case(case_data):
             recv_data, recv_code = send_request(casedata)
 
             # 结果校验
-            hope_result = casedata['expect']
+            hope_result = casedata['validate']
             checkresult.check_result(hope_result, recv_data, recv_code)
 
             # 取值
             if 'extract' in casedata.keys():
-                extract.handle_extarct(casedata['extract'], recv_data)
+                extract.handle_extarct(casedata['extract'], recv_data, casedata['caseid'])
 
             # 执行后置接口
             teardowncase.case_teardown(casedata)
@@ -74,7 +74,7 @@ def send_request(casedata):
     """
     with allure.step("执行当前接口：" + casedata['name']):
         request_data = casedata['request']
-        url = casedata['base_url'] + request_data['url']
+        url = casedata['base_url'] + request_data['address']
         method = request_data['method']
         headers = request_data['headers']
 
@@ -96,13 +96,13 @@ def send_request(casedata):
             file = request_data['file']
 
         #发送请求
-        if method == 'post':
+        if method in ['post', 'POST']:
             recv_data, recv_code = ApiMethod(url, headers, data, file).post()
-        elif method == 'get':
+        elif method in ['get', 'GET']:
             recv_data, recv_code = ApiMethod(url, headers, data, file).get()
-        elif method == 'put':
+        elif method in ['put', 'PUT']:
             recv_data, recv_code = ApiMethod(url, headers, data, file).put()
-        elif method == 'delete':
+        elif method in ['delete', 'DELETE']:
             recv_data, recv_code = ApiMethod(url, headers, data, file).delete()
         else:
             pass
@@ -166,7 +166,7 @@ class ApiMethod:
             recv_result = requests.put(url=self.url, headers=self.headers, json=self.data, verify=False)
         else:
             if self.data:
-                data = json.dumps(self.data)
+                self.data = json.dumps(self.data)
             recv_result = requests.put(url=self.url, headers=self.headers, data=self.data, verify=False)
         try:
             res = recv_result.json()
@@ -178,7 +178,10 @@ class ApiMethod:
 
     #delete请求
     def delete(self):
-        recv_result = requests.delete(url=self.url, params=self.data, headers=self.headers, verify=False)
+        if 'application/json' in self.headers.values():
+            recv_result = requests.delete(url=self.url, json=self.data, headers=self.headers, verify=False)
+        else:
+            recv_result = requests.delete(url=self.url, params=self.data, headers=self.headers, verify=False)
         try:
             res = recv_result.json()
         except:

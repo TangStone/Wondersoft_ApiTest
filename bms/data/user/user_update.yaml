@@ -1,0 +1,44 @@
+- epic: 用户管理   # 一级模块
+  feature: 基础数据管理-用户与机构管理  # 二级模块
+  story: 修改用户接口    # 接口名称
+  # 接口基本信息
+  case_info:
+    # 基础URL:https://192.168.148.174:31000
+    base_url: ${config(host)}
+    # 请求信息
+    request:
+      # 请求类型
+      method: PUT
+      # 请求地址
+      address: /api/user/v1/user/${relevance(sid)}/true
+      # 请求头
+      headers:
+        Content-Type: application/json
+        token: ${extract(token)}
+        Referer: ${config(host)}/sub-app-unity/group
+  # 用例信息，可包含多个用例，用例id需唯一
+  case_data:
+    # 用例id
+    user_update_01:
+      # 用例名称
+      name: 修改用户姓名成功
+      # 用例描述
+      description: 修改用户姓名成功
+      # 请求信息，包括data，file
+      request:
+        data: {"userName": "apiuser01","authentication": 0, "displayName": "自动化测试用户01修改","groupId": "${relevance(groupId)}","roleId": 0,"employeeId": "","phoneNumber":"","mobileNumber": "","email": "","gender": "男","password": "3d4f2bf07dc1be38b20cd6e46949a1071f9d0e3d","ipAddress": "","remark": "","leaderUserSid":"","locationCode": "","idCard": "","platformCode": "","sid": "${relevance(sid)}"}
+      # 关联用例
+      relevance:
+        - caseid: user_list_03  #用例id
+          # 取值类型，response(从返回值中取值)，request(从发送值中取值)
+          response:
+            - value: $.data.list[0].sid
+              name: sid
+            - value: $.data.list[0].groupId
+              name: groupId
+      # 校验
+      validate:
+        # 状态码校验
+        code: 200
+        # 返回值校验
+        response: {"statusCode": 0,"msg": "success"}

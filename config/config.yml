@@ -1,3 +1,12 @@
+# 运行项目
+project_name: 统一管理平台
+
 # 环境信息
-bms_env:
-  host: https://192.168.148.174:31000
+host: https://192.168.148.174:31000
+
+# 数据库相关配置
+mysql_db:
+  host: 192.168.148.174
+  user: root
+  password: ws-123456
+  port: 3306

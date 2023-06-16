@@ -9,6 +9,9 @@
 """
 import allure, logging, jsonpath
 
+from common import handledict
+
+
 def check_result(hope_res, real_res, real_code):
     """
     返回结果校验
@@ -23,11 +26,31 @@ def check_result(hope_res, real_res, real_code):
                 assert_code(value, real_code)
             elif key == 'jsonpath':
                 assert_text(value,real_res)
+            elif key == 'response':
+                assert_response(value, real_res)
 
+def assert_response(hope_res, real_res):
+    """
+    返回结果校验 -全返回校验
+    :param hope_res: 
+    :param real_res: 
+    :return: 
+    """
+    if isinstance(hope_res, dict) and isinstance(real_res, dict):
+        try:
+            with allure.step("返回值校验"):
+                allure.attach(name="期望返回值", body=str(hope_res))
+                allure.attach(name='实际返回值', body=str(real_res))
+                flag = handledict.cmp_dict(hope_res, real_res)
+                assert flag
+                logging.info("返回结果断言通过, 期望返回值:%s, 实际返回值:%s", hope_res, real_res)
+        except AssertionError:
+            logging.error("返回结果断言未通过, 期望返回值:%s, 实际返回值:%s", hope_res, real_res)
+            raise
 
 def assert_text(hope_res, real_res):
     """
-    返回结果校验
+    返回结果校验 -jsonpath
     :param hope_res: 期望返回结果
     :param real_res: 实际返回结果
     :return:
@@ -41,7 +64,7 @@ def assert_text(hope_res, real_res):
                         with allure.step("json断言判断相等"):
                             allure.attach(name="期望结果", body=str(h_res))
                             allure.attach(name='实际实际结果', body=str(r_res))
-                            assert str(r_res) == str(h_res["value"])
+                            assert str(h_res["value"]) == str(r_res)
                             logging.info("json断言通过, 期望结果'{0}', 实际结果'{1}'".format(h_res, r_res))
                     except AssertionError:
                         logging.error("json断言未通过, 期望结果'{0}', 实际结果'{1}'".format(h_res, r_res))
@@ -51,7 +74,7 @@ def assert_text(hope_res, real_res):
                         with allure.step("json断言判断不等"):
                             allure.attach(name="json期望结果", body=str(h_res))
                             allure.attach(name='json实际实际结果', body=str(r_res))
-                            assert str(r_res) != str(h_res["value"])
+                            assert str(h_res["value"]) != str(r_res)
                             logging.info("json断言通过, 期望结果'{0}', 实际结果'{1}'".format(h_res, r_res))
                     except AssertionError:
                         logging.error("json断言未通过, 期望结果'{0}', 实际结果'{1}'".format(h_res, r_res))
@@ -62,7 +85,7 @@ def assert_text(hope_res, real_res):
                         with allure.step("json断言判断包含"):
                             allure.attach(name="期望结果", body=str(h_res))
                             allure.attach(name='实际实际结果', body=str(r_res))
-                            assert str(r_res) in str(h_res["value"])
+                            assert str(h_res["value"]) in str(r_res)
                             logging.info("json断言通过, 期望结果'{0}', 实际结果'{1}'".format(h_res, real_res))
                     except AssertionError:
                         logging.error("json断言未通过, 期望结果'{0}', 实际结果'{1}'".format(h_res, real_res))

@@ -1,0 +1,1 @@
+{'path': '$.data.list[0].userName', 'value': 'apiuser', 'asserttype': 'in'}

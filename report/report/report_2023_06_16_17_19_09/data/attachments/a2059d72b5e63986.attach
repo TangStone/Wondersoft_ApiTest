@@ -1,0 +1,1 @@
+{'statusCode': 0, 'msg': 'success', 'data': {'totalCount': 1, 'list': [{'roleId': 7, 'roleName': '自动化测试职位修改', 'priority': 0, 'createTime': '2023-06-16 17:16:46', 'updateTime': '2023-06-16 17:16:47', 'isRemoved': 0}]}}
