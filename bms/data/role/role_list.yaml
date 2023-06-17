@@ -1,0 +1,61 @@
+- epic: 系统管理   # 一级模块
+  feature: 权限管理-角色配置  # 二级模块
+  story: 角色列表接口    # 接口名称
+  # 接口基本信息
+  case_info:
+    # 基础URL:https://192.168.148.174:31000
+    base_url: ${config(host)}
+    # 请求信息
+    request:
+      # 请求类型
+      method: GET
+      # 请求地址
+      address: /api/auth/v1/roles
+      # 请求头
+      headers:
+        Content-Type: application/x-www-form-urlencoded
+        token: ${extract(token)}
+        Referer: ${config(host)}/sub-app-unity/systemAdminLog
+  # 用例信息，可包含多个用例，用例id需唯一
+  case_data:
+    # 用例id
+    role_list_01:
+      # 用例名称
+      name: 角色列表搜索-无搜索条件
+      # 用例描述
+      description: 不输入搜索条件，点击搜索，查看角色列表
+      # 请求信息，包括data，file
+      request:
+        data:
+          filters: '{"roleName":""}'
+          pageNum: 1
+          pageSize: 20
+      # 校验
+      validate:
+        # 状态码校验
+        code: 200
+        # 返回值校验
+        response: {"statusCode": 0,"msg": "success"}
+    # 用例id
+    role_list_02:
+      # 用例名称
+      name: 角色列表搜索-按角色名称条件
+      # 用例描述
+      description: 输入角色名称搜索条件，点击搜索，查看角色列表
+      # 请求信息，包括data，file
+      request:
+        data:
+          pageNum: 1
+          pageSize: 20
+          filters: '{"roleName":"自动化测试角色"}'
+      # 校验
+      validate:
+        # 状态码校验
+        code: 200
+        # 返回值校验
+        response: { "statusCode": 0,"msg": "success" }
+        # jsonpath校验
+        jsonpath:
+          - path: $.data.list[0].roleName
+            value: 自动化测试角色
+            asserttype: in

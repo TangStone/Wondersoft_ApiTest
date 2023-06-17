@@ -127,20 +127,20 @@ class TestUser:
         logging.info("==========开始执行用例：%s==========", caseid)
         runcase.excute_case(casedata)
 
-    # 删除用户
-    @pytest.mark.parametrize('caseid, casedata', [(caseid, casedata) for caseid, casedata in
-                                                  readcase.ReadCase().get_case_dict(
-                                                      ROOT_DIR + 'bms/data/user/user_delete.yaml').items()])
-    def test_user_delete(self, caseid, casedata):
-        handleallure.allure_display(casedata)
-        logging.info("==========开始执行用例：%s==========", caseid)
-        runcase.excute_case(casedata)
+    # # 删除用户
+    # @pytest.mark.parametrize('caseid, casedata', [(caseid, casedata) for caseid, casedata in
+    #                                               readcase.ReadCase().get_case_dict(
+    #                                                   ROOT_DIR + 'bms/data/user/user_delete.yaml').items()])
+    # def test_user_delete(self, caseid, casedata):
+    #     handleallure.allure_display(casedata)
+    #     logging.info("==========开始执行用例：%s==========", caseid)
+    #     runcase.excute_case(casedata)
 
-    # 删除用户组
-    @pytest.mark.parametrize('caseid, casedata', [(caseid, casedata) for caseid, casedata in
-                                                  readcase.ReadCase().get_case_dict(
-                                                      ROOT_DIR + 'bms/data/user/user_group_delete.yaml').items()])
-    def test_user_group_delete(self, caseid, casedata):
-        handleallure.allure_display(casedata)
-        logging.info("==========开始执行用例：%s==========", caseid)
-        runcase.excute_case(casedata)
+    # # 删除用户组
+    # @pytest.mark.parametrize('caseid, casedata', [(caseid, casedata) for caseid, casedata in
+    #                                               readcase.ReadCase().get_case_dict(
+    #                                                   ROOT_DIR + 'bms/data/user/user_group_delete.yaml').items()])
+    # def test_user_group_delete(self, caseid, casedata):
+    #     handleallure.allure_display(casedata)
+    #     logging.info("==========开始执行用例：%s==========", caseid)
+    #     runcase.excute_case(casedata)

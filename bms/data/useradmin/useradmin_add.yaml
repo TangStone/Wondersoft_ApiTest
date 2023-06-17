@@ -1,0 +1,61 @@
+- epic: 系统管理   # 一级模块
+  feature: 权限管理-管理员配置  # 二级模块
+  story: 管理员批量创建接口    # 接口名称
+  # 接口基本信息
+  case_info:
+    # 基础URL:https://192.168.148.174:31000
+    base_url: ${config(host)}
+    # 请求信息
+    request:
+      # 请求类型
+      method: POST
+      # 请求地址
+      address: /api/auth/v1/user/batch
+      # 请求头
+      headers:
+        Content-Type: application/json
+        token: ${extract(token)}
+        Referer: ${config(host)}/sub-app-unity/adminConfig
+  # 用例信息，可包含多个用例，用例id需唯一
+  case_data:
+    # 用例id
+    useradmin_add_01:
+      # 用例名称
+      name: 创建自动化测试超级管理员
+      # 用例描述
+      description: 创建自动化测试超级管理员，管辖范围为自己所属组
+      # 请求信息，包括data，file
+      request:
+#        data: [{"id": "1D5B4072-F0D745B0-B359A711-00E45794","account": "apiuser01","roleId": "2","groupIds": ["76"],"realName": "自动化测试用户01修改","password":"3d4f2bf07dc1be38b20cd6e46949a1071f9d0e3d"},{"id": "8AD2209D-BD61499B-85A2D86E-63EA2798","account": "apiuser02","roleId": "2","groupIds": ["76"],"realName":"自动化测试用户02","password": "3d4f2bf07dc1be38b20cd6e46949a1071f9d0e3d"}]
+        data: [{"id": "${relevance(id1)}","account": "${relevance(account1)}","roleId": "2","groupIds": ["${relevance(groupId1)}"],"realName": "${relevance(realName1)}","password":"${relevance(password1)}"}]
+      # 关联用例
+      relevance:
+        - caseid: user_list_03  #用例id
+          # 取值类型，response(从返回值中取值)，request(从发送值中取值)
+          response:
+            - value: $.data.list[0].sid
+              name: id1
+            - value: $.data.list[0].userName
+              name: account1
+            - value: $.data.list[0].groupId
+              name: groupId1
+            - value: $.data.list[0].displayName
+              name: realName1
+            - value: $.data.list[0].password
+              name: password1
+#            - value: $.data.list[1].sid
+#              name: id2
+#            - value: $.data.list[1].userName
+#              name: account2
+#            - value: $.data.list[1].groupId
+#              name: groupId2
+#            - value: $.data.list[1].displayName
+#              name: realName2
+#            - value: $.data.list[1].password
+#              name: password2
+      # 校验
+      validate:
+        # 状态码校验
+        code: 200
+        # 返回值校验
+        response: {"statusCode": 0,"msg": "success"}

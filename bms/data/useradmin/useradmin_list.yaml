@@ -1,0 +1,99 @@
+- epic: 系统管理   # 一级模块
+  feature: 权限管理-管理员配置  # 二级模块
+  story: 管理员列表查询接口    # 接口名称
+  # 接口基本信息
+  case_info:
+    # 基础URL:https://192.168.148.174:31000
+    base_url: ${config(host)}
+    # 请求信息
+    request:
+      # 请求类型
+      method: GET
+      # 请求地址
+      address: /api/auth/v1/users
+      # 请求头
+      headers:
+        Content-Type: application/x-www-form-urlencoded
+        token: ${extract(token)}
+        Referer: ${config(host)}/sub-app-unity/adminConfig
+  # 用例信息，可包含多个用例，用例id需唯一
+  case_data:
+    # 用例id
+    useradmin_list_01:
+      # 用例名称
+      name: 管理员列表搜索-无搜索条件
+      # 用例描述
+      description: 不输入搜索条件，点击搜索，查看管理员列表
+      # 校验
+      validate:
+        # 状态码校验
+        code: 200
+        # 返回值校验
+        response: {"statusCode": 0,"msg": "success"}
+    # 用例id
+    useradmin_list_02:
+      # 用例名称
+      name: 管理员列表搜索-按角色名称搜索
+      # 用例描述
+      description: 输入角色名称搜索条件，点击搜索，查看管理员列表
+      # 请求信息，包括data，file
+      request:
+        data:
+          pageNum: 1
+          pageSize: 20
+          filters: '{"roleId":"2"}'
+      # 校验
+      validate:
+        # 状态码校验
+        code: 200
+        # 返回值校验
+        response: { "statusCode": 0,"msg": "success" }
+    # 用例id
+    useradmin_list_03:
+      # 用例名称
+      name: 管理员列表搜索-按登录名搜索
+      # 用例描述
+      description: 输入登录名搜索条件，点击搜索，查看管理员列表
+      # 请求信息，包括data，file
+      request:
+        data:
+          pageNum: 1
+          pageSize: 20
+          filters: '{"account":"apiuser"}'
+      # 校验
+      validate:
+        # 状态码校验
+        code: 200
+        # 返回值校验
+        response: { "statusCode": 0,"msg": "success" }
+        # jsonpath校验
+        jsonpath:
+          - path: $.data.list[0].realName
+            value: 自动化测试用户
+            asserttype: in
+    # 用例id
+    useradmin_list_04:
+      # 用例名称
+      name: 管理员列表搜索-按登录名、角色名组合搜索
+      # 用例描述
+      description: 输入登录名、组合名搜索条件，点击搜索，查看管理员列表
+      # 请求信息，包括data，file
+      request:
+        data:
+          pageNum: 1
+          pageSize: 20
+          filters: '{"account":"apiuser","roleId":"2"}'
+      # 校验
+      validate:
+        # 状态码校验
+        code: 200
+        # 返回值校验
+        response: { "statusCode": 0,"msg": "success" }
+        # jsonpath校验
+        jsonpath:
+          - path: $.data.list[0].realName
+            value: 自动化测试用户
+            asserttype: in
+          - path: $.data.list[0].roleName
+            value: 超级管理员
+            asserttype: in

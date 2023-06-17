@@ -1,0 +1,1 @@
+{'statusCode': 0, 'msg': 'success', 'data': {'totalCount': 1, 'list': [{'id': '09FE2E96-033244D7-A9B7CE79-16714B7C', 'roleName': '自动化测试角色', 'desciption': '自动化测试角色', 'type': 2, 'createTime': '2023-06-17 22:58:41', 'creater': 'B5A33586-15104954-9B752AE1-53333EC10', 'updateTime': '2023-06-17 22:58:41'}]}}

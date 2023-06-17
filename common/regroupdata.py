@@ -7,7 +7,7 @@
 @time: 2023-06-04 20:19
 @description: 参数替换
 """
-import json, re, sys, logging
+import json, re, sys, logging, time
 
 from config import *
 
@@ -56,6 +56,22 @@ class RegroupData:
         """
         data = encryption.encryption(param)
         return data
+
+    @staticmethod
+    def get_time(str):
+        """
+        获取时间
+        :param str: format='%Y-%m-%d %H:%M:%S'
+        :return:
+        """
+        param_list = str.split(',')   #获取多个配置项
+        time_str = ''
+        for param in param_list:
+            pa_list = param.split('=')  #拆分配置项
+            if pa_list[0] == 'format':   #时间格式
+                time_str = time.strftime(pa_list[1])
+        return time_str
+
 
     # def replace_value(self):
     #     """
@@ -137,10 +153,7 @@ class RegroupData:
                                     rawDict = tem_rawDict
                                     break
                             elif isinstance(list_value, str):
-                                logging.info("=========:%s",list_value)
-                                logging.info("========:%s", self.relevance_dict)
                                 tem_str = self.replace_value(list_value)
-                                logging.info("====:%s",tem_str)
                                 tem_raw_list.append(tem_str)
                             else:
                                 tem_raw_list.append(list_value)
@@ -167,6 +180,13 @@ class RegroupData:
         config_list = re.findall(r"\$\{config\((.*?)\)\}", str_data)  # 配置文件参数替换
         extract_list = re.findall(r"\$\{extract\((.*?)\)\}", str_data)  # 配置文件参数替换
         enc_list = re.findall(r"\$\{enc\((.*?)\)\}", str_data)  # 加密替换
+        time_list = re.findall(r"\$\{GetTime\((.*?)\)\}", str_data)  # 时间
+
+        if len(time_list):
+            for i in time_list:
+                pattern = re.compile(r'\$\{GetTime\(' + i + r'\)\}')
+                value = self.get_time(i)
+                str_data = re.sub(pattern, str(value), str_data, count=1)
 
         if len(config_list):
             for i in config_list:
