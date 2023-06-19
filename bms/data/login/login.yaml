@@ -29,6 +29,10 @@
           unityId: false   #是否启用验证码
           username: admin  #用户名
           gossip: ${enc(Ws-123456)}  #密码
+      extract:
+        token: $.data.token
+        userId: $.data.userId
+        realName: $.data.realName
       # 校验
       validate:
         # 状态码校验

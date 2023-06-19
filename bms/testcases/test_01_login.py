@@ -25,11 +25,13 @@ class TestLogin:
         handleallure.allure_display(casedata)
 
         logging.info("==========开始执行用例：%s==========", caseid)
-        send_data, recv_data = runcase.excute_case(casedata)
+        runcase.excute_case(casedata)
+        # send_data, recv_data = runcase.excute_case(casedata)
 
-        if caseid == 'login_01':
-            # 获取token值
-            token = recv_data['data']['token']
-            extract_value = {"token": token}
-
-            handleyaml.YamlHandle(EXTRACT_DIR, extract_value).updata_yaml()
+        # if caseid == 'login_01':
+        #     # 获取token值
+        #     token = recv_data['data']['token']   #token值
+        #     userId = recv_data['data']['userId']
+        #     extract_value = {"token": token, 'userId': userId}
+        #
+        #     handleyaml.YamlHandle(EXTRACT_DIR, extract_value).updata_yaml()   #保存到临时中间文件extract.yaml中

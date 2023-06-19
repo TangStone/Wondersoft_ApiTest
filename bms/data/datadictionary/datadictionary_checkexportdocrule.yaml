@@ -1,0 +1,70 @@
+- epic: 规则管理   # 一级模块
+  feature: 基础规则-数据字典  # 二级模块
+  story: 文档规则导出数据核查接口    # 接口名称
+  # 接口基本信息
+  case_info:
+    # 基础URL:https://192.168.148.174:31000
+    base_url: ${config(host)}
+    # 请求信息
+    request:
+      # 请求类型
+      method: POST
+      # 请求地址
+      address: /api/dlpparam/v1/dlpDocRule/checkExportDocRule
+      # 请求头
+      headers:
+        Content-Type: application/x-www-form-urlencoded
+        token: ${extract(token)}
+        Referer: ${config(host)}/sub-app-dlpparam/dlpFileDocRule
+  # 用例信息，可包含多个用例，用例id需唯一
+  case_data:
+    # 用例id
+    datadictionary_checkexportdocrule_01:
+      # 用例名称
+      name: 导出自动化测试数据字典规则核查
+      # 用例描述
+      description: 导出自动化测试数据字典规则核查
+      # 请求信息，包括data，file
+      request:
+        data:
+          userName: ${extract(realName)}
+          c_id: ${relevance(c_id;type=list)}
+          c_rule_type: "4"
+      # 关联用例
+      relevance:
+        - caseid: datadictionary_list_02  #用例id
+          # 取值类型，response(从返回值中取值)，request(从发送值中取值)
+          response:
+            - value: $.data.resultList[*].c_id
+              name: c_id
+      # 校验
+      validate:
+        # 状态码校验
+        code: 200
+        # 返回值校验
+        response: {"statusCode": 0}
+    # 用例id
+    datadictionary_checkexportdocrule_02:
+      # 用例名称
+      name: 导出数据字典规则,包含内置数据字典规则核查
+      # 用例描述
+      description: 导出数据字典规则,包含内置数据字典规则核查
+      # 请求信息，包括data，file
+      request:
+        data:
+          userName: ${extract(realName)}
+          c_id: ${relevance(c_id;type=list)}
+          c_rule_type: "4"
+      # 关联用例
+      relevance:
+        - caseid: datadictionary_list_01  #用例id
+          # 取值类型，response(从返回值中取值)，request(从发送值中取值)
+          response:
+            - value: $.data.resultList[*].c_id
+              name: c_id
+      # 校验
+      validate:
+        # 状态码校验
+        code: 200
+        # 返回值校验
+        response: { "statusCode": -1, "msg": "预置规则不允许导出，请重新选择！"}

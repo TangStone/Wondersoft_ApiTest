@@ -9,6 +9,8 @@
 """
 import json, re, sys, logging, time
 
+import jsonpath
+
 from config import *
 
 from common import exceptions
@@ -30,23 +32,54 @@ class RegroupData:
         self.relevance_dict = relevance_dict
         self.extract_dict = extract_dict
         self.config_dict = config_dict
+        logging.info("casedata:%s", self.casedata)
+        logging.info("relevance_dict:%s", self.relevance_dict)
+        logging.info("extract_dict:%s", self.extract_dict)
+        logging.info("config_dict:%s", self.config_dict)
 
-    @staticmethod
-    def get_value(param, data):
+    # @staticmethod
+    # def get_value(param, data):
+    #     """
+    #     获取参数值
+    #     :param param: key
+    #     :param data: 取值字典
+    #     :return:
+    #     """
+    #     if isinstance(data, dict):
+    #         if ',' in param:
+    #             expect_value_list = param.split(',')
+    #             for i in expect_value_list:
+    #                 data = data[i.strip()]
+    #             return data
+    #         else:
+    #             return data[param]
+
+    def get_value(self, param, data):
         """
         获取参数值
         :param param: key
         :param data: 取值字典
         :return:
         """
+        param_list = param.split(";")  # 拆分取值需求 docrule_01.c_id;type=list
+        #获取参数值
         if isinstance(data, dict):
-            if ',' in param:
-                expect_value_list = param.split(',')
-                for i in expect_value_list:
-                    data = data[i.strip()]
-                return data
-            else:
-                return data[param]
+            # 获取参数值
+            expect_value_list = param_list[0].split('.')
+            for i in expect_value_list:
+                data = data[i.strip()]
+
+            if len(param_list) >= 2:
+                for pa in param_list[1:]:
+                    pa_list = pa.split("=")
+                    if pa_list[0] == 'type':
+                        return data
+            else:  #中间件参数使用jsonpath提取的是列表，取第一个值
+                if type(data) == list:
+                    return data[0]
+                else:
+                    return data
+
     @staticmethod
     def get_enc_value(param):
         """
@@ -176,11 +209,21 @@ class RegroupData:
         :param data_str: 原始字符串
         :return:
         """
+        Eval_list = re.findall(r"\$\{Eval\((.*)\)\}", str_data)  # 格式转换,非贪婪模式
         relevance_list = re.findall(r"\$\{relevance\((.*?)\)\}", str_data)  # 关联参数替换
         config_list = re.findall(r"\$\{config\((.*?)\)\}", str_data)  # 配置文件参数替换
         extract_list = re.findall(r"\$\{extract\((.*?)\)\}", str_data)  # 配置文件参数替换
         enc_list = re.findall(r"\$\{enc\((.*?)\)\}", str_data)  # 加密替换
         time_list = re.findall(r"\$\{GetTime\((.*?)\)\}", str_data)  # 时间
+
+        if len(Eval_list):
+            for i in Eval_list:
+                value = self.replace_value(i)
+                try:
+                    str_data = eval(value)
+                except:
+                    str_data = value
+                return str_data
 
         if len(time_list):
             for i in time_list:

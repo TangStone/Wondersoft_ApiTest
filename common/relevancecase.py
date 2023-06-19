@@ -48,7 +48,8 @@ class Relevance:
                             value = jsonpath.jsonpath(recv_data, param['value'])
                             name = param['name']
                             if value:
-                                relevance_dict[name] = value[0]
+                                # relevance_dict[name] = value[0]
+                                relevance_dict[name] = value
                             else:
                                 raise Exception("关联参数：" + name + "获取失败，请检查用例！")
                     elif 'request' in rele_case.keys():
@@ -56,7 +57,8 @@ class Relevance:
                             value = jsonpath.jsonpath(case_send_data, param['value'])
                             name = param['name']
                             if value:
-                                relevance_dict[name] = value[0]
+                                # relevance_dict[name] = value[0]
+                                relevance_dict[name] = value
                             else:
                                 raise Exception("关联参数：" + name + "获取失败，请检查用例！")
         return relevance_dict
