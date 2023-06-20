@@ -1,0 +1,14 @@
+INFO     root:test_04_user.py:37 ==========开始执行用例：user_group_add_01==========
+INFO     root:runcase.py:30 -·-·-·-·-·-·-·-·-·-发送请求并接受信息 START-·-·-·-·-·-·-·-·-·-
+INFO     root:handleyaml.py:94 Yaml测试用例基础架构检查通过
+INFO     root:runcase.py:47 重组后的用例信息：{'name': '新增用户组成功', 'description': '新增默认组下级组织机构', 'request': {'data': {'groupName': '自动化测试根组', 'parentGroupId': '1'}, 'method': 'POST', 'address': '/api/user/v1/group', 'headers': {'Content-Type': 'application/json', 'token': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJhdWQiOiJhcHBsaWNhdGlvbiIsInN1YiI6ImI4MTFhZWQ1LTQ1NDgtNDhiZS1hMmVkLTBiNDkxZGZmMDExZSIsImlzcyI6ImJtc19zZXJ2ZXIiLCJzZXNzaW9uSWQiOiJiODExYWVkNS00NTQ4LTQ4YmUtYTJlZC0wYjQ5MWRmZjAxMWUiLCJleHAiOjE2ODc0Mzk3NjcsImlhdCI6MTY4NzI1OTc2N30.J3PSoyOaMaCiwiBwk0fAgcUBEAvLuek3o_mgQzDupb58NNPp3gk-0Dm4AADP2p5sx-p0BvBllkKnusWV0xnxpw', 'Referer': 'https://192.168.148.174:31000/sub-app-unity/group'}}, 'validate': {'code': 200, 'response': {'statusCode': 0, 'msg': 'success'}}, 'epic': '用户管理', 'feature': '基础数据管理-用户与机构管理', 'story': '新增用户组接口', 'base_url': 'https://192.168.148.174:31000', 'caseid': 'user_group_add_01'}
+INFO     root:runcase.py:83 请求地址：https://192.168.148.174:31000/api/user/v1/group
+INFO     root:runcase.py:84 请求方法：POST
+INFO     root:runcase.py:85 请求头：{'Content-Type': 'application/json', 'token': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJhdWQiOiJhcHBsaWNhdGlvbiIsInN1YiI6ImI4MTFhZWQ1LTQ1NDgtNDhiZS1hMmVkLTBiNDkxZGZmMDExZSIsImlzcyI6ImJtc19zZXJ2ZXIiLCJzZXNzaW9uSWQiOiJiODExYWVkNS00NTQ4LTQ4YmUtYTJlZC0wYjQ5MWRmZjAxMWUiLCJleHAiOjE2ODc0Mzk3NjcsImlhdCI6MTY4NzI1OTc2N30.J3PSoyOaMaCiwiBwk0fAgcUBEAvLuek3o_mgQzDupb58NNPp3gk-0Dm4AADP2p5sx-p0BvBllkKnusWV0xnxpw', 'Referer': 'https://192.168.148.174:31000/sub-app-unity/group'}
+INFO     root:runcase.py:95 请求参数：{'groupName': '自动化测试根组', 'parentGroupId': '1'}
+DEBUG    urllib3.connectionpool:connectionpool.py:1003 Starting new HTTPS connection (1): 192.168.148.174:31000
+DEBUG    urllib3.connectionpool:connectionpool.py:456 https://192.168.148.174:31000 "POST /api/user/v1/group HTTP/1.1" 200 32
+INFO     root:runcase.py:157 请求接口结果： {'statusCode': 0, 'msg': 'success'}
+INFO     root:checkresult.py:113 code断言通过, 期望状态码:200, 实际状态码:200
+INFO     root:checkresult.py:48 返回结果断言通过, 期望返回值:{'statusCode': 0, 'msg': 'success'}, 实际返回值:{'statusCode': 0, 'msg': 'success'}
+INFO     root:runcase.py:63 -·-·-·-·-·-·-·-·-·-发送请求并接受信息 END-·-·-·-·-·-·-·-·-·-

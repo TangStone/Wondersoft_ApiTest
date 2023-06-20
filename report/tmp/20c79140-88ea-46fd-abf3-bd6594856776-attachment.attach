@@ -1,0 +1,1 @@
+{'path': '$.data.list[0].realName', 'value': '自动化测试用户', 'asserttype': 'in'}

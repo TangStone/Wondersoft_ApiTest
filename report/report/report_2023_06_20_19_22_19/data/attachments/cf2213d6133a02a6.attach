@@ -1,0 +1,1 @@
+{'statusCode': 0, 'msg': 'success', 'data': {'totalCount': 1, 'list': [{'id': 'FEDE5DDB-E191472A-98438A00-6FBC4D4F', 'roleName': '自动化测试角色修改', 'desciption': '修改自动化测试角色', 'type': 2, 'createTime': '2023-06-20 19:19:30', 'creater': 'B5A33586-15104954-9B752AE1-53333EC10', 'updateTime': '2023-06-20 19:19:31', 'updater': 'B5A33586-15104954-9B752AE1-53333EC10'}]}}

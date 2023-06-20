@@ -14,10 +14,27 @@ from common import readcase
 from common import runcase
 from common import handleallure
 
-class Delete:
+class TestDelete:
     """
     删除模块
     """
+    # 管理员删除
+    @pytest.mark.parametrize('caseid, casedata', [(caseid, casedata) for caseid, casedata in
+                                                  readcase.ReadCase().get_case_dict(
+                                                      ROOT_DIR + 'bms/data/useradmin/useradmin_delete.yaml').items()])
+    def test_useradmin_delete(self, caseid, casedata):
+        handleallure.allure_display(casedata)
+        logging.info("==========开始执行用例：%s==========", caseid)
+        runcase.excute_case(casedata)
+
+    # 角色删除
+    @pytest.mark.parametrize('caseid, casedata', [(caseid, casedata) for caseid, casedata in
+                                                  readcase.ReadCase().get_case_dict(
+                                                      ROOT_DIR + 'bms/data/role/role_delete.yaml').items()])
+    def test_role_delete(self, caseid, casedata):
+        handleallure.allure_display(casedata)
+        logging.info("==========开始执行用例：%s==========", caseid)
+        runcase.excute_case(casedata)
 
     # 删除用户
     @pytest.mark.parametrize('caseid, casedata', [(caseid, casedata) for caseid, casedata in
@@ -42,24 +59,6 @@ class Delete:
                                                   readcase.ReadCase().get_case_dict(
                                                       ROOT_DIR + 'bms/data/userrole/userrole_delete.yaml').items()])
     def test_userrole_delete(self, caseid, casedata):
-        handleallure.allure_display(casedata)
-        logging.info("==========开始执行用例：%s==========", caseid)
-        runcase.excute_case(casedata)
-
-    # 角色删除
-    @pytest.mark.parametrize('caseid, casedata', [(caseid, casedata) for caseid, casedata in
-                                                  readcase.ReadCase().get_case_dict(
-                                                      ROOT_DIR + 'bms/data/role/role_delete.yaml').items()])
-    def test_role_delete(self, caseid, casedata):
-        handleallure.allure_display(casedata)
-        logging.info("==========开始执行用例：%s==========", caseid)
-        runcase.excute_case(casedata)
-
-    # 管理员删除
-    @pytest.mark.parametrize('caseid, casedata', [(caseid, casedata) for caseid, casedata in
-                                                  readcase.ReadCase().get_case_dict(
-                                                      ROOT_DIR + 'bms/data/useradmin/useradmin_delete.yaml').items()])
-    def test_useradmin_delete(self, caseid, casedata):
         handleallure.allure_display(casedata)
         logging.info("==========开始执行用例：%s==========", caseid)
         runcase.excute_case(casedata)

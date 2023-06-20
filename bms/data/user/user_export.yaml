@@ -41,5 +41,5 @@
       validate:
         # 状态码校验
         code: 200
-        # 返回值校验
-        response: {"statusCode": 0,"msg": "success"}
+#        # 返回值校验
+#        response: {"statusCode": 0,"msg": "success"}

@@ -1,0 +1,14 @@
+INFO     root:test_12_dlpSeverityLevel.py:28 ==========开始执行用例：dlpSeverityLevel_add_03==========
+INFO     root:runcase.py:30 -·-·-·-·-·-·-·-·-·-发送请求并接受信息 START-·-·-·-·-·-·-·-·-·-
+INFO     root:handleyaml.py:94 Yaml测试用例基础架构检查通过
+INFO     root:runcase.py:47 重组后的用例信息：{'name': '新增严重性等级-严重性等级重复', 'description': '输入已有的严重性等级，新增严重性等级', 'request': {'data': {'c_name': '极极高', 'c_level': 11, 'c_note': '极极高', 'c_creater': 'B5A33586-15104954-9B752AE1-53333EC10', 'c_updater': 'B5A33586-15104954-9B752AE1-53333EC10', 'c_severity_class': '2'}, 'method': 'POST', 'address': '/api/dlpparam/v1/dlpSeverityLevel/insertDlpSeverityLevel', 'headers': {'Content-Type': 'application/x-www-form-urlencoded', 'token': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJhdWQiOiJhcHBsaWNhdGlvbiIsInN1YiI6ImI4MTFhZWQ1LTQ1NDgtNDhiZS1hMmVkLTBiNDkxZGZmMDExZSIsImlzcyI6ImJtc19zZXJ2ZXIiLCJzZXNzaW9uSWQiOiJiODExYWVkNS00NTQ4LTQ4YmUtYTJlZC0wYjQ5MWRmZjAxMWUiLCJleHAiOjE2ODc0Mzk3NjcsImlhdCI6MTY4NzI1OTc2N30.J3PSoyOaMaCiwiBwk0fAgcUBEAvLuek3o_mgQzDupb58NNPp3gk-0Dm4AADP2p5sx-p0BvBllkKnusWV0xnxpw', 'Referer': 'https://192.168.148.174:31000/sub-app-dlpparam/dlpSeverityLevel'}}, 'validate': {'code': 200, 'response': {'statusCode': -1, 'msg': '严重性等级或名称重复,请检查并重新添加'}}, 'epic': '规则管理', 'feature': '敏感级别-严重性等级管理', 'story': '严重性等级新增接口', 'base_url': 'https://192.168.148.174:31000', 'caseid': 'dlpSeverityLevel_add_03'}
+INFO     root:runcase.py:83 请求地址：https://192.168.148.174:31000/api/dlpparam/v1/dlpSeverityLevel/insertDlpSeverityLevel
+INFO     root:runcase.py:84 请求方法：POST
+INFO     root:runcase.py:85 请求头：{'Content-Type': 'application/x-www-form-urlencoded', 'token': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJhdWQiOiJhcHBsaWNhdGlvbiIsInN1YiI6ImI4MTFhZWQ1LTQ1NDgtNDhiZS1hMmVkLTBiNDkxZGZmMDExZSIsImlzcyI6ImJtc19zZXJ2ZXIiLCJzZXNzaW9uSWQiOiJiODExYWVkNS00NTQ4LTQ4YmUtYTJlZC0wYjQ5MWRmZjAxMWUiLCJleHAiOjE2ODc0Mzk3NjcsImlhdCI6MTY4NzI1OTc2N30.J3PSoyOaMaCiwiBwk0fAgcUBEAvLuek3o_mgQzDupb58NNPp3gk-0Dm4AADP2p5sx-p0BvBllkKnusWV0xnxpw', 'Referer': 'https://192.168.148.174:31000/sub-app-dlpparam/dlpSeverityLevel'}
+INFO     root:runcase.py:95 请求参数：{'c_name': '极极高', 'c_level': 11, 'c_note': '极极高', 'c_creater': 'B5A33586-15104954-9B752AE1-53333EC10', 'c_updater': 'B5A33586-15104954-9B752AE1-53333EC10', 'c_severity_class': '2'}
+DEBUG    urllib3.connectionpool:connectionpool.py:1003 Starting new HTTPS connection (1): 192.168.148.174:31000
+DEBUG    urllib3.connectionpool:connectionpool.py:456 https://192.168.148.174:31000 "POST /api/dlpparam/v1/dlpSeverityLevel/insertDlpSeverityLevel HTTP/1.1" 200 81
+INFO     root:runcase.py:157 请求接口结果： {'statusCode': -1, 'msg': '严重性等级或名称重复,请检查并重新添加'}
+INFO     root:checkresult.py:113 code断言通过, 期望状态码:200, 实际状态码:200
+INFO     root:checkresult.py:48 返回结果断言通过, 期望返回值:{'statusCode': -1, 'msg': '严重性等级或名称重复,请检查并重新添加'}, 实际返回值:{'statusCode': -1, 'msg': '严重性等级或名称重复,请检查并重新添加'}
+INFO     root:runcase.py:63 -·-·-·-·-·-·-·-·-·-发送请求并接受信息 END-·-·-·-·-·-·-·-·-·-

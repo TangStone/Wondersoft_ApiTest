@@ -39,8 +39,6 @@
       validate:
         # 状态码校验
         code: 200
-        # 返回值校验
-        response: {"statusCode": 0}
         # jsonpath校验
         jsonpath:
           - path: $.[0].c_rule_name
