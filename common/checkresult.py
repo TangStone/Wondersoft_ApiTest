@@ -36,17 +36,19 @@ def assert_response(hope_res, real_res):
     :param real_res: 
     :return: 
     """
-    if isinstance(hope_res, dict) and isinstance(real_res, dict):
-        try:
-            with allure.step("返回值校验"):
-                allure.attach(name="期望返回值", body=str(hope_res))
-                allure.attach(name='实际返回值', body=str(real_res))
+    try:
+        with allure.step("返回值校验"):
+            allure.attach(name="期望返回值", body=str(hope_res))
+            allure.attach(name='实际返回值', body=str(real_res))
+            if isinstance(hope_res, dict) and isinstance(real_res, dict):
                 flag = handledict.cmp_dict(hope_res, real_res)
                 assert flag
-                logging.info("返回结果断言通过, 期望返回值:%s, 实际返回值:%s", hope_res, real_res)
-        except AssertionError:
-            logging.error("返回结果断言未通过, 期望返回值:%s, 实际返回值:%s", hope_res, real_res)
-            raise
+            else:
+                assert str(hope_res) == str(real_res)
+            logging.info("返回结果断言通过, 期望返回值:%s, 实际返回值:%s", hope_res, real_res)
+    except AssertionError:
+        logging.error("返回结果断言未通过, 期望返回值:%s, 实际返回值:%s", hope_res, real_res)
+        raise
 
 def assert_text(hope_res, real_res):
     """

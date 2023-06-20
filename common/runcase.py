@@ -7,6 +7,7 @@
 @time: 2023-06-04 19:41
 @description:
 """
+import copy
 import logging, allure, sys, requests, random, json
 from requests_toolbelt import MultipartEncoder
 
@@ -37,9 +38,10 @@ def excute_case(case_data):
             relevance_dict = relevancecase.Relevance().get_relevance_data(case_data['relevance'])
         extract_dict = handleyaml.YamlHandle(EXTRACT_DIR).read_yaml()  # 全局参数
         config_dict = handleyaml.YamlHandle(CONFIG_DIR).read_yaml()  # 配置参数
+
         # 重组用例信息
         # casedata = regroupdata.RegroupData(case_data, relevance_dict, extract_dict, config_dict).replace_value()
-        sign, casedata = regroupdata.RegroupData(case_data, relevance_dict, extract_dict,
+        sign, casedata = regroupdata.RegroupData(copy.deepcopy(case_data), relevance_dict, extract_dict,
                                                  config_dict).regroup_case_data()
         if sign == 'success':
             logging.info("重组后的用例信息：%s", casedata)
@@ -94,6 +96,8 @@ def send_request(casedata):
             allure.attach(name="请求参数", body=str(data))
         if 'file' in request_data.keys():
             file = request_data['file']
+            logging.info("上传文件：%s", file)
+            allure.attach(name="上传文件", body=str(file))
 
         #发送请求
         if method in ['post', 'POST']:
@@ -110,7 +114,9 @@ def send_request(casedata):
 
 
 class ApiMethod:
-    "request请求封装"
+    """
+    request请求封装
+    """
 
     def __init__(self, url, headers, data=None, file=None):
         self.url = url
@@ -125,24 +131,24 @@ class ApiMethod:
                                         headers=self.headers,
                                         json=self.data, verify=False)
         elif "multipart/form-data" in self.headers.values():
-            for key in self.file:
-                value = self.file[key]
-                # 判定参数值是否为文件，如果是则替换为二进制值
-                # if '/' in value:
-                file_path = FILE_DIR + '/' + value
-                self.file[key] = (os.path.basename(file_path), open(file_path, 'rb'), 'application/octet-stream')
-            data = self.file
-            if self.data:
-                data = dict(self.file, **self.data)
-            multipart = MultipartEncoder(
-                fields=data
-                # boundary='-----------------------------' + str(random.randint(int(1e28), int(1e29 - 1)))
-            )
-            self.headers['Content-Type'] = multipart.content_type
-            recv_result = requests.post(url=self.url, data=multipart, headers=self.headers, verify=False)
+            if self.file:
+                for key in self.file:
+                    value = self.file[key]
+                    # 判定参数值是否为文件，如果是则替换为二进制值
+                    # if '/' in value:
+                    file_path = FILE_DIR + '/' + value
+                    self.file[key] = (os.path.basename(file_path), open(file_path, 'rb'), 'application/octet-stream')
+                if self.data:
+                    self.file = dict(self.file, **self.data)
+                multipart = MultipartEncoder(
+                    fields=self.file
+                    # boundary='-----------------------------' + str(random.randint(int(1e28), int(1e29 - 1)))
+                )
+                self.headers['Content-Type'] = multipart.content_type
+                recv_result = requests.post(url=self.url, data=multipart, headers=self.headers, verify=False)
+            else:
+                recv_result = requests.post(url=self.url, headers=self.headers, data=self.data, verify=False)
         else:
-            # if self.data:
-            #     self.data = json.loads(self.data)
             recv_result = requests.post(url=self.url, headers=self.headers, data=self.data, verify=False)
         try:
             res = recv_result.json()

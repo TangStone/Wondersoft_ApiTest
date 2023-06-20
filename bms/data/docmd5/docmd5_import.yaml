@@ -1,0 +1,93 @@
+- epic: 规则管理   # 一级模块
+  feature: 基础规则-文件MD5  # 二级模块
+  story: MD5导入接口    # 接口名称
+  # 接口基本信息
+  case_info:
+    # 基础URL:https://192.168.148.174:31000
+    base_url: ${config(host)}
+    # 请求信息
+    request:
+      # 请求类型
+      method: POST
+      # 请求地址
+      address: /api/dlpparam/v1/docFinger/importDocFinger
+      # 请求头
+      headers:
+        Content-Type: multipart/form-data
+        token: ${extract(token)}
+        Referer: ${config(host)}/sub-app-dlpparam/dlpFileMd5
+  # 用例信息，可包含多个用例，用例id需唯一
+  case_data:
+    # 用例id
+    docmd5_import_01:
+      # 用例名称
+      name: MD5导入不覆盖
+      # 用例描述
+      description: MD5导入不覆盖
+      # 请求信息，包括data，file
+      request:
+        data:
+          fingerPrintType: "2"
+          creater: ${extract(userId)}
+          updater: ${extract(userId)}
+          fingerPrintName: 自动化测试MD5
+        file:
+          file: MD5-demo.json
+      # 校验
+      validate:
+        # 状态码校验
+        code: 200
+        # 返回值校验
+        response: { "statusCode": 0 }
+    # 用例id
+    docmd5_import_02:
+      # 用例名称
+      name: MD5导入覆盖
+      # 用例描述
+      description: MD5导入覆盖
+      # 请求信息，包括data，file
+      request:
+        data:
+          fingerPrintType: "2"
+          creater: ${extract(userId)}
+          updater: ${extract(userId)}
+          fingerPrintId: ${relevance(fingerPrintId)}
+          id: ${relevance(id)}
+        file:
+          file: MD5-demo-update.json
+      # 关联用例
+      relevance:
+        - caseid: docmd5_list_02  #用例id
+          # 取值类型，response(从返回值中取值)，request(从发送值中取值)
+          response:
+            - value: $.data.resultList[0].id
+              name: id
+            - value: $.data.resultList[0].fingerPrintId
+              name: fingerPrintId
+      # 校验
+      validate:
+        # 状态码校验
+        code: 200
+        # 返回值校验
+        response: { "statusCode": 0 }
+    # 用例id
+    docmd5_import_03:
+      # 用例名称
+      name: MD5导入不覆盖
+      # 用例描述
+      description: MD5导入不覆盖
+      # 请求信息，包括data，file
+      request:
+        data:
+          fingerPrintType: "2"
+          creater: ${extract(userId)}
+          updater: ${extract(userId)}
+          fingerPrintName: 自动化测试MD5-1
+        file:
+          file: MD5-demo.json
+      # 校验
+      validate:
+        # 状态码校验
+        code: 200
+        # 返回值校验
+        response: { "statusCode": 0 }

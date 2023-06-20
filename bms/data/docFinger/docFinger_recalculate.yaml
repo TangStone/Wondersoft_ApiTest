@@ -1,0 +1,43 @@
+- epic: 规则管理   # 一级模块
+  feature: 基础规则-文件指纹  # 二级模块
+  story: 重新计算指纹接口    # 接口名称
+  # 接口基本信息
+  case_info:
+    # 基础URL:https://192.168.148.174:31000
+    base_url: ${config(host)}
+    # 请求信息
+    request:
+      # 请求类型
+      method: POST
+      # 请求地址
+      address: /api/dlpparam/v1/docFinger/recalculateFingerPrint
+      # 请求头
+      headers:
+        Content-Type: application/x-www-form-urlencoded
+        token: ${extract(token)}
+        Referer: ${config(host)}/sub-app-dlpparam/dlpFileFingerPrint
+  # 用例信息，可包含多个用例，用例id需唯一
+  case_data:
+    # 用例id
+    docFinger_recalculate_01:
+      # 用例名称
+      name: 重新计算指纹
+      # 用例描述
+      description: 重新计算指纹
+      # 请求信息，包括data，file
+      request:
+        data:
+          fingerPrintId: ${relevance(fingerPrintId)}
+      # 关联用例
+      relevance:
+        - caseid: docFinger_list_02  #用例id
+          # 取值类型，response(从返回值中取值)，request(从发送值中取值)
+          response:
+            - value: $.data.resultList[0].fingerPrintId
+              name: fingerPrintId
+      # 校验
+      validate:
+        # 状态码校验
+        code: 200
+        # 返回值校验
+        response: {"statusCode": 0}

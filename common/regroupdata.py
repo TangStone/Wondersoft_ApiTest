@@ -32,29 +32,13 @@ class RegroupData:
         self.relevance_dict = relevance_dict
         self.extract_dict = extract_dict
         self.config_dict = config_dict
-        logging.info("casedata:%s", self.casedata)
-        logging.info("relevance_dict:%s", self.relevance_dict)
-        logging.info("extract_dict:%s", self.extract_dict)
-        logging.info("config_dict:%s", self.config_dict)
+        # logging.info("casedata:%s", self.casedata)
+        # logging.info("relevance_dict:%s", self.relevance_dict)
+        # logging.info("extract_dict:%s", self.extract_dict)
+        # logging.info("config_dict:%s", self.config_dict)
 
-    # @staticmethod
-    # def get_value(param, data):
-    #     """
-    #     获取参数值
-    #     :param param: key
-    #     :param data: 取值字典
-    #     :return:
-    #     """
-    #     if isinstance(data, dict):
-    #         if ',' in param:
-    #             expect_value_list = param.split(',')
-    #             for i in expect_value_list:
-    #                 data = data[i.strip()]
-    #             return data
-    #         else:
-    #             return data[param]
-
-    def get_value(self, param, data):
+    @staticmethod
+    def get_value(param, data):
         """
         获取参数值
         :param param: key
@@ -72,13 +56,38 @@ class RegroupData:
             if len(param_list) >= 2:
                 for pa in param_list[1:]:
                     pa_list = pa.split("=")
-                    if pa_list[0] == 'type':
+                    if pa_list[0] == 'type':   #返回整个列表，针对a[*]取值类型
                         return data
-            else:  #中间件参数使用jsonpath提取的是列表，取第一个值
-                if type(data) == list:
+            else:
+                if type(data) == list: #中间件参数使用jsonpath提取的是列表，取第一个值
                     return data[0]
                 else:
                     return data
+
+    def eval_data(self, param):
+        """
+        还原数据类型
+        :param param: key
+        :return:
+        """
+        param_list = param.split(";")  # 拆分取值需求 ${relevance(fileContent)};path=filelist[0].md5
+        value = self.replace_value(param_list[0])
+        try:
+            path = None
+            if len(param_list) >= 2:
+                for pa in param_list[1:]:
+                    pa_list = pa.split("=")
+                    if pa_list[0] == 'path':  # 获取字典中的特定值
+                        value = value.replace("\\", '/')
+                        path = pa_list[1]
+                    if pa_list[0] == 'cal':   #计算
+                        value = value + pa_list[1]
+            str_data = eval(value)
+            if path:
+                str_data = jsonpath.jsonpath(str_data, path)[0]
+        except:
+            str_data = value
+        return str_data
 
     @staticmethod
     def get_enc_value(param):
@@ -218,11 +227,7 @@ class RegroupData:
 
         if len(Eval_list):
             for i in Eval_list:
-                value = self.replace_value(i)
-                try:
-                    str_data = eval(value)
-                except:
-                    str_data = value
+                str_data = self.eval_data(i)
                 return str_data
 
         if len(time_list):
