@@ -7,7 +7,7 @@
 @time: 2023-06-04 20:19
 @description: 参数替换
 """
-import json, re, sys, logging, time
+import json, re, sys, logging, time, datetime
 
 import jsonpath
 
@@ -70,7 +70,7 @@ class RegroupData:
         :param param: key
         :return:
         """
-        param_list = param.split(";")  # 拆分取值需求 ${relevance(fileContent)};path=filelist[0].md5
+        param_list = param.split(";;")  # 拆分取值需求 ${relevance(fileContent)};path=filelist[0].md5
         value = self.replace_value(param_list[0])
         try:
             path = None
@@ -79,7 +79,7 @@ class RegroupData:
                     pa_list = pa.split("=")
                     if pa_list[0] == 'path':  # 获取字典中的特定值
                         value = value.replace("\\", '/')
-                        path = pa_list[1]
+                        path = '$.' + pa_list[1]
                     if pa_list[0] == 'cal':   #计算
                         value = value + pa_list[1]
             str_data = eval(value)
@@ -106,14 +106,43 @@ class RegroupData:
         :param str: format='%Y-%m-%d %H:%M:%S'
         :return:
         """
-        param_list = str.split(',')   #获取多个配置项
-        time_str = ''
+        param_list = str.split(';')   #获取多个配置项
+        time_str = datetime.datetime.now()   #获取当前时间
+        format = None
         for param in param_list:
             pa_list = param.split('=')  #拆分配置项
             if pa_list[0] == 'format':   #时间格式
-                time_str = time.strftime(pa_list[1])
+                format = pa_list[1]
+                # time_str = time.strftime(pa_list[1])
+            if pa_list[0] == 'cal':   #时间偏移
+                cal_list = pa_list[1].split(',')
+                for cal in cal_list:
+                    num = int(cal[2:])
+                    if cal[1] == '+': #向后偏移
+                        if cal[0] == 'w':  #周偏移
+                            time_str += datetime.timedelta(weeks=num)
+                        elif cal[0] == 'd': #天偏移
+                            time_str += datetime.timedelta(days=num)
+                        elif cal[0] == 'h': #天偏移
+                            time_str += datetime.timedelta(hours=num)
+                        elif cal[0] == 'm': #分钟偏移
+                            time_str += datetime.timedelta(minutes=num)
+                        else:
+                            raise Exception("暂不支持此种时间偏移：" + pa_list[1])
+                    elif cal[1] == '-': #向前偏移
+                        if cal[0] == 'w':  #周偏移
+                            time_str -= datetime.timedelta(weeks=num)
+                        elif cal[0] == 'd': #天偏移
+                            time_str -= datetime.timedelta(days=num)
+                        elif cal[0] == 'h': #天偏移
+                            time_str -= datetime.timedelta(hours=num)
+                        elif cal[0] == 'm': #分钟偏移
+                            time_str -= datetime.timedelta(minutes=num)
+                        else:
+                            raise Exception("暂不支持此种时间偏移：" + pa_list[1])
+        if format:
+            time_str = time_str.strftime(format)
         return time_str
-
 
     # def replace_value(self):
     #     """
@@ -227,8 +256,13 @@ class RegroupData:
 
         if len(Eval_list):
             for i in Eval_list:
-                str_data = self.eval_data(i)
-                return str_data
+                value = self.eval_data(i)
+                if str_data[0:7] == '${Eval(' and str_data[-2:] == ')}':  #当前值需要转换类型
+                    return value
+                else:  #返回字符串
+                    rep_data = '${Eval(' + i + ')}'
+                    str_data = str_data.replace(rep_data, str(value), 1)
+                    return str_data
 
         if len(time_list):
             for i in time_list:

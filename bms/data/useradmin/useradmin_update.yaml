@@ -26,7 +26,7 @@
       description: 修改自动化测试超级管理员为系统管理员
       # 请求信息，包括data，file
       request:
-        data: {"id": "${relevance(id)}","account": "${relevance(account)}","realName": "${relevance(realName)}","password": "${relevance(password)}","roleId": "3","adminType": 1,"themeColor": 0,"display": 0,"isFirstLogin": 0,"isLocked": 0,"lastLoginTime": "2023-06-18 00:00:25","lastLoginIp": "192.168.154.30","isRemoved": 0,"createTime": "2023-06-17 23:30:25","creater": "B5A33586-15104954-9B752AE1-53333EC10","updateTime": "${GetTime(format='%Y-%m-%d %H:%M:%S')}","updater": "B5A33586-15104954-9B752AE1-53333EC10","lastPwdModTime": "2023-06-17 23:53:43","pwdErrorNums": 0,"lastPwdWrongTime": "2023-06-17 23:56:30","groupIds": ["${relevance(groupId)}"],"accountList": [],"groupControlList": [{"groupControl": "${relevance(groupId)}"}]}
+        data: {"id": "${relevance(id)}","account": "${relevance(account)}","realName": "${relevance(realName)}","password": "${relevance(password)}","roleId": "3","adminType": 1,"themeColor": 0,"display": 0,"isFirstLogin": 0,"isLocked": 0,"lastLoginTime": "2023-06-18 00:00:25","lastLoginIp": "192.168.154.30","isRemoved": 0,"createTime": "2023-06-17 23:30:25","creater": "B5A33586-15104954-9B752AE1-53333EC10","updateTime": "${GetTime(format=%Y-%m-%d %H:%M:%S)}","updater": "B5A33586-15104954-9B752AE1-53333EC10","lastPwdModTime": "2023-06-17 23:53:43","pwdErrorNums": 0,"lastPwdWrongTime": "2023-06-17 23:56:30","groupIds": ["${relevance(groupId)}"],"accountList": [],"groupControlList": [{"groupControl": "${relevance(groupId)}"}]}
       # 关联用例
       relevance:
         - caseid: user_list_03  #用例id

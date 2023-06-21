@@ -32,7 +32,7 @@
           c_level: 7
           c_note: 自动化测试严重性等级-中-中-修改
           c_updater: ${extract(userId)}
-          c_version: ${Eval(${relevance(c_version)};cal=+1)}
+          c_version: ${Eval(${relevance(c_version)};;cal=+1)}
       # 关联用例
       relevance:
         - caseid: dlpSeverityLevel_list_02  #用例id

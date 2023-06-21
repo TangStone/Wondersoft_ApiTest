@@ -1,0 +1,15 @@
+INFO     root:test_10_docmd5.py:28 ==========开始执行用例：docmd5_import_01==========
+INFO     root:runcase.py:30 -·-·-·-·-·-·-·-·-·-发送请求并接受信息 START-·-·-·-·-·-·-·-·-·-
+INFO     root:handleyaml.py:94 Yaml测试用例基础架构检查通过
+INFO     root:runcase.py:47 重组后的用例信息：{'name': 'MD5导入不覆盖', 'description': 'MD5导入不覆盖', 'request': {'data': {'fingerPrintType': '2', 'creater': 'B5A33586-15104954-9B752AE1-53333EC10', 'updater': 'B5A33586-15104954-9B752AE1-53333EC10', 'fingerPrintName': '自动化测试MD5'}, 'file': {'file': 'MD5-demo.json'}, 'method': 'POST', 'address': '/api/dlpparam/v1/docFinger/importDocFinger', 'headers': {'Content-Type': 'multipart/form-data', 'token': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJhdWQiOiJhcHBsaWNhdGlvbiIsInN1YiI6ImNmMjhmM2M2LTA3YzUtNDRhZS05YWExLTI1Y2Q4MTg4ZTMxZCIsImlzcyI6ImJtc19zZXJ2ZXIiLCJzZXNzaW9uSWQiOiJjZjI4ZjNjNi0wN2M1LTQ0YWUtOWFhMS0yNWNkODE4OGUzMWQiLCJleHAiOjE2ODc1MjAwNTksImlhdCI6MTY4NzM0MDA1OX0.mKGgCUYuJC4NKp9M2EjIwEGx9vLxnPH71YDR71nwWYJzKL2cc_k36u5mcW49jffY2s87f9Urpi2H2Wyrl7cDJA', 'Referer': 'https://192.168.148.174:31000/sub-app-dlpparam/dlpFileMd5'}}, 'validate': {'code': 200, 'response': {'statusCode': 0}}, 'epic': '规则管理', 'feature': '基础规则-文件MD5', 'story': 'MD5导入接口', 'base_url': 'https://192.168.148.174:31000', 'caseid': 'docmd5_import_01'}
+INFO     root:runcase.py:83 请求地址：https://192.168.148.174:31000/api/dlpparam/v1/docFinger/importDocFinger
+INFO     root:runcase.py:84 请求方法：POST
+INFO     root:runcase.py:85 请求头：{'Content-Type': 'multipart/form-data', 'token': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJhdWQiOiJhcHBsaWNhdGlvbiIsInN1YiI6ImNmMjhmM2M2LTA3YzUtNDRhZS05YWExLTI1Y2Q4MTg4ZTMxZCIsImlzcyI6ImJtc19zZXJ2ZXIiLCJzZXNzaW9uSWQiOiJjZjI4ZjNjNi0wN2M1LTQ0YWUtOWFhMS0yNWNkODE4OGUzMWQiLCJleHAiOjE2ODc1MjAwNTksImlhdCI6MTY4NzM0MDA1OX0.mKGgCUYuJC4NKp9M2EjIwEGx9vLxnPH71YDR71nwWYJzKL2cc_k36u5mcW49jffY2s87f9Urpi2H2Wyrl7cDJA', 'Referer': 'https://192.168.148.174:31000/sub-app-dlpparam/dlpFileMd5'}
+INFO     root:runcase.py:95 请求参数：{'fingerPrintType': '2', 'creater': 'B5A33586-15104954-9B752AE1-53333EC10', 'updater': 'B5A33586-15104954-9B752AE1-53333EC10', 'fingerPrintName': '自动化测试MD5'}
+INFO     root:runcase.py:99 上传文件：{'file': 'MD5-demo.json'}
+DEBUG    urllib3.connectionpool:connectionpool.py:1003 Starting new HTTPS connection (1): 192.168.148.174:31000
+DEBUG    urllib3.connectionpool:connectionpool.py:456 https://192.168.148.174:31000 "POST /api/dlpparam/v1/docFinger/importDocFinger HTTP/1.1" 200 16
+INFO     root:runcase.py:157 请求接口结果： {'statusCode': 0}
+INFO     root:checkresult.py:113 code断言通过, 期望状态码:200, 实际状态码:200
+INFO     root:checkresult.py:48 返回结果断言通过, 期望返回值:{'statusCode': 0}, 实际返回值:{'statusCode': 0}
+INFO     root:runcase.py:63 -·-·-·-·-·-·-·-·-·-发送请求并接受信息 END-·-·-·-·-·-·-·-·-·-

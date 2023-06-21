@@ -15,7 +15,7 @@
       headers:
         Content-Type: application/json
         token: ${extract(token)}
-        Referer: ${config(host)}/sub-app-unity/systemAdminLog
+        Referer: ${config(host)}/sub-app-unity/roleConfig
   # 用例信息，可包含多个用例，用例id需唯一
   case_data:
     # 用例id

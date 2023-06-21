@@ -1,0 +1,14 @@
+INFO     root:test_10_docmd5.py:37 ==========开始执行用例：docmd5_namelist_01==========
+INFO     root:runcase.py:30 -·-·-·-·-·-·-·-·-·-发送请求并接受信息 START-·-·-·-·-·-·-·-·-·-
+INFO     root:handleyaml.py:94 Yaml测试用例基础架构检查通过
+INFO     root:runcase.py:47 重组后的用例信息：{'name': '查询md5名称列表', 'description': '查询md5名称列表', 'request': {'data': {'fingerPrintType': '2'}, 'method': 'POST', 'address': '/api/dlpparam/v1/docFinger/docFingerNameList', 'headers': {'Content-Type': 'application/x-www-form-urlencoded', 'token': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJhdWQiOiJhcHBsaWNhdGlvbiIsInN1YiI6ImNmMjhmM2M2LTA3YzUtNDRhZS05YWExLTI1Y2Q4MTg4ZTMxZCIsImlzcyI6ImJtc19zZXJ2ZXIiLCJzZXNzaW9uSWQiOiJjZjI4ZjNjNi0wN2M1LTQ0YWUtOWFhMS0yNWNkODE4OGUzMWQiLCJleHAiOjE2ODc1MjAwNTksImlhdCI6MTY4NzM0MDA1OX0.mKGgCUYuJC4NKp9M2EjIwEGx9vLxnPH71YDR71nwWYJzKL2cc_k36u5mcW49jffY2s87f9Urpi2H2Wyrl7cDJA', 'Referer': 'https://192.168.148.174:31000/sub-app-dlpparam/dlpFileMd5'}}, 'validate': {'code': 200, 'response': {'statusCode': 0}}, 'epic': '规则管理', 'feature': '基础规则-文件MD5', 'story': 'MD5名称列表查询接口', 'base_url': 'https://192.168.148.174:31000', 'caseid': 'docmd5_namelist_01'}
+INFO     root:runcase.py:83 请求地址：https://192.168.148.174:31000/api/dlpparam/v1/docFinger/docFingerNameList
+INFO     root:runcase.py:84 请求方法：POST
+INFO     root:runcase.py:85 请求头：{'Content-Type': 'application/x-www-form-urlencoded', 'token': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJhdWQiOiJhcHBsaWNhdGlvbiIsInN1YiI6ImNmMjhmM2M2LTA3YzUtNDRhZS05YWExLTI1Y2Q4MTg4ZTMxZCIsImlzcyI6ImJtc19zZXJ2ZXIiLCJzZXNzaW9uSWQiOiJjZjI4ZjNjNi0wN2M1LTQ0YWUtOWFhMS0yNWNkODE4OGUzMWQiLCJleHAiOjE2ODc1MjAwNTksImlhdCI6MTY4NzM0MDA1OX0.mKGgCUYuJC4NKp9M2EjIwEGx9vLxnPH71YDR71nwWYJzKL2cc_k36u5mcW49jffY2s87f9Urpi2H2Wyrl7cDJA', 'Referer': 'https://192.168.148.174:31000/sub-app-dlpparam/dlpFileMd5'}
+INFO     root:runcase.py:95 请求参数：{'fingerPrintType': '2'}
+DEBUG    urllib3.connectionpool:connectionpool.py:1003 Starting new HTTPS connection (1): 192.168.148.174:31000
+DEBUG    urllib3.connectionpool:connectionpool.py:456 https://192.168.148.174:31000 "POST /api/dlpparam/v1/docFinger/docFingerNameList HTTP/1.1" 200 293
+INFO     root:runcase.py:157 请求接口结果： {'statusCode': 0, 'data': [{'fingerPrintId': 'MD5_90aaf323-39db-4cb8-9ba1-efbff2611065', 'label': '自动化测试MD5', 'value': '387c49067f9748e4be503e9f64ea14df'}, {'fingerPrintId': 'MD5_e51a6b47-cda0-4c1c-a47b-f94815dda996', 'label': '自动化测试MD5-1', 'value': '9b45ff89897d4d9a946e22d091fccf6d'}]}
+INFO     root:checkresult.py:113 code断言通过, 期望状态码:200, 实际状态码:200
+INFO     root:checkresult.py:48 返回结果断言通过, 期望返回值:{'statusCode': 0}, 实际返回值:{'statusCode': 0, 'data': [{'fingerPrintId': 'MD5_90aaf323-39db-4cb8-9ba1-efbff2611065', 'label': '自动化测试MD5', 'value': '387c49067f9748e4be503e9f64ea14df'}, {'fingerPrintId': 'MD5_e51a6b47-cda0-4c1c-a47b-f94815dda996', 'label': '自动化测试MD5-1', 'value': '9b45ff89897d4d9a946e22d091fccf6d'}]}
+INFO     root:runcase.py:63 -·-·-·-·-·-·-·-·-·-发送请求并接受信息 END-·-·-·-·-·-·-·-·-·-

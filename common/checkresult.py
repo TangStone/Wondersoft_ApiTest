@@ -40,7 +40,7 @@ def assert_response(hope_res, real_res):
         with allure.step("返回值校验"):
             allure.attach(name="期望返回值", body=str(hope_res))
             allure.attach(name='实际返回值', body=str(real_res))
-            if isinstance(hope_res, dict) and isinstance(real_res, dict):
+            if isinstance(hope_res, (dict, list)) and isinstance(real_res, (dict, list)):
                 flag = handledict.cmp_dict(hope_res, real_res)
                 assert flag
             else:

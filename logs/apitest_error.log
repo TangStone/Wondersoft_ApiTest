@@ -1,5 +1,0 @@
-ERROR[2023-06-20 19:21:39,248][11800][checkresult.py checkresult assert_response 50]：返回结果断言未通过, 期望返回值:{'statusCode': 0, 'msg': 'success'}, 实际返回值:{'statusCode': 1114886, 'msg': '找不到对应的组织机构'}
-ERROR[2023-06-20 19:21:44,742][11800][checkresult.py checkresult assert_response 50]：返回结果断言未通过, 期望返回值:{'statusCode': 0, 'msg': 'success'}, 实际返回值:{'statusCode': 1114886, 'msg': '找不到对应的组织机构'}
-ERROR[2023-06-20 19:21:49,947][11800][checkresult.py checkresult assert_response 50]：返回结果断言未通过, 期望返回值:{'statusCode': 0, 'msg': 'success'}, 实际返回值:{'statusCode': 1114886, 'msg': '找不到对应的组织机构'}
-ERROR[2023-06-20 19:21:55,182][11800][checkresult.py checkresult assert_response 50]：返回结果断言未通过, 期望返回值:{'statusCode': 0, 'msg': 'success'}, 实际返回值:{'statusCode': 1114886, 'msg': '找不到对应的组织机构'}
-ERROR[2023-06-20 19:22:07,815][11800][checkresult.py checkresult assert_response 50]：返回结果断言未通过, 期望返回值:{'statusCode': 0}, 实际返回值:{'statusCode': -1, 'msg': '该指纹库正在计算中，请稍后修改！'}

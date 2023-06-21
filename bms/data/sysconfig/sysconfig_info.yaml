@@ -1,0 +1,32 @@
+- epic: 系统管理   # 一级模块
+  feature: 参数管理-系统参数管理  # 二级模块
+  story: 系统配置查询接口    # 接口名称
+  # 接口基本信息
+  case_info:
+    # 基础URL:https://192.168.148.174:31000
+    base_url: ${config(host)}
+    # 请求信息
+    request:
+      # 请求类型
+      method: GET
+      # 请求地址
+      address: /api/system/v1/system/getSysParamInfo
+      # 请求头
+      headers:
+        Content-Type: application/json
+        token: ${extract(token)}
+        Referer: ${config(host)}/sub-app-unity/systemConfig
+  # 用例信息，可包含多个用例，用例id需唯一
+  case_data:
+    # 用例id
+    sysconfig_info_01:
+      # 用例名称
+      name: 系统配置查询
+      # 用例描述
+      description: 系统配置查询
+      # 校验
+      validate:
+        # 状态码校验
+        code: 200
+        # 返回值校验
+        response: {'中间件管理': {'REDIS参数':[{"paramType":"REDIS参数"}]}}

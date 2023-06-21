@@ -43,7 +43,7 @@
         # 状态码校验
         code: 200
         # 返回值校验
-        response: {"filelist":[{"md5":"${Eval(${relevance(fileContent)};path=filelist[0].md5)}"}]}
+        response: {"filelist":[{"md5":"${Eval(${relevance(fileContent)};;path=filelist[0].md5)}"}]}
     # 用例id
     docmd5_export_02:
       # 用例名称
