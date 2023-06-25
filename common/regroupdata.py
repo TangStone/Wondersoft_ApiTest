@@ -266,8 +266,10 @@ class RegroupData:
 
         if len(time_list):
             for i in time_list:
-                pattern = re.compile(r'\$\{GetTime\(' + i + r'\)\}')
                 value = self.get_time(i)
+                if '+' in i:   #日期向后偏移时 +字符转换
+                    i = i.replace('+', '\+')
+                pattern = re.compile(r'\$\{GetTime\(' + i + r'\)\}')
                 str_data = re.sub(pattern, str(value), str_data, count=1)
 
         if len(config_list):

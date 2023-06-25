@@ -117,6 +117,8 @@ def cmp_dict(expect_data, recv_data):
                     if str(expect_data[field]) != str(recv_data[field]):  # 暂时只进行字符串比较
                         flag = False
                         break
+        else:
+            flag = False
     elif isinstance(expect_data, list) and isinstance(recv_data, list):
         for i in expect_data:
             if type(i) == dict:
