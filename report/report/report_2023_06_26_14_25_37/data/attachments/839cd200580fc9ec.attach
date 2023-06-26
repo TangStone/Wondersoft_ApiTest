@@ -1,1 +1,0 @@
-{'statusCode': 0, 'msg': 'success', 'data': [{'groupName': '自动化测试根组修改', 'parentName': '默认组', 'createTime': '2023-06-26 14:22:21', 'parentCode': 'G001', 'groupBusinessCode': 'G001011', 'groupId': 86, 'domainGUID': '', 'parentGroupId': 1, 'methodId': 0, 'updateTime': '2023-06-26 14:22:22', 'isLimit': False, 'groupPath': '默认组 -> 自动化测试根组修改'}]}

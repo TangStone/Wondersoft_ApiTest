@@ -13,3 +13,6 @@ mysql_db:
   user: root
   password: ws-123456
   port: 3306
+
+# 用例路径
+casedata_path: bms/data

@@ -1,6 +1,6 @@
-ERROR[2023-06-26 14:24:43,393][11932][checkresult.py checkresult assert_response 50]：返回结果断言未通过, 期望返回值:{'statusCode': 0, 'msg': 'success'}, 实际返回值:{'statusCode': 1114886, 'msg': '找不到对应的组织机构'}
-ERROR[2023-06-26 14:24:48,765][11932][checkresult.py checkresult assert_response 50]：返回结果断言未通过, 期望返回值:{'statusCode': 0, 'msg': 'success'}, 实际返回值:{'statusCode': 1114886, 'msg': '找不到对应的组织机构'}
-ERROR[2023-06-26 14:24:53,982][11932][checkresult.py checkresult assert_response 50]：返回结果断言未通过, 期望返回值:{'statusCode': 0, 'msg': 'success'}, 实际返回值:{'statusCode': 1114886, 'msg': '找不到对应的组织机构'}
-ERROR[2023-06-26 14:24:59,260][11932][checkresult.py checkresult assert_response 50]：返回结果断言未通过, 期望返回值:{'statusCode': 0, 'msg': 'success'}, 实际返回值:{'statusCode': 1114886, 'msg': '找不到对应的组织机构'}
-ERROR[2023-06-26 14:25:11,881][11932][checkresult.py checkresult assert_response 50]：返回结果断言未通过, 期望返回值:{'statusCode': 0}, 实际返回值:{'statusCode': -1, 'msg': '该指纹库正在计算中，请稍后修改！'}
-ERROR[2023-06-26 14:25:17,208][11932][checkresult.py checkresult assert_response 50]：返回结果断言未通过, 期望返回值:{'statusCode': 0}, 实际返回值:{'statusCode': -1, 'msg': '该指纹库正在计算中，请稍后修改！'}
+ERROR[2023-06-26 18:00:48,368][4484][checkresult.py checkresult assert_response 50]：返回结果断言未通过, 期望返回值:{'statusCode': 0, 'msg': 'success'}, 实际返回值:{'statusCode': 1114886, 'msg': '找不到对应的组织机构'}
+ERROR[2023-06-26 18:00:55,449][4484][checkresult.py checkresult assert_response 50]：返回结果断言未通过, 期望返回值:{'statusCode': 0, 'msg': 'success'}, 实际返回值:{'statusCode': 1114886, 'msg': '找不到对应的组织机构'}
+ERROR[2023-06-26 18:01:00,840][4484][checkresult.py checkresult assert_response 50]：返回结果断言未通过, 期望返回值:{'statusCode': 0, 'msg': 'success'}, 实际返回值:{'statusCode': 1114886, 'msg': '找不到对应的组织机构'}
+ERROR[2023-06-26 18:01:06,065][4484][checkresult.py checkresult assert_response 50]：返回结果断言未通过, 期望返回值:{'statusCode': 0, 'msg': 'success'}, 实际返回值:{'statusCode': 1114886, 'msg': '找不到对应的组织机构'}
+ERROR[2023-06-26 18:01:23,787][4484][checkresult.py checkresult assert_response 50]：返回结果断言未通过, 期望返回值:{'statusCode': 0}, 实际返回值:{'statusCode': -1, 'msg': '该指纹库正在计算中，请稍后修改！'}
+ERROR[2023-06-26 18:01:29,521][4484][checkresult.py checkresult assert_response 50]：返回结果断言未通过, 期望返回值:{'statusCode': 0}, 实际返回值:{'statusCode': -1, 'msg': '该指纹库正在计算中，请稍后修改！'}

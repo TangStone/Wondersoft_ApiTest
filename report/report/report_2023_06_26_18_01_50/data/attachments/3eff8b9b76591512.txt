@@ -1,0 +1,14 @@
+INFO     root:test_17_logbackup.py:46 ==========开始执行用例：logbackup_listconfig_02==========
+INFO     root:runcase.py:30 -·-·-·-·-·-·-·-·-·-发送请求并接受信息 START-·-·-·-·-·-·-·-·-·-
+INFO     root:handleyaml.py:94 Yaml测试用例基础架构检查通过
+INFO     root:runcase.py:47 重组后的用例信息：{'name': '查询所有备份配置-按照时间段筛选', 'description': '查询所有备份配置-按照时间段筛选', 'request': {'data': {'start': '2023-06-26 00:00:00', 'end': '2023-06-27 00:00:00', 'pageNum': 1, 'pageSize': 20}, 'method': 'POST', 'address': '/api/auth/v1/log/queryAllBackupConfig', 'headers': {'Content-Type': 'application/json', 'token': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJhdWQiOiJhcHBsaWNhdGlvbiIsInN1YiI6IjdlYTYwMzc0LTdjZTQtNGI0YS05ODNmLTYyMDNiZjQ1NTUxMSIsImlzcyI6ImJtc19zZXJ2ZXIiLCJzZXNzaW9uSWQiOiI3ZWE2MDM3NC03Y2U0LTRiNGEtOTgzZi02MjAzYmY0NTU1MTEiLCJleHAiOjE2ODc5NTMzMDUsImlhdCI6MTY4Nzc3MzMwNX0.ZEh_kobQplJq6Ir4jExaWcfxbJsVc9q3auT0UTeNUCqHMgPwJ8DcBIWCU3ymzQEDJAzxG6-6_IMLyGTayZfRDQ', 'Referer': 'https://192.168.148.174:31000/sub-app-unity/syslogBackUp'}}, 'validate': {'code': 200, 'response': {'statusCode': 0, 'msg': 'success'}}, 'epic': '系统管理', 'feature': '运维管理-日志备份配置', 'story': '查询所有备份配置接口', 'base_url': 'https://192.168.148.174:31000', 'caseid': 'logbackup_listconfig_02'}
+INFO     root:runcase.py:83 请求地址：https://192.168.148.174:31000/api/auth/v1/log/queryAllBackupConfig
+INFO     root:runcase.py:84 请求方法：POST
+INFO     root:runcase.py:85 请求头：{'Content-Type': 'application/json', 'token': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJhdWQiOiJhcHBsaWNhdGlvbiIsInN1YiI6IjdlYTYwMzc0LTdjZTQtNGI0YS05ODNmLTYyMDNiZjQ1NTUxMSIsImlzcyI6ImJtc19zZXJ2ZXIiLCJzZXNzaW9uSWQiOiI3ZWE2MDM3NC03Y2U0LTRiNGEtOTgzZi02MjAzYmY0NTU1MTEiLCJleHAiOjE2ODc5NTMzMDUsImlhdCI6MTY4Nzc3MzMwNX0.ZEh_kobQplJq6Ir4jExaWcfxbJsVc9q3auT0UTeNUCqHMgPwJ8DcBIWCU3ymzQEDJAzxG6-6_IMLyGTayZfRDQ', 'Referer': 'https://192.168.148.174:31000/sub-app-unity/syslogBackUp'}
+INFO     root:runcase.py:95 请求参数：{'start': '2023-06-26 00:00:00', 'end': '2023-06-27 00:00:00', 'pageNum': 1, 'pageSize': 20}
+DEBUG    urllib3.connectionpool:connectionpool.py:1003 Starting new HTTPS connection (1): 192.168.148.174:31000
+DEBUG    urllib3.connectionpool:connectionpool.py:456 https://192.168.148.174:31000 "POST /api/auth/v1/log/queryAllBackupConfig HTTP/1.1" 200 66
+INFO     root:runcase.py:157 请求接口结果： {'statusCode': 0, 'msg': 'success', 'data': {'totalCount': 0, 'list': []}}
+INFO     root:checkresult.py:113 code断言通过, 期望状态码:200, 实际状态码:200
+INFO     root:checkresult.py:48 返回结果断言通过, 期望返回值:{'statusCode': 0, 'msg': 'success'}, 实际返回值:{'statusCode': 0, 'msg': 'success', 'data': {'totalCount': 0, 'list': []}}
+INFO     root:runcase.py:63 -·-·-·-·-·-·-·-·-·-发送请求并接受信息 END-·-·-·-·-·-·-·-·-·-

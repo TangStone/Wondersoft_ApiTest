@@ -2,7 +2,7 @@
 
 """
 @author: gaojie
-@File: extract.yaml.py
+@File: extract.py
 @IDE: PyCharm
 @time: 2023-06-08 15:59
 @description: 处理参数传递

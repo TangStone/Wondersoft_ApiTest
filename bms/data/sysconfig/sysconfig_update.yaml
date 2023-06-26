@@ -33,7 +33,7 @@
         - caseid: sysconfig_info_01  #用例id
           # 取值类型，response(从返回值中取值)，request(从发送值中取值)
           response:
-            - value: $.其他.系统参数[2].propKey
+            - value: $.其他.系统参数[3].propKey
               name: propKey
       # 校验
       validate:

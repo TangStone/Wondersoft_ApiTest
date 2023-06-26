@@ -2,7 +2,7 @@
 
 """
 @author: gaojie
-@File: replacedata.py
+@File: regroupdata.py
 @IDE: PyCharm
 @time: 2023-06-04 20:19
 @description: 参数替换

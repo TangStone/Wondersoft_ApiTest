@@ -1,92 +1,198 @@
-# 接口自动化
-
-# c
-
-## Getting started
-
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
-
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
-
-## Add your files
-
-- [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://docs.gitlab.com/ee/gitlab-basics/add-file.html#add-a-file-using-the-command-line) or push an existing Git repository with the following command:
+# 接口自动化:python+pytest+yaml+allure
+## 目录结构
 
 ```
-cd existing_repo
-git remote add origin https://192.168.50.9/WonderSoft/DevCenter/QMD/AUT/api-auto-test.git
-git branch -M main
-git push -uf origin main
+├── bms                              // 统一平台测试用例
+│   ├── data                         // 测试用例数据
+│   ├── testcases                    // 测试用例代码
+├── common                           // 公共方法
+│   └── basefunc.py                  //基础方法
+│   └── checkresult.py               //断言
+│   └── database.py                  //数据库操作
+│   └── encryption.py                //加密
+│   └── exceptions.py                //异常处理
+│   └── extract.py                   //处理参数传递
+│   └── handleallure.py              //allure处理
+│   └── handledict.py                //字典处理
+│   └── handleyaml.py                //yaml文件处理
+│   └── logger.py                    //日志处理
+│   └── readcase.py                  //处理用例数据
+│   └── regroupdata.py               //用例重组
+│   └── relevancecase.py             //关联用例处理
+│   └── runcase.py                   //执行用例
+│   └── teardowncase.py              //后置用例处理
+├── config                          // 配置
+│   └── __init__.py               
+│   └── config.yml                  //基础配置
+│   └── logging.yaml                //日志配置
+├── files                          // 文件
+├── logs                           // 日志
+├── report                         // 测试报告
+│   └── report                      //测试报告
+│   └── tmp                         //临时文件
+├── Readme.md                       
+├── pytest.ini                   
+├── excute.py                       // 运行入口  
+├── requirements.txt                            
 ```
+## yaml用例结构
 
-## Integrate with your tools
+```
+- epic: 用户管理   # 一级模块
+  feature: 基础数据管理-用户与机构管理  # 二级模块
+  story: 新增用户接口    # 接口名称
+  # 接口基本信息
+  case_info:
+    # 基础URL:https://192.168.148.174:31000
+    base_url: ${config(host)}
+    # 请求信息
+    request:
+      # 请求类型
+      method: POST
+      # 请求地址
+      address: /api/user/v1/user
+      # 请求头
+      headers:
+        Content-Type: application/json
+        token: ${extract(token)}
+        Referer: ${config(host)}/sub-app-unity/group
+  # 用例信息，可包含多个用例，用例id需唯一
+  case_data:
+    # 用例id
+    user_add_01:
+      # 用例名称
+      name: 自建用户组新增普通职员用户成功
+      # 用例描述
+      description: 在自动化测试组下新增用户，职位为普通用户
+      # 请求信息，包括data，file
+      request:
+        data: {"userName": "apiuser01","authentication": 0,"displayName": "自动化测试用户01","groupId": "${relevance(groupId)}","roleId": 0,"employeeId": "","phoneNumber":"","mobileNumber": "","email": "","gender": "男","ipAddress": "","leaderUserSid": "","locationCode": "","idCard": "","platformCode":"","remark": "",}
+      # 关联用例
+      relevance:
+        - caseid: user_group_list_02  #用例id
+          # 取值类型，response(从返回值中取值)，request(从发送值中取值)
+          response:
+            - value: $.data[0].groupId
+              name: groupId
+      # 校验
+      validate:
+        # 状态码校验
+        code: 200
+        # 返回值校验
+        response: {"statusCode": 0,"msg": "success"}
+#        # jsonpath校验
+#        jsonpath:
+#          - path: $.data.list[0].userName
+#            value: apiuser
+#            asserttype: in
+```
+## 取值方式
+1. 从配置文件中取值：${config(host)}
+2. 从中间件文件中取值：${extract(token)}
+3. 从关联用例中取值：${relevance(c_id)}
+4. 从关联用例中取返回值列表：${relevance(c_id;type=list)}
+5. 取值后，根据jsonpath获取指定值：${Eval(${relevance(fileContent)};;path=filelist[0].md5)}
+6. 取值后，进行公式计算：${Eval(${relevance(c_version)};;cal=+1)}
+7. 获取当前时间：${GetTime(format=%Y-%m-%d %H:%M:%S)} 
+8. 获取当前时间后偏移：${GetTime(format=%Y-%m-%d %H:%M:%S;cal=m+1)}    (w:周偏移、d:天偏移、h:小时偏移、m:分钟偏移)
 
-- [ ] [Set up project integrations](https://192.168.50.9/WonderSoft/DevCenter/QMD/AUT/api-auto-test/-/settings/integrations)
-
-## Collaborate with your team
-
-- [ ] [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-- [ ] [Automatically merge when pipeline succeeds](https://docs.gitlab.com/ee/user/project/merge_requests/merge_when_pipeline_succeeds.html)
-
-## Test and Deploy
-
-Use the built-in continuous integration in GitLab.
-
-- [ ] [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/index.html)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing(SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
-- [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
-
-***
-
-# Editing this README
-
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thank you to [makeareadme.com](https://www.makeareadme.com/) for this template.
-
-## Suggestions for a good README
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
-
-## Name
-Choose a self-explaining name for your project.
-
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
-
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
-
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
-
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
-
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
-
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
-
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
-
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
-
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
-
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
-
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
-
-## License
-For open source projects, say how it is licensed.
-
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+## 统一平台Yaml测试用例结构
+<table>
+    <tr>
+	    <th >一级模块</th>
+	    <th>二级模块</th>
+	    <th>三级模块</th>  
+	    <th>目录</th>  
+	</tr >
+	<tr >
+	    <td colspan="3">登录</td>
+	    <td>login</td>
+	</tr>
+	<tr >
+	    <td rowspan="4">用户管理</td>
+	    <td rowspan="2">用户同步管理</td>
+	    <td>用户同步</td>
+	    <td>usersync</td>
+	</tr>
+	<tr >
+	    <td>用户推送</td>
+	    <td>usersyncManage</td>
+	</tr>
+	<tr >
+	    <td rowspan="2">基础数据管理</td>
+	    <td>用户与机构管理</td>
+	    <td>user</td>
+	</tr>
+	<tr >
+	    <td>职位管理</td>
+	    <td>userrole</td>
+	</tr>
+	<tr >
+	    <td rowspan="2">系统管理</td>
+	    <td rowspan="2">权限管理</td>
+	    <td>管理员配置</td>
+	    <td>useradmin</td>
+	</tr>
+	<tr >
+	    <td>角色配置</td>
+	    <td>role</td>
+	</tr>
+	<tr >
+	    <td rowspan="5">规则管理</td>
+	    <td rowspan="4">基础规则</td>
+	    <td>关键字/正则</td>
+	    <td>docrule</td>
+	</tr>
+	<tr >
+	    <td>数据字典</td>
+	    <td>datadictionary</td>
+	</tr>
+	<tr >
+	    <td>文件MD5</td>
+	    <td>docmd5</td>
+	</tr>
+	<tr >
+	    <td>文件指纹</td>
+	    <td>docFinger</td>
+	</tr>
+	<tr >
+	    <td>敏感级别</td>
+	    <td>严重性等级管理</td>
+	    <td>dlpSeverityLevel</td>
+	</tr>
+	<tr >
+	    <td rowspan="8">系统管理</td>
+	    <td rowspan="6">运维管理</td>
+	    <td>管理员审计</td>
+	    <td>sysloginfo</td>
+	</tr>
+	<tr >
+	    <td>告警规则</td>
+	    <td>alarmrules</td>
+	</tr>
+	<tr >
+	    <td>服务监控</td>
+	    <td>servermonitor</td>
+	</tr>
+	<tr >
+	    <td>Syslog规则配置</td>
+	    <td>syslogrule</td>
+	</tr>
+	<tr >
+	    <td>日志备份配置</td>
+	    <td>logbackup</td>
+	</tr>
+	<tr >
+	    <td>告警信息</td>
+	    <td>alarminfo</td>
+	</tr>
+	<tr >
+	    <td rowspan="2">参数管理</td>
+	    <td>系统参数管理</td>
+	    <td>sysconfig</td>
+	</tr>
+	<tr >
+	    <td>系统邮箱配置</td>
+	    <td>sysemailconfig</td>
+	</tr>
+</table>

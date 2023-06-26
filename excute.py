@@ -18,23 +18,12 @@ from common import readcase
 
 if __name__ == '__main__':
 
-    # 开启日志记录(默认logs目录)
-    logger.MyLogs().setup_logging(ROOT_DIR)
-
-    # 清空临时文件目录
-    basefunc.clean_dir(ROOT_DIR + 'report/tmp')
-    # 清空报告
-    basefunc.clean_dir(ROOT_DIR + 'report/report')
-    # 清空中间件文件
-    handleyaml.YamlHandle(EXTRACT_DIR).clear_yaml()
-
-    #获取用例数据
-    readcase.ReadCase().read_case([ROOT_DIR + 'bms/data/'])
-
-    # pytest.main(['-vs', '--alluredir', './report/tmp'])
+    # 执行用例前置处理操作
+    basefunc.pre_process()
+    # 执行用例
     pytest.main()
-
+    # 执行用例后置处理操作
+    basefunc.post_process()
+    # 生成allure报告
     times = time.strftime("%Y_%m_%d_%H_%M_%S", time.localtime())
-    # 将report/tmp目录下的结果文件生成html类型的测试报告文件到report/report目录下
-    # -o report/report --clean 清空已有的测试报告再生成
     os.system("allure generate ./report/tmp -o ./report/report/report_" + times + " --clean")
