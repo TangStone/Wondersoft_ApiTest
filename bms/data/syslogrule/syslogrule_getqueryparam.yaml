@@ -1,0 +1,32 @@
+- epic: 系统管理   # 一级模块
+  feature: 运维管理-Syslog规则配置  # 二级模块
+  story: 查看syslog查询参数接口    # 接口名称
+  # 接口基本信息
+  case_info:
+    # 基础URL:https://192.168.148.174:31000
+    base_url: ${config(host)}
+    # 请求信息
+    request:
+      # 请求类型
+      method: POST
+      # 请求地址
+      address: /api/auth/v1/syslog/getHighQueryParam
+      # 请求头
+      headers:
+        Content-Type: application/x-www-form-urlencoded
+        token: ${extract(token)}
+        Referer: ${config(host)}/sub-app-unity/syslogManage
+  # 用例信息，可包含多个用例，用例id需唯一
+  case_data:
+    # 用例id
+    syslogrule_getqueryparam_01:
+      # 用例名称
+      name: 获取syslog查询参数列表
+      # 用例描述
+      description: 获取syslog查询参数列表
+      # 校验
+      validate:
+        # 状态码校验
+        code: 200
+        # 返回值校验
+        response: [{"paramType": "input","fieldName": "ruleName","paramName": "规则名称"}]

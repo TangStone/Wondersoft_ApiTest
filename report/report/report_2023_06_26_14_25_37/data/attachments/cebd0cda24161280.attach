@@ -1,0 +1,1 @@
+{'statusCode': 0, 'msg': 'success', 'data': {'groupId': 86, 'parentGroupId': 1, 'groupName': '自动化测试根组修改', 'groupCode': 'G001011', 'createTime': '2023-06-26 14:22:21', 'updateTime': '2023-06-26 14:22:22', 'methodId': 0, 'domainGUID': '', 'isRemoved': 0, 'groupPath': '默认组 -> 自动化测试根组修改', 'isLogicGroup': '0', 'groupAccessStrategies': []}}

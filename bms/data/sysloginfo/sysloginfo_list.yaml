@@ -1,0 +1,172 @@
+- epic: 系统管理   # 一级模块
+  feature: 运维管理-管理员审计  # 二级模块
+  story: 管理员日志查看接口    # 接口名称
+  # 接口基本信息
+  case_info:
+    # 基础URL:https://192.168.148.174:31000
+    base_url: ${config(host)}
+    # 请求信息
+    request:
+      # 请求类型
+      method: POST
+      # 请求地址
+      address: /api/auth/v1/sysLogInfo/getAllDlpEventLogListByParam
+      # 请求头
+      headers:
+        Content-Type: application/x-www-form-urlencoded
+        token: ${extract(token)}
+        Referer: ${config(host)}/sub-app-unity/systemAdminLog
+  # 用例信息，可包含多个用例，用例id需唯一
+  case_data:
+    # 用例id
+    sysloginfo_list_01:
+      # 用例名称
+      name: 管理员审计-无筛选条件
+      # 用例描述
+      description: 管理员审计-无筛选条件
+      # 校验
+      validate:
+        # 状态码校验
+        code: 200
+    # 用例id
+    sysloginfo_list_02:
+      # 用例名称
+      name: 管理员审计-根据时间筛选
+      # 用例描述
+      description: 管理员审计-根据时间筛选
+      # 请求信息，包括data，file
+      request:
+        data:
+          logTime: '{"timeType":"0","timeValue":"","from":"${GetTime(format=%Y-%m-%d %H:%M:%S;cal=w-2)}","to":"${GetTime(format=%Y-%m-%d %H:%M:%S)}"}'
+          page: "1"
+          rows: "20"
+      # 校验
+      validate:
+        # 状态码校验
+        code: 200
+    # 用例id
+    sysloginfo_list_03:
+      # 用例名称
+      name: 管理员审计-根据系统标识筛选
+      # 用例描述
+      description: 管理员审计-根据系统标识筛选
+      # 请求信息，包括data，file
+      request:
+        data:
+          systemId: ${Eval(${relevance(systemId)};;path=[-1:].value)}
+          page: "1"
+          rows: "20"
+      # 关联用例
+      relevance:
+        - caseid: sysloginfo_getQueryParamList_01  #用例id
+          # 取值类型，response(从返回值中取值)，request(从发送值中取值)
+          response:
+            - value: $.[2].list[0].reportParamValue
+              name: systemId
+      # 校验
+      validate:
+        # 状态码校验
+        code: 200
+    # 用例id
+    sysloginfo_list_04:
+      # 用例名称
+      name: 管理员审计-根据系统标识、一级菜单筛选
+      # 用例描述
+      description: 管理员审计-根据系统标识、一级菜单筛选
+      # 请求信息，包括data，file
+      request:
+        data:
+          systemId: ${Eval(${relevance(systemId)};;path=[-1:].value)}
+          module: ${relevance(module)}
+          page: "1"
+          rows: "20"
+      # 关联用例
+      relevance:
+        - caseid: sysloginfo_getQueryParamList_01  #用例id
+          # 取值类型，response(从返回值中取值)，request(从发送值中取值)
+          response:
+            - value: $.[2].list[0].reportParamValue
+              name: systemId
+        - caseid: sysloginfo_getModuleByParams_01  #用例id
+          # 取值类型，response(从返回值中取值)，request(从发送值中取值)
+          response:
+            - value: $.[1].value
+              name: module
+      # 校验
+      validate:
+        # 状态码校验
+        code: 200
+    # 用例id
+    sysloginfo_list_05:
+      # 用例名称
+      name: 管理员审计-根据系统标识、一级菜单、二级菜单筛选
+      # 用例描述
+      description: 管理员审计-根据系统标识、一级菜单筛选
+      # 请求信息，包括data，file
+      request:
+        data:
+          systemId: ${Eval(${relevance(systemId)};;path=[-1:].value)}
+          module: ${relevance(module)}
+          childModule: ${relevance(childModule)}
+          page: "1"
+          rows: "20"
+      # 关联用例
+      relevance:
+        - caseid: sysloginfo_getQueryParamList_01  #用例id
+          # 取值类型，response(从返回值中取值)，request(从发送值中取值)
+          response:
+            - value: $.[2].list[0].reportParamValue
+              name: systemId
+        - caseid: sysloginfo_getModuleByParams_01  #用例id
+          # 取值类型，response(从返回值中取值)，request(从发送值中取值)
+          response:
+            - value: $.[1].value
+              name: module
+        - caseid: sysloginfo_getModuleByParams_02  #用例id
+          # 取值类型，response(从返回值中取值)，request(从发送值中取值)
+          response:
+            - value: $.[1].value
+              name: childModule
+      # 校验
+      validate:
+        # 状态码校验
+        code: 200
+    # 用例id
+    sysloginfo_list_06:
+      # 用例名称
+      name: 管理员审计-根据系统标识、一级菜单、二级菜单、操作类型筛选
+      # 用例描述
+      description: 管理员审计-根据系统标识、一级菜单筛选
+      # 请求信息，包括data，file
+      request:
+        data:
+          systemId: ${Eval(${relevance(systemId)};;path=[-1:].value)}
+          module: ${relevance(module)}
+          childModule: ${relevance(childModule)}
+          operateType: '[${Eval(${relevance(operateType)};;path=[0].value)}]'
+          page: "1"
+          rows: "20"
+      # 关联用例
+      relevance:
+        - caseid: sysloginfo_getQueryParamList_01  #用例id
+          # 取值类型，response(从返回值中取值)，request(从发送值中取值)
+          response:
+            - value: $.[2].list[0].reportParamValue
+              name: systemId
+            - value: $.[2].list[3].reportParamValue
+              name: operateType
+        - caseid: sysloginfo_getModuleByParams_01  #用例id
+          # 取值类型，response(从返回值中取值)，request(从发送值中取值)
+          response:
+            - value: $.[1].value
+              name: module
+        - caseid: sysloginfo_getModuleByParams_02  #用例id
+          # 取值类型，response(从返回值中取值)，request(从发送值中取值)
+          response:
+            - value: $.[1].value
+              name: childModule
+      # 校验
+      validate:
+        # 状态码校验
+        code: 200
+

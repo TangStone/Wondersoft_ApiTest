@@ -1,0 +1,1 @@
+{'statusCode': 0, 'msg': 'success', 'data': {'totalCount': 37895, 'list': [{'id': 49666, 'modifyTime': '2023-06-26T06:22:25.000+00:00', 'endpointId': 1, 'serverIp': '192.168.148.174', 'cpuUsed': '21.362489488982977', 'memoryUsed': '48.49687666170728', 'diskUsed': '3.8417501221299464'}]}}
