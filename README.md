@@ -94,6 +94,13 @@
 #          - path: $.data.list[0].userName
 #            value: apiuser
 #            type: in
+#        # 数据库校验
+#        dbcheck:
+#          - type: mysql
+#            sql: select * from `bms-general-aa`.t_sys_role tsr where roleName = '自动化测试角色'
+#            result:
+#              - path: $.roleName
+#                value: 自动化测试角色
 ```
 ## 取值方式
 1. 从配置文件中取值：${config(host)}
