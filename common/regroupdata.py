@@ -15,23 +15,26 @@ from config import *
 
 from common import exceptions
 from common import encryption
+from common.basefunc import config_dict
 
 class RegroupData:
     """
     参数替换
     """
 
-    def __init__(self, casedata, relevance_dict, extract_dict, config_dict):
+    def __init__(self, casedata, relevance_dict, extract_dict, db_dict):
         """
         :param casedata: 用例信息
         :param relevance_dict: 关联参数
         :param extract_dict: 全局参数
         :param config_dict: 配置参数
+        :param db_dict: 数据库查询参数
         """
         self.casedata = casedata
         self.relevance_dict = relevance_dict
         self.extract_dict = extract_dict
         self.config_dict = config_dict
+        self.db_dict = db_dict
         # logging.info("casedata:%s", self.casedata)
         # logging.info("relevance_dict:%s", self.relevance_dict)
         # logging.info("extract_dict:%s", self.extract_dict)
@@ -250,6 +253,7 @@ class RegroupData:
         Eval_list = re.findall(r"\$\{Eval\((.*)\)\}", str_data)  # 格式转换,非贪婪模式
         relevance_list = re.findall(r"\$\{relevance\((.*?)\)\}", str_data)  # 关联参数替换
         config_list = re.findall(r"\$\{config\((.*?)\)\}", str_data)  # 配置文件参数替换
+        db_list = re.findall(r"\$\{db\((.*?)\)\}", str_data)  # 配置文件参数替换
         extract_list = re.findall(r"\$\{extract\((.*?)\)\}", str_data)  # 配置文件参数替换
         enc_list = re.findall(r"\$\{enc\((.*?)\)\}", str_data)  # 加密替换
         time_list = re.findall(r"\$\{GetTime\((.*?)\)\}", str_data)  # 时间
@@ -288,6 +292,12 @@ class RegroupData:
             for i in relevance_list:
                 pattern = re.compile(r'\$\{relevance\(' + i + r'\)\}')
                 value = self.get_value(i, self.relevance_dict)
+                str_data = re.sub(pattern, str(value), str_data, count=1)
+
+        if len(db_list):
+            for i in db_list:
+                pattern = re.compile(r'\$\{db\(' + i + r'\)\}')
+                value = self.get_value(i, self.db_dict)
                 str_data = re.sub(pattern, str(value), str_data, count=1)
 
         if len(enc_list):

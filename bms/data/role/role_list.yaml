@@ -30,12 +30,21 @@
           filters: '{"roleName":""}'
           pageNum: 1
           pageSize: 20
+      # 前置sql
+      setup_sql:
+        - type: mysql    #数据库类型：mysql
+          #sql语句，取返回的第一组数据
+          sql: select count(*) as count from `bms-general-aa`.t_sys_role tsr where `type` != 0
+          #sql取值
+          sqldata:
+            - value: $.count
+              name: totalCount
       # 校验
       validate:
         # 状态码校验
         code: 200
         # 返回值校验
-        response: {"statusCode": 0,"msg": "success"}
+        response: {"statusCode": 0,"msg": "success", "data": {"totalCount": "${db(totalCount)}"}}
     # 用例id
     role_list_02:
       # 用例名称

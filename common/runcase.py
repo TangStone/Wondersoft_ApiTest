@@ -20,6 +20,7 @@ from common import checkresult
 from common import teardowncase
 from common import relevancecase
 from common import extract
+from common import database
 
 def excute_case(case_data):
     """
@@ -31,35 +32,32 @@ def excute_case(case_data):
     # 校验用例格式
     flag, msg = handleyaml.standard_yaml(case_data)
     if flag:  # 用例格式无误
-
+        extract_dict = handleyaml.YamlHandle(EXTRACT_DIR).read_yaml()  # 全局参数
+        db_dict = {}   #数据库参数
+        # 判断是否存在前置sql，若存在，执行前置sql
+        if 'setup_sql' in case_data.keys():
+            db_dict = database.SetUpMySQL().get_setup_sql_data(case_data['setup_sql'])
         relevance_dict = {}  # 关联参数
         # 判断是否存在关联用例，若存在，执行前置用例获取参数值
         if 'relevance' in case_data.keys():
             relevance_dict = relevancecase.Relevance().get_relevance_data(case_data['relevance'])
-        extract_dict = handleyaml.YamlHandle(EXTRACT_DIR).read_yaml()  # 全局参数
-        config_dict = handleyaml.YamlHandle(CONFIG_DIR).read_yaml()  # 配置参数
 
         # 重组用例信息
         # casedata = regroupdata.RegroupData(case_data, relevance_dict, extract_dict, config_dict).replace_value()
         sign, casedata = regroupdata.RegroupData(copy.deepcopy(case_data), relevance_dict, extract_dict,
-                                                 config_dict).regroup_case_data()
+                                                 db_dict).regroup_case_data()
         if sign == 'success':
             logging.info("重组后的用例信息：%s", casedata)
-
             # 发送请求
             recv_data, recv_code = send_request(casedata)
-
             # 结果校验
             hope_result = casedata['validate']
             checkresult.check_result(hope_result, recv_data, recv_code)
-
             # 取值
             if 'extract' in casedata.keys():
                 extract.handle_extarct(casedata['extract'], recv_data, casedata['caseid'])
-
             # 执行后置接口
             teardowncase.case_teardown(casedata)
-
             logging.info('-·-·-·-·-·-·-·-·-·-发送请求并接受信息 END-·-·-·-·-·-·-·-·-·-')
             return casedata, recv_data
         else:
@@ -109,7 +107,7 @@ def send_request(casedata):
         elif method in ['delete', 'DELETE']:
             recv_data, recv_code = ApiMethod(url, headers, data, file).delete()
         else:
-            pass
+            raise Exception("暂不支持" + method + "请求类型！")
         return recv_data, recv_code
 
 

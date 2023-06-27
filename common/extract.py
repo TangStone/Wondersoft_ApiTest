@@ -11,6 +11,7 @@ import re, jsonpath, logging
 
 from config import *
 from common import handleyaml
+from common.basefunc import config_dict
 
 def handle_extarct(extarct, recv_data, caseid):
     """
@@ -36,7 +37,6 @@ def handle_extarct(extarct, recv_data, caseid):
             else:
                 raise Exception("期望值获取失败！")
     logging.info("extract_value:%s", extract_value)
-    config_dict = handleyaml.YamlHandle(CONFIG_DIR).read_yaml()
     if caseid == config_dict['logincase']:
         extract_value = extract_value
     else:

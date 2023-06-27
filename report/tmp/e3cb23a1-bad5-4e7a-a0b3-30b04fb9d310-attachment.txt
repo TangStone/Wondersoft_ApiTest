@@ -1,0 +1,14 @@
+INFO     root:test_16_syslogrule.py:100 ==========开始执行用例：syslogrule_validrulename_02==========
+INFO     root:runcase.py:31 -·-·-·-·-·-·-·-·-·-发送请求并接受信息 START-·-·-·-·-·-·-·-·-·-
+INFO     root:handleyaml.py:94 Yaml测试用例基础架构检查通过
+INFO     root:runcase.py:50 重组后的用例信息：{'name': '校验syslog规则名称-新增规则时校验-规则名称已存在', 'description': '校验syslog规则名称-新增规则时校验-规则名称已存在', 'request': {'data': {'ruleName': '自动化测试统一平台审计日志规则'}, 'method': 'POST', 'address': '/api/auth/v1/syslog/validSyslogRuleName', 'headers': {'Content-Type': 'application/x-www-form-urlencoded', 'token': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJhdWQiOiJhcHBsaWNhdGlvbiIsInN1YiI6Ijc0Njc3NmJiLWZjZmMtNGMyOC1hMzY3LTY0ODBlNGE5ZmEwMyIsImlzcyI6ImJtc19zZXJ2ZXIiLCJzZXNzaW9uSWQiOiI3NDY3NzZiYi1mY2ZjLTRjMjgtYTM2Ny02NDgwZTRhOWZhMDMiLCJleHAiOjE2ODgwNDI1OTQsImlhdCI6MTY4Nzg2MjU5NH0.O8P51iQijd4dXdw9AlM9NRCQ6SLu28ZirspvKrfBk3eeSCluJZHOpr6MJ7D9V_kPAK1ed1IpQkvahME21OjbVg', 'Referer': 'https://192.168.148.174:31000/sub-app-unity/syslogManage'}}, 'validate': {'code': 200, 'response': {'result': -1, 'resultDesc': '规则名称不能重复，请重新输入规则名称', 'entityKey': 0}}, 'epic': '系统管理', 'feature': '运维管理-Syslog规则配置', 'story': '校验规则名称接口', 'base_url': 'https://192.168.148.174:31000', 'caseid': 'syslogrule_validrulename_02'}
+INFO     root:runcase.py:81 请求地址：https://192.168.148.174:31000/api/auth/v1/syslog/validSyslogRuleName
+INFO     root:runcase.py:82 请求方法：POST
+INFO     root:runcase.py:83 请求头：{'Content-Type': 'application/x-www-form-urlencoded', 'token': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJhdWQiOiJhcHBsaWNhdGlvbiIsInN1YiI6Ijc0Njc3NmJiLWZjZmMtNGMyOC1hMzY3LTY0ODBlNGE5ZmEwMyIsImlzcyI6ImJtc19zZXJ2ZXIiLCJzZXNzaW9uSWQiOiI3NDY3NzZiYi1mY2ZjLTRjMjgtYTM2Ny02NDgwZTRhOWZhMDMiLCJleHAiOjE2ODgwNDI1OTQsImlhdCI6MTY4Nzg2MjU5NH0.O8P51iQijd4dXdw9AlM9NRCQ6SLu28ZirspvKrfBk3eeSCluJZHOpr6MJ7D9V_kPAK1ed1IpQkvahME21OjbVg', 'Referer': 'https://192.168.148.174:31000/sub-app-unity/syslogManage'}
+INFO     root:runcase.py:93 请求参数：{'ruleName': '自动化测试统一平台审计日志规则'}
+DEBUG    urllib3.connectionpool:connectionpool.py:1003 Starting new HTTPS connection (1): 192.168.148.174:31000
+DEBUG    urllib3.connectionpool:connectionpool.py:456 https://192.168.148.174:31000 "POST /api/auth/v1/syslog/validSyslogRuleName HTTP/1.1" 200 97
+INFO     root:runcase.py:155 请求接口结果： {'result': -1, 'resultDesc': '规则名称不能重复，请重新输入规则名称', 'entityKey': 0}
+INFO     root:checkresult.py:113 code断言通过, 期望状态码:200, 实际状态码:200
+INFO     root:checkresult.py:48 返回结果断言通过, 期望返回值:{'result': -1, 'resultDesc': '规则名称不能重复，请重新输入规则名称', 'entityKey': 0}, 实际返回值:{'result': -1, 'resultDesc': '规则名称不能重复，请重新输入规则名称', 'entityKey': 0}
+INFO     root:runcase.py:61 -·-·-·-·-·-·-·-·-·-发送请求并接受信息 END-·-·-·-·-·-·-·-·-·-

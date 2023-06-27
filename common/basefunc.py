@@ -9,9 +9,10 @@
 """
 import os
 from config import *
-from common import logger
 from common import handleyaml
 from common import readcase
+
+config_dict = handleyaml.YamlHandle(CONFIG_DIR).read_yaml()
 
 def clean_dir(path):
     """清空目录下所有文件，保留文件夹"""
@@ -56,9 +57,6 @@ def pre_process():
     执行用例前置处理操作
     :return:
     """
-    # 开启日志记录(默认logs目录)
-    logger.MyLogs().setup_logging(ROOT_DIR)
-
     # 清空临时文件目录
     clean_dir(ROOT_DIR + 'report/tmp')
     # 清空报告
@@ -66,9 +64,8 @@ def pre_process():
     # 清空中间件文件
     handleyaml.YamlHandle(EXTRACT_DIR).clear_yaml()
     # 获取用例数据
-    config_dict = handleyaml.YamlHandle(CONFIG_DIR).read_yaml()
-    casedata_path = config_dict['casedata_path']
-    readcase.ReadCase().read_case([ROOT_DIR + casedata_path])
+    casedata_path = [ ROOT_DIR + i for i in config_dict['casedata_path']]
+    readcase.ReadCase().read_case(casedata_path)
 
 def post_process():
     """
@@ -76,7 +73,6 @@ def post_process():
     :return:
     """
     # 添加environment.properties到allure目录
-    config_dict = handleyaml.YamlHandle(CONFIG_DIR).read_yaml()
     # project_name = config_dict['project_name']
     baseurl = config_dict['host']
     environment = 'BaseURL=' + baseurl + '\n'

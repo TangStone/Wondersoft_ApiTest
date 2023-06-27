@@ -15,4 +15,5 @@ mysql_db:
   port: 3306
 
 # 用例路径
-casedata_path: bms/data
+casedata_path:
+  - bms/data

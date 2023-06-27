@@ -9,12 +9,15 @@
 """
 import pytest, time, copy
 from requests.packages import urllib3
+from common import logger
 urllib3.disable_warnings()
 from config import *
 from common import basefunc
 
 if __name__ == '__main__':
 
+    # 开启日志记录(默认logs目录)
+    logger.MyLogs().setup_logging(ROOT_DIR)
     # 执行用例前置处理操作
     basefunc.pre_process()
     # 执行用例
