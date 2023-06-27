@@ -66,7 +66,7 @@
         jsonpath:
           - path: $.data.list[0].userName
             value: apiuser
-            asserttype: in
+            type: in
     # 用例id
     user_list_03:
       # 用例名称
@@ -96,4 +96,4 @@
         jsonpath:
           - path: $.data.list[0].displayName
             value: 自动化测试用户
-            asserttype: in
+            type: in

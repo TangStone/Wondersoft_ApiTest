@@ -59,7 +59,7 @@
         jsonpath:
           - path: $.data.resultList[0].c_rule_name
             value: 自动化测试
-            asserttype: in
+            type: in
     # 用例id
     datadictionary_list_03:
       # 用例名称
@@ -83,7 +83,7 @@
         jsonpath:
           - path: $.data.resultList[0].c_rule_name
             value: 自动化测试
-            asserttype: in
+            type: in
     # 用例id
     datadictionary_list_04:
       # 用例名称
@@ -108,4 +108,4 @@
         jsonpath:
           - path: $.data.resultList[0].c_rule_name
             value: 自动化测试
-            asserttype: in
+            type: in

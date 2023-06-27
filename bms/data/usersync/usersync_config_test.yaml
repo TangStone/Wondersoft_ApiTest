@@ -19,7 +19,7 @@
           #数据源类型
           type: domain
           #数据源配置
-          configs: "{\"name\":\"自动化测试70.235数据源修改\",\"host\":\"192.168.70.235\",\"port\":\"389\",\"username\":\"xiantest\\\\administrator\",\"password\":\"Ws-123456abc\",\"base\":\"DC=xiantest,DC=com\",\"org\":\"ou=北京明朝万达\",\"isEncrypt\":false,\"userFilter\":\"\",\"groupFilter\":\"\",\"isIncrement\":false}"
+          configs: "{\"name\":\"自动化测试70.235数据源修改\",\"host\":\"192.168.70.235\",\"port\":\"389\",\"username\":\"xiantest\\\\administrator\",\"password\":\"Ws-123456abcd\",\"base\":\"DC=xiantest,DC=com\",\"org\":\"ou=北京明朝万达\",\"isEncrypt\":false,\"userFilter\":\"\",\"groupFilter\":\"\",\"isIncrement\":false}"
       validate:
         code: 200
         response: { "statusCode": 0,"msg": "success" }

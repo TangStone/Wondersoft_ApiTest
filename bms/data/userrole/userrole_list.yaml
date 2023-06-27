@@ -57,4 +57,4 @@
         jsonpath:
           - path: $.data.list[0].roleName
             value: 自动化测试职位
-            asserttype: in
+            type: in

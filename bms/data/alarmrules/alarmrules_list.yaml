@@ -52,7 +52,7 @@
         jsonpath:
           - path: $.data.list[0].alarmName
             value: 自动化测试
-            asserttype: in
+            type: in
     # 用例id
     alarmrules_list_03:
       # 用例名称
@@ -75,7 +75,7 @@
         jsonpath:
           - path: $.data.list[0].alarmName
             value: 自动化测试
-            asserttype: in
+            type: in
     # 用例id
     alarmrules_list_04:
       # 用例名称
@@ -117,5 +117,5 @@
         jsonpath:
           - path: $.data.list[0].alarmName
             value: 自动化测试CPU
-            asserttype: in
+            type: in
 

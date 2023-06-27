@@ -61,7 +61,7 @@ def assert_text(hope_res, real_res):
         for h_res in hope_res:
             if jsonpath.jsonpath(real_res, h_res['path']):
                 r_res = jsonpath.jsonpath(real_res, h_res['path'])[0]
-                if h_res['asserttype'] == '==':
+                if h_res['type'] == '==':
                     try:
                         with allure.step("json断言判断相等"):
                             allure.attach(name="期望结果", body=str(h_res))
@@ -71,7 +71,7 @@ def assert_text(hope_res, real_res):
                     except AssertionError:
                         logging.error("json断言未通过, 期望结果'{0}', 实际结果'{1}'".format(h_res, r_res))
                         raise
-                elif h_res["asserttype"] == "!=":
+                elif h_res["type"] == "!=":
                     try:
                         with allure.step("json断言判断不等"):
                             allure.attach(name="json期望结果", body=str(h_res))
@@ -81,7 +81,7 @@ def assert_text(hope_res, real_res):
                     except AssertionError:
                         logging.error("json断言未通过, 期望结果'{0}', 实际结果'{1}'".format(h_res, r_res))
                         raise
-                elif h_res["asserttype"] == "in":
+                elif h_res["type"] == "in":
                     r_res = str(r_res)
                     try:
                         with allure.step("json断言判断包含"):
@@ -93,7 +93,7 @@ def assert_text(hope_res, real_res):
                         logging.error("json断言未通过, 期望结果'{0}', 实际结果'{1}'".format(h_res, real_res))
                         raise
                 else:
-                    raise TypeError("asserttype方法错误")
+                    raise TypeError("type方法错误")
             else:
                 logging.error("获取json值失败，请检查jsonpath")
                 raise ValueError('获取json值失败，请检查jsonpath')

@@ -84,7 +84,7 @@
 #        jsonpath:
 #          - path: $.data.list[0].userName
 #            value: apiuser
-#            asserttype: in
+#            type: in
 ```
 ## 取值方式
 1. 从配置文件中取值：${config(host)}

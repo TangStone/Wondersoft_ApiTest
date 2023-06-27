@@ -59,7 +59,7 @@
         jsonpath:
           - path: $.data.resultList[0].fingerPrintName
             value: 自动化测试
-            asserttype: in
+            type: in
     # 用例id
     docFinger_list_03:
       # 用例名称

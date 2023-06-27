@@ -41,7 +41,7 @@
         jsonpath:
           - path: $.data.realName
             value: admin
-            asserttype: ==
+            type: ==
     login_02:
       name: 登录失败（正确用户名、错误密码）
       description: 输入正确用户名，错误密码，登录失败
@@ -55,7 +55,7 @@
         jsonpath:
           - path: $.msg
             value: 用户名或密码错误
-            asserttype: ==
+            type: ==
     login_03:
       name: 登录失败（错误用户名、正确密码）
       description: 输入错误用户名，正确密码，登录失败
@@ -69,4 +69,4 @@
         jsonpath:
           - path: $.msg
             value: 用户名或密码错误
-            asserttype: ==
+            type: ==

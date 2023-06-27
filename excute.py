@@ -10,11 +10,8 @@
 import pytest, time, copy
 from requests.packages import urllib3
 urllib3.disable_warnings()
-from common import logger
 from config import *
 from common import basefunc
-from common import handleyaml
-from common import readcase
 
 if __name__ == '__main__':
 
