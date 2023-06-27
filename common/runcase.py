@@ -36,7 +36,7 @@ def excute_case(case_data):
         db_dict = {}   #数据库参数
         # 判断是否存在前置sql，若存在，执行前置sql
         if 'setup_sql' in case_data.keys():
-            db_dict = database.SetUpMySQL().get_setup_sql_data(case_data['setup_sql'])
+            db_dict = database.SetUpDB().get_setup_sql_data(case_data['setup_sql'])
         relevance_dict = {}  # 关联参数
         # 判断是否存在关联用例，若存在，执行前置用例获取参数值
         if 'relevance' in case_data.keys():

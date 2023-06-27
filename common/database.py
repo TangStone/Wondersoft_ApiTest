@@ -10,14 +10,14 @@
 import pymysql, logging, jsonpath
 import pymysql.cursors
 from warnings import filterwarnings
-# from common.basefunc import config_dict
+from common.basefunc import config_dict
 
 # 忽略 Mysql 告警信息
 filterwarnings("ignore", category=pymysql.Warning)
 
-from common import handleyaml
-from config import *
-config_dict = handleyaml.YamlHandle(CONFIG_DIR).read_yaml()
+# from common import handleyaml
+# from config import *
+# config_dict = handleyaml.YamlHandle(CONFIG_DIR).read_yaml()
 
 class MysqlConn:
     """
@@ -71,9 +71,9 @@ class MysqlConn:
         except Exception as e:
             raise Exception('执行数据库查询失败：' + str(e))
 
-class SetUpMySQL(MysqlConn):
+class SetUpDB(MysqlConn):
     """
-    处理前置sql
+    处理前置数据库操作
     """
 
     def get_setup_sql_data(self, setup_sql):
@@ -101,7 +101,7 @@ class SetUpMySQL(MysqlConn):
                         else:
                             self.mysql_execute(db_sql)
                     else:
-                        raise Exception("当前暂不支持此种数据类型：" + str(db_type))
+                        raise Exception("当前暂不支持此种数据库类型：" + str(db_type))
             return db_dict
         except Exception as e:
             raise Exception("sql 数据查询失败，请检查setup_sql语句是否正确：报错信息：" + str(e))

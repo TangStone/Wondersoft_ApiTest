@@ -1,0 +1,14 @@
+INFO     root:test_09_datadictionary.py:28 ==========开始执行用例：datadictionary_add_01==========
+INFO     root:runcase.py:31 -·-·-·-·-·-·-·-·-·-发送请求并接受信息 START-·-·-·-·-·-·-·-·-·-
+INFO     root:handleyaml.py:94 Yaml测试用例基础架构检查通过
+INFO     root:runcase.py:50 重组后的用例信息：{'name': '新增数据字典', 'description': '输入正确的数据字典配置，新增数据字典规则', 'request': {'data': {'c_rule_type': '4', 'c_rule_name': '自动化测试数据字典规则', 'c_rule_content': '自动化测试,2;数据字典,1', 'c_creater': 'B5A33586-15104954-9B752AE1-53333EC10', 'c_note': '自动化测试数据字典规则备注', 'c_traditional_match': '1'}, 'method': 'POST', 'address': '/api/dlpparam/v1/dlpDocRule/insertDlpDocRules', 'headers': {'Content-Type': 'application/x-www-form-urlencoded', 'token': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJhdWQiOiJhcHBsaWNhdGlvbiIsInN1YiI6IjEyNWFmM2VkLWFmNGItNDU4ZC04YWVkLWNiZWYwZTYyYzYzYSIsImlzcyI6ImJtc19zZXJ2ZXIiLCJzZXNzaW9uSWQiOiIxMjVhZjNlZC1hZjRiLTQ1OGQtOGFlZC1jYmVmMGU2MmM2M2EiLCJleHAiOjE2ODgwNDc2ODksImlhdCI6MTY4Nzg2NzY4OX0.bFZaQIrZbatN0oHQbyZ7ObTIcgFvwRpAz7lLkHETnYKseZ0G5Rhs-pcbRTwBWuUf9kDuwQcxmZVEHmnE7-56-g', 'Referer': 'https://192.168.148.174:31000/sub-app-dlpparam/dlpDataDictionary'}}, 'validate': {'code': 200, 'response': {'statusCode': 0}}, 'epic': '规则管理', 'feature': '基础规则-数据字典', 'story': '文档规则新增接口', 'base_url': 'https://192.168.148.174:31000', 'caseid': 'datadictionary_add_01'}
+INFO     root:runcase.py:81 请求地址：https://192.168.148.174:31000/api/dlpparam/v1/dlpDocRule/insertDlpDocRules
+INFO     root:runcase.py:82 请求方法：POST
+INFO     root:runcase.py:83 请求头：{'Content-Type': 'application/x-www-form-urlencoded', 'token': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJhdWQiOiJhcHBsaWNhdGlvbiIsInN1YiI6IjEyNWFmM2VkLWFmNGItNDU4ZC04YWVkLWNiZWYwZTYyYzYzYSIsImlzcyI6ImJtc19zZXJ2ZXIiLCJzZXNzaW9uSWQiOiIxMjVhZjNlZC1hZjRiLTQ1OGQtOGFlZC1jYmVmMGU2MmM2M2EiLCJleHAiOjE2ODgwNDc2ODksImlhdCI6MTY4Nzg2NzY4OX0.bFZaQIrZbatN0oHQbyZ7ObTIcgFvwRpAz7lLkHETnYKseZ0G5Rhs-pcbRTwBWuUf9kDuwQcxmZVEHmnE7-56-g', 'Referer': 'https://192.168.148.174:31000/sub-app-dlpparam/dlpDataDictionary'}
+INFO     root:runcase.py:93 请求参数：{'c_rule_type': '4', 'c_rule_name': '自动化测试数据字典规则', 'c_rule_content': '自动化测试,2;数据字典,1', 'c_creater': 'B5A33586-15104954-9B752AE1-53333EC10', 'c_note': '自动化测试数据字典规则备注', 'c_traditional_match': '1'}
+DEBUG    urllib3.connectionpool:connectionpool.py:1003 Starting new HTTPS connection (1): 192.168.148.174:31000
+DEBUG    urllib3.connectionpool:connectionpool.py:456 https://192.168.148.174:31000 "POST /api/dlpparam/v1/dlpDocRule/insertDlpDocRules HTTP/1.1" 200 16
+INFO     root:runcase.py:155 请求接口结果： {'statusCode': 0}
+INFO     root:checkresult.py:151 code断言通过, 期望状态码:200, 实际状态码:200
+INFO     root:checkresult.py:86 返回结果断言通过, 期望返回值:{'statusCode': 0}, 实际返回值:{'statusCode': 0}
+INFO     root:runcase.py:61 -·-·-·-·-·-·-·-·-·-发送请求并接受信息 END-·-·-·-·-·-·-·-·-·-

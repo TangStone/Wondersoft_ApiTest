@@ -1,5 +1,6 @@
-ERROR[2023-06-27 18:48:57,116][12112][checkresult.py checkresult assert_response 50]：返回结果断言未通过, 期望返回值:{'statusCode': 0, 'msg': 'success'}, 实际返回值:{'statusCode': 1114886, 'msg': '找不到对应的组织机构'}
-ERROR[2023-06-27 18:49:02,529][12112][checkresult.py checkresult assert_response 50]：返回结果断言未通过, 期望返回值:{'statusCode': 0, 'msg': 'success'}, 实际返回值:{'statusCode': 1114886, 'msg': '找不到对应的组织机构'}
-ERROR[2023-06-27 18:49:07,716][12112][checkresult.py checkresult assert_response 50]：返回结果断言未通过, 期望返回值:{'statusCode': 0, 'msg': 'success'}, 实际返回值:{'statusCode': 1114886, 'msg': '找不到对应的组织机构'}
-ERROR[2023-06-27 18:49:12,934][12112][checkresult.py checkresult assert_response 50]：返回结果断言未通过, 期望返回值:{'statusCode': 0, 'msg': 'success'}, 实际返回值:{'statusCode': 1114886, 'msg': '找不到对应的组织机构'}
-ERROR[2023-06-27 18:49:25,927][12112][checkresult.py checkresult assert_response 50]：返回结果断言未通过, 期望返回值:{'statusCode': 0}, 实际返回值:{'statusCode': -1, 'msg': '该指纹库正在计算中，请稍后修改！'}
+ERROR[2023-06-27 20:13:52,747][9176][checkresult.py checkresult assert_response 88]：返回结果断言未通过, 期望返回值:{'statusCode': 0, 'msg': 'success'}, 实际返回值:{'statusCode': 1114886, 'msg': '找不到对应的组织机构'}
+ERROR[2023-06-27 20:13:58,228][9176][checkresult.py checkresult assert_response 88]：返回结果断言未通过, 期望返回值:{'statusCode': 0, 'msg': 'success'}, 实际返回值:{'statusCode': 1114886, 'msg': '找不到对应的组织机构'}
+ERROR[2023-06-27 20:14:03,428][9176][checkresult.py checkresult assert_response 88]：返回结果断言未通过, 期望返回值:{'statusCode': 0, 'msg': 'success'}, 实际返回值:{'statusCode': 1114886, 'msg': '找不到对应的组织机构'}
+ERROR[2023-06-27 20:14:08,650][9176][checkresult.py checkresult assert_response 88]：返回结果断言未通过, 期望返回值:{'statusCode': 0, 'msg': 'success'}, 实际返回值:{'statusCode': 1114886, 'msg': '找不到对应的组织机构'}
+ERROR[2023-06-27 20:14:21,628][9176][checkresult.py checkresult assert_response 88]：返回结果断言未通过, 期望返回值:{'statusCode': 0}, 实际返回值:{'statusCode': -1, 'msg': '该指纹库正在计算中，请稍后修改！'}
+ERROR[2023-06-27 20:14:26,944][9176][checkresult.py checkresult assert_response 88]：返回结果断言未通过, 期望返回值:{'statusCode': 0}, 实际返回值:{'statusCode': -1, 'msg': '该指纹库正在计算中，请稍后修改！'}

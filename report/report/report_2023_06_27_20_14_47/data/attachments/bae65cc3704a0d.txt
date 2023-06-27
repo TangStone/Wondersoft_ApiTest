@@ -1,0 +1,14 @@
+INFO     root:test_18_alarminfo.py:28 ==========开始执行用例：alarminfo_list_01==========
+INFO     root:runcase.py:31 -·-·-·-·-·-·-·-·-·-发送请求并接受信息 START-·-·-·-·-·-·-·-·-·-
+INFO     root:handleyaml.py:94 Yaml测试用例基础架构检查通过
+INFO     root:runcase.py:50 重组后的用例信息：{'name': '查询集群列表', 'description': '查询集群列表', 'request': {'data': {'page': 1, 'rows': 20}, 'method': 'GET', 'address': '/api/auth/v1/monitor/listAlarmInfo', 'headers': {'Content-Type': 'application/json', 'token': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJhdWQiOiJhcHBsaWNhdGlvbiIsInN1YiI6IjEyNWFmM2VkLWFmNGItNDU4ZC04YWVkLWNiZWYwZTYyYzYzYSIsImlzcyI6ImJtc19zZXJ2ZXIiLCJzZXNzaW9uSWQiOiIxMjVhZjNlZC1hZjRiLTQ1OGQtOGFlZC1jYmVmMGU2MmM2M2EiLCJleHAiOjE2ODgwNDc2ODksImlhdCI6MTY4Nzg2NzY4OX0.bFZaQIrZbatN0oHQbyZ7ObTIcgFvwRpAz7lLkHETnYKseZ0G5Rhs-pcbRTwBWuUf9kDuwQcxmZVEHmnE7-56-g', 'Referer': 'https://192.168.148.174:31000/sub-app-unity/monitor/listAlarmInfo'}}, 'validate': {'code': 200, 'response': {'statusCode': 0, 'msg': 'success'}}, 'epic': '系统管理', 'feature': '运维管理-告警信息', 'story': '查询告警信息接口', 'base_url': 'https://192.168.148.174:31000', 'caseid': 'alarminfo_list_01'}
+INFO     root:runcase.py:81 请求地址：https://192.168.148.174:31000/api/auth/v1/monitor/listAlarmInfo
+INFO     root:runcase.py:82 请求方法：GET
+INFO     root:runcase.py:83 请求头：{'Content-Type': 'application/json', 'token': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJhdWQiOiJhcHBsaWNhdGlvbiIsInN1YiI6IjEyNWFmM2VkLWFmNGItNDU4ZC04YWVkLWNiZWYwZTYyYzYzYSIsImlzcyI6ImJtc19zZXJ2ZXIiLCJzZXNzaW9uSWQiOiIxMjVhZjNlZC1hZjRiLTQ1OGQtOGFlZC1jYmVmMGU2MmM2M2EiLCJleHAiOjE2ODgwNDc2ODksImlhdCI6MTY4Nzg2NzY4OX0.bFZaQIrZbatN0oHQbyZ7ObTIcgFvwRpAz7lLkHETnYKseZ0G5Rhs-pcbRTwBWuUf9kDuwQcxmZVEHmnE7-56-g', 'Referer': 'https://192.168.148.174:31000/sub-app-unity/monitor/listAlarmInfo'}
+INFO     root:runcase.py:93 请求参数：{'page': 1, 'rows': 20}
+DEBUG    urllib3.connectionpool:connectionpool.py:1003 Starting new HTTPS connection (1): 192.168.148.174:31000
+DEBUG    urllib3.connectionpool:connectionpool.py:456 https://192.168.148.174:31000 "GET /api/auth/v1/monitor/listAlarmInfo?page=1&rows=20 HTTP/1.1" 200 66
+INFO     root:runcase.py:166 请求接口结果： {'statusCode': 0, 'msg': 'success', 'data': {'totalCount': 0, 'list': []}}
+INFO     root:checkresult.py:151 code断言通过, 期望状态码:200, 实际状态码:200
+INFO     root:checkresult.py:86 返回结果断言通过, 期望返回值:{'statusCode': 0, 'msg': 'success'}, 实际返回值:{'statusCode': 0, 'msg': 'success', 'data': {'totalCount': 0, 'list': []}}
+INFO     root:runcase.py:61 -·-·-·-·-·-·-·-·-·-发送请求并接受信息 END-·-·-·-·-·-·-·-·-·-

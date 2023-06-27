@@ -1,0 +1,14 @@
+INFO     root:test_17_logbackup.py:73 ==========开始执行用例：logbackup_updateconfig_01==========
+INFO     root:runcase.py:31 -·-·-·-·-·-·-·-·-·-发送请求并接受信息 START-·-·-·-·-·-·-·-·-·-
+INFO     root:handleyaml.py:94 Yaml测试用例基础架构检查通过
+INFO     root:runcase.py:50 重组后的用例信息：{'name': '修改备份配置', 'description': '修改备份配置', 'request': {'data': {'backupTaskName': '终端日志备份修改', 'nameDatabase': 'sas_v3_doc', 'description': '终端日志备份-自动化测试修改', 'retentionTime': 1, 'firstExecutionTime': '2023-06-27 21:14:45', 'intervalPeriod': 2, 'cycleUnit': '2', 'retentionUnit': '2'}, 'method': 'POST', 'address': '/api/auth/v1/log/modBackupConfig', 'headers': {'Content-Type': 'application/json', 'token': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJhdWQiOiJhcHBsaWNhdGlvbiIsInN1YiI6IjEyNWFmM2VkLWFmNGItNDU4ZC04YWVkLWNiZWYwZTYyYzYzYSIsImlzcyI6ImJtc19zZXJ2ZXIiLCJzZXNzaW9uSWQiOiIxMjVhZjNlZC1hZjRiLTQ1OGQtOGFlZC1jYmVmMGU2MmM2M2EiLCJleHAiOjE2ODgwNDc2ODksImlhdCI6MTY4Nzg2NzY4OX0.bFZaQIrZbatN0oHQbyZ7ObTIcgFvwRpAz7lLkHETnYKseZ0G5Rhs-pcbRTwBWuUf9kDuwQcxmZVEHmnE7-56-g', 'Referer': 'https://192.168.148.174:31000/sub-app-unity/syslogBackUp'}}, 'validate': {'code': 200, 'response': {'statusCode': 0, 'msg': 'success'}}, 'epic': '系统管理', 'feature': '运维管理-日志备份配置', 'story': '修改备份配置接口', 'base_url': 'https://192.168.148.174:31000', 'caseid': 'logbackup_updateconfig_01'}
+INFO     root:runcase.py:81 请求地址：https://192.168.148.174:31000/api/auth/v1/log/modBackupConfig
+INFO     root:runcase.py:82 请求方法：POST
+INFO     root:runcase.py:83 请求头：{'Content-Type': 'application/json', 'token': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJhdWQiOiJhcHBsaWNhdGlvbiIsInN1YiI6IjEyNWFmM2VkLWFmNGItNDU4ZC04YWVkLWNiZWYwZTYyYzYzYSIsImlzcyI6ImJtc19zZXJ2ZXIiLCJzZXNzaW9uSWQiOiIxMjVhZjNlZC1hZjRiLTQ1OGQtOGFlZC1jYmVmMGU2MmM2M2EiLCJleHAiOjE2ODgwNDc2ODksImlhdCI6MTY4Nzg2NzY4OX0.bFZaQIrZbatN0oHQbyZ7ObTIcgFvwRpAz7lLkHETnYKseZ0G5Rhs-pcbRTwBWuUf9kDuwQcxmZVEHmnE7-56-g', 'Referer': 'https://192.168.148.174:31000/sub-app-unity/syslogBackUp'}
+INFO     root:runcase.py:93 请求参数：{'backupTaskName': '终端日志备份修改', 'nameDatabase': 'sas_v3_doc', 'description': '终端日志备份-自动化测试修改', 'retentionTime': 1, 'firstExecutionTime': '2023-06-27 21:14:45', 'intervalPeriod': 2, 'cycleUnit': '2', 'retentionUnit': '2'}
+DEBUG    urllib3.connectionpool:connectionpool.py:1003 Starting new HTTPS connection (1): 192.168.148.174:31000
+DEBUG    urllib3.connectionpool:connectionpool.py:456 https://192.168.148.174:31000 "POST /api/auth/v1/log/modBackupConfig HTTP/1.1" 200 32
+INFO     root:runcase.py:155 请求接口结果： {'statusCode': 0, 'msg': 'success'}
+INFO     root:checkresult.py:151 code断言通过, 期望状态码:200, 实际状态码:200
+INFO     root:checkresult.py:86 返回结果断言通过, 期望返回值:{'statusCode': 0, 'msg': 'success'}, 实际返回值:{'statusCode': 0, 'msg': 'success'}
+INFO     root:runcase.py:61 -·-·-·-·-·-·-·-·-·-发送请求并接受信息 END-·-·-·-·-·-·-·-·-·-

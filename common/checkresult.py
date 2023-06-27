@@ -10,6 +10,7 @@
 import allure, logging, jsonpath
 
 from common import handledict
+from common import database
 
 
 def check_result(hope_res, real_res, real_code):
@@ -28,6 +29,43 @@ def check_result(hope_res, real_res, real_code):
                 assert_text(value,real_res)
             elif key == 'response':
                 assert_response(value, real_res)
+            elif key == 'dbcheck':
+                assert_db(value)
+
+def assert_db(hope_res):
+    """
+    数据库校验
+    :param hope_res:
+    :return:
+    """
+    if hope_res:
+        for dbcheck_data in hope_res:
+            db_type = dbcheck_data['type']  # 数据库类型
+            db_sql = dbcheck_data['sql']
+            if db_type == 'mysql':
+                if db_sql[0:6].upper() == 'SELECT':
+                    sql_date = database.MysqlConn().mysql_query(db_sql)
+                    for param in dbcheck_data['result']:
+                        sql_value = jsonpath.jsonpath(sql_date, param['path'])
+                        value = param['value']
+                        try:
+                            with allure.step("数据库校验校验"):
+                                allure.attach(name="期望返回值", body=str(value))
+                                if sql_value:
+                                    allure.attach(name='实际返回值', body=str(sql_value[0]))
+                                    assert str(value) == str(sql_value[0])
+                                    logging.info("json断言通过, 期望结果:%s, 实际结果:%s", value, sql_value[0])
+                                else:
+                                    allure.attach(name='实际返回值', body=str(sql_value))
+                                    raise AssertionError("该条sql未查询出任何数据:" + str(db_sql))
+                        except AssertionError:
+                            logging.error("数据库断言未通过, 期望返回值:%s, 实际返回值：%s", value, sql_value[0])
+                            raise
+                else:
+                    raise Exception("断言的 sql 必须是查询的 sql")
+            else:
+                raise Exception("当前暂不支持此种数据库类型：" + str(db_type))
+
 
 def assert_response(hope_res, real_res):
     """

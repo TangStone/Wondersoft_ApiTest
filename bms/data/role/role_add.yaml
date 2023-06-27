@@ -36,3 +36,10 @@
         code: 200
         # 返回值校验
         response: {"statusCode": 0,"msg": "success"}
+        # 数据库校验
+        dbcheck:
+          - type: mysql
+            sql: select * from `bms-general-aa`.t_sys_role tsr where roleName = '自动化测试角色'
+            result:
+              - path: $.roleName
+                value: 自动化测试角色

@@ -74,6 +74,15 @@
           response:
             - value: $.data[0].groupId
               name: groupId
+#      # 前置sql
+#      setup_sql:
+#        - type: mysql    #数据库类型：mysql
+#          #sql语句，取返回的第一组数据
+#          sql: select count(*) as count from `bms-general-aa`.t_sys_role tsr where `type` != 0
+#          #sql取值
+#          sqldata:
+#            - value: $.count
+#              name: totalCount
       # 校验
       validate:
         # 状态码校验
@@ -90,11 +99,12 @@
 1. 从配置文件中取值：${config(host)}
 2. 从中间件文件中取值：${extract(token)}
 3. 从关联用例中取值：${relevance(c_id)}
-4. 从关联用例中取返回值列表：${relevance(c_id;type=list)}
-5. 取值后，根据jsonpath获取指定值：${Eval(${relevance(fileContent)};;path=filelist[0].md5)}
-6. 取值后，进行公式计算：${Eval(${relevance(c_version)};;cal=+1)}
-7. 获取当前时间：${GetTime(format=%Y-%m-%d %H:%M:%S)} 
-8. 获取当前时间后偏移：${GetTime(format=%Y-%m-%d %H:%M:%S;cal=m+1)}    (w:周偏移、d:天偏移、h:小时偏移、m:分钟偏移)
+4. 从数据库sql查询返回值中取值：${db(totalCount)} 
+5. 从关联用例中取返回值列表：${relevance(c_id;type=list)} 
+6. 取值后，根据jsonpath获取指定值：${Eval(${relevance(fileContent)};;path=filelist[0].md5)} 
+7. 取值后，进行公式计算：${Eval(${relevance(c_version)};;cal=+1)} 
+8. 获取当前时间：${GetTime(format=%Y-%m-%d %H:%M:%S)} 
+9. 获取当前时间后偏移：${GetTime(format=%Y-%m-%d %H:%M:%S;cal=m+1)}    (w:周偏移、d:天偏移、h:小时偏移、m:分钟偏移)
 
 ## 统一平台Yaml测试用例结构
 <table>
