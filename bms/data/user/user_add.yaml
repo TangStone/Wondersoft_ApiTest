@@ -62,3 +62,16 @@
         code: 200
         # 返回值校验
         response: { "statusCode": 0,"msg": "success" }
+    # 用例id
+    user_add_03:
+      # 用例名称
+      name: 新增用户-所属用户组不存在
+      # 用例描述
+      description: 在自动化测试组下新增用户，所属用户组不存在
+      # 请求信息，包括data，file
+      request:
+        data: { "userName": "apiuser02","authentication": 0,"displayName": "自动化测试用户02","groupId": "test","roleId": 0,"employeeId": "","phoneNumber": "","mobileNumber": "","email": "","gender": "男","ipAddress": "","leaderUserSid": "","locationCode": "","idCard": "","platformCode": "","remark": "", }
+      # 校验
+      validate:
+        # 状态码校验
+        code: 400

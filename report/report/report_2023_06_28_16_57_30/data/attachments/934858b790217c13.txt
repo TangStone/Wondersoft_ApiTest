@@ -1,0 +1,14 @@
+[32mINFO    [0m root:test_08_docrule.py:82 ==========开始执行用例：docrule_importdocrule_01==========
+[32mINFO    [0m root:runcase.py:31 -·-·-·-·-·-·-·-·-·-发送请求并接受信息 START-·-·-·-·-·-·-·-·-·-
+[32mINFO    [0m root:handleyaml.py:94 Yaml测试用例基础架构检查通过
+[32mINFO    [0m root:runcase.py:50 重组后的用例信息：{'name': '导入自动化测试关键字规则', 'description': '导入自动化测试关键字规则', 'request': {'file': {'file': '自动化测试导入文档规则.xlsx'}, 'method': 'POST', 'address': '/api/dlpparam/v1/dlpDocRule/importDocRuleSheet', 'headers': {'Content-Type': 'multipart/form-data', 'token': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJhdWQiOiJhcHBsaWNhdGlvbiIsInN1YiI6Ijc2ZDQ0NmFlLTdkMGEtNDVhYy04NzE0LTgxNmQzMzRjYzg4ZSIsImlzcyI6ImJtc19zZXJ2ZXIiLCJzZXNzaW9uSWQiOiI3NmQ0NDZhZS03ZDBhLTQ1YWMtODcxNC04MTZkMzM0Y2M4OGUiLCJleHAiOjE2ODgxMjIyMDEsImlhdCI6MTY4Nzk0MjIwMX0.FWYPT5nPgOdBtOT0wGRVZNVTB6oggV1ehXLgP2gppALL2Djxp_46T_KhaOizqJlxUPAYRWJs7nKHiU-ug2qGKA', 'Referer': 'https://192.168.148.174:31000/sub-app-dlpparam/dlpFileDocRule'}}, 'validate': {'code': 200, 'response': {'statusCode': 0}}, 'epic': '规则管理', 'feature': '基础规则-关键字/正则', 'story': '导入文档规则sheet接口', 'base_url': 'https://192.168.148.174:31000', 'caseid': 'docrule_importdocrule_01'}
+[32mINFO    [0m root:runcase.py:81 请求地址：https://192.168.148.174:31000/api/dlpparam/v1/dlpDocRule/importDocRuleSheet
+[32mINFO    [0m root:runcase.py:82 请求方法：POST
+[32mINFO    [0m root:runcase.py:83 请求头：{'Content-Type': 'multipart/form-data', 'token': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJhdWQiOiJhcHBsaWNhdGlvbiIsInN1YiI6Ijc2ZDQ0NmFlLTdkMGEtNDVhYy04NzE0LTgxNmQzMzRjYzg4ZSIsImlzcyI6ImJtc19zZXJ2ZXIiLCJzZXNzaW9uSWQiOiI3NmQ0NDZhZS03ZDBhLTQ1YWMtODcxNC04MTZkMzM0Y2M4OGUiLCJleHAiOjE2ODgxMjIyMDEsImlhdCI6MTY4Nzk0MjIwMX0.FWYPT5nPgOdBtOT0wGRVZNVTB6oggV1ehXLgP2gppALL2Djxp_46T_KhaOizqJlxUPAYRWJs7nKHiU-ug2qGKA', 'Referer': 'https://192.168.148.174:31000/sub-app-dlpparam/dlpFileDocRule'}
+[32mINFO    [0m root:runcase.py:97 上传文件：{'file': '自动化测试导入文档规则.xlsx'}
+[35mDEBUG   [0m urllib3.connectionpool:connectionpool.py:1003 Starting new HTTPS connection (1): 192.168.148.174:31000
+[35mDEBUG   [0m urllib3.connectionpool:connectionpool.py:456 https://192.168.148.174:31000 "POST /api/dlpparam/v1/dlpDocRule/importDocRuleSheet HTTP/1.1" 200 16
+[32mINFO    [0m root:runcase.py:155 请求接口结果： {'statusCode': 0}
+[32mINFO    [0m root:checkresult.py:152 code断言通过, 期望状态码:200, 实际状态码:200
+[32mINFO    [0m root:checkresult.py:87 返回结果断言通过, 期望返回值:{'statusCode': 0}, 实际返回值:{'statusCode': 0}
+[32mINFO    [0m root:runcase.py:61 -·-·-·-·-·-·-·-·-·-发送请求并接受信息 END-·-·-·-·-·-·-·-·-·-

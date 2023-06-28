@@ -1,4 +1,9 @@
 # 接口自动化:python+pytest+yaml+allure
+
+## 流程图
+
+![img.png](img.png)
+
 ## 目录结构
 
 ```
@@ -103,15 +108,23 @@
 #                value: 自动化测试角色
 ```
 ## 取值方式
-1. 从配置文件中取值：${config(host)}
-2. 从中间件文件中取值：${extract(token)}
-3. 从关联用例中取值：${relevance(c_id)}
-4. 从数据库sql查询返回值中取值：${db(totalCount)} 
-5. 从关联用例中取返回值列表：${relevance(c_id;type=list)} 
-6. 取值后，根据jsonpath获取指定值：${Eval(${relevance(fileContent)};;path=filelist[0].md5)} 
-7. 取值后，进行公式计算：${Eval(${relevance(c_version)};;cal=+1)} 
-8. 获取当前时间：${GetTime(format=%Y-%m-%d %H:%M:%S)} 
-9. 获取当前时间后偏移：${GetTime(format=%Y-%m-%d %H:%M:%S;cal=m+1)}    (w:周偏移、d:天偏移、h:小时偏移、m:分钟偏移)
+1. 关联取值：${取值方式(取值名称)}
+   - 从配置文件中取值：${config(host)}
+   - 从中间文件中取值：${extract(token)}
+   - 从数据库sql查询结果中取值：${db(totalCount)}
+   - 从关联用例发送、返回值中取值：${relevance(c_id)}   
+   **备注：使用jsonpath取值，默认取第一个匹配值**
+2. 关联取值扩展
+   - 取值后，进行公示计算：${Eval(${relevance(c_version)};;cal=+1)} 
+   - 取值后，转换格式，根据jsonpath获取指定值：${Eval(${relevance(fileContent)};;path=filelist[0].md5)}  
+      （针对获取的值为字符串，需要获取字符串中的特定参数的场景）
+   - 从关联用例中取返回值列表：${relevance(c_id;type=list)}   
+      （针对获取返回值中的多个参数，统一进行操作的场景）
+3. 时间取值: ${GetTime()}
+   - 获取当前时间，指定格式：${GetTime(format=%Y-%m-%d %H:%M:%S)} 
+   - 获取当前时间，时间偏移：${GetTime(format=%Y-%m-%d %H:%M:%S;cal=m+1)}
+     - +：向后偏移；-：向前偏移
+     - w：周偏移；d：天偏移；h：小时偏移；m：分钟偏移
 
 ## 统一平台Yaml测试用例结构
 <table>

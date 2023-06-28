@@ -1,0 +1,1 @@
+select count(*) as count from `bms-general-uba`.t_group_info where groupName = '自动化测试根组……&%' and isRemoved = '0'

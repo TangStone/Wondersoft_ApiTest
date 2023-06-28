@@ -1,1 +1,0 @@
-{'statusCode': 0, 'msg': 'success', 'data': {'totalCount': 1, 'list': [{'id': '355953F2-780145EA-A6F4BA3B-0C9ABFDD', 'account': 'apiuser01', 'realName': '自动化测试用户01修改', 'adminType': 0, 'themeColor': 0, 'display': 0, 'isFirstLogin': 0, 'isLocked': 0, 'isRemoved': 0, 'createTime': '2023-06-27 20:11:32', 'updateTime': '2023-06-27 20:11:32', 'pwdErrorNums': 0, 'roleName': '超级管理员'}]}}

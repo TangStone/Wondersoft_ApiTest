@@ -1,6 +1,14 @@
-ERROR[2023-06-27 20:13:52,747][9176][checkresult.py checkresult assert_response 88]：返回结果断言未通过, 期望返回值:{'statusCode': 0, 'msg': 'success'}, 实际返回值:{'statusCode': 1114886, 'msg': '找不到对应的组织机构'}
-ERROR[2023-06-27 20:13:58,228][9176][checkresult.py checkresult assert_response 88]：返回结果断言未通过, 期望返回值:{'statusCode': 0, 'msg': 'success'}, 实际返回值:{'statusCode': 1114886, 'msg': '找不到对应的组织机构'}
-ERROR[2023-06-27 20:14:03,428][9176][checkresult.py checkresult assert_response 88]：返回结果断言未通过, 期望返回值:{'statusCode': 0, 'msg': 'success'}, 实际返回值:{'statusCode': 1114886, 'msg': '找不到对应的组织机构'}
-ERROR[2023-06-27 20:14:08,650][9176][checkresult.py checkresult assert_response 88]：返回结果断言未通过, 期望返回值:{'statusCode': 0, 'msg': 'success'}, 实际返回值:{'statusCode': 1114886, 'msg': '找不到对应的组织机构'}
-ERROR[2023-06-27 20:14:21,628][9176][checkresult.py checkresult assert_response 88]：返回结果断言未通过, 期望返回值:{'statusCode': 0}, 实际返回值:{'statusCode': -1, 'msg': '该指纹库正在计算中，请稍后修改！'}
-ERROR[2023-06-27 20:14:26,944][9176][checkresult.py checkresult assert_response 88]：返回结果断言未通过, 期望返回值:{'statusCode': 0}, 实际返回值:{'statusCode': -1, 'msg': '该指纹库正在计算中，请稍后修改！'}
+ERROR[2023-06-28 16:55:46,905][12104][checkresult.py checkresult assert_response 89]：返回结果断言未通过, 期望返回值:{'statusCode': 0, 'msg': 'success'}, 实际返回值:{'statusCode': 1114886, 'msg': '找不到对应的组织机构'}
+ERROR[2023-06-28 16:55:53,778][12104][checkresult.py checkresult assert_response 89]：返回结果断言未通过, 期望返回值:{'statusCode': 0, 'msg': 'success'}, 实际返回值:{'statusCode': 1114886, 'msg': '找不到对应的组织机构'}
+ERROR[2023-06-28 16:55:59,105][12104][checkresult.py checkresult assert_response 89]：返回结果断言未通过, 期望返回值:{'statusCode': 0, 'msg': 'success'}, 实际返回值:{'statusCode': 1114886, 'msg': '找不到对应的组织机构'}
+ERROR[2023-06-28 16:56:04,643][12104][checkresult.py checkresult assert_response 89]：返回结果断言未通过, 期望返回值:{'statusCode': 0, 'msg': 'success'}, 实际返回值:{'statusCode': 1114886, 'msg': '找不到对应的组织机构'}
+ERROR[2023-06-28 16:56:05,759][12104][checkresult.py checkresult assert_db 63]：数据库断言未通过, 期望返回值:0, 实际返回值：1
+ERROR[2023-06-28 16:56:10,882][12104][checkresult.py checkresult assert_db 63]：数据库断言未通过, 期望返回值:0, 实际返回值：1
+ERROR[2023-06-28 16:56:16,010][12104][checkresult.py checkresult assert_db 63]：数据库断言未通过, 期望返回值:0, 实际返回值：1
+ERROR[2023-06-28 16:56:21,138][12104][checkresult.py checkresult assert_db 63]：数据库断言未通过, 期望返回值:0, 实际返回值：1
+ERROR[2023-06-28 16:56:21,341][12104][checkresult.py checkresult assert_db 63]：数据库断言未通过, 期望返回值:0, 实际返回值：1
+ERROR[2023-06-28 16:56:26,477][12104][checkresult.py checkresult assert_db 63]：数据库断言未通过, 期望返回值:0, 实际返回值：1
+ERROR[2023-06-28 16:56:31,657][12104][checkresult.py checkresult assert_db 63]：数据库断言未通过, 期望返回值:0, 实际返回值：1
+ERROR[2023-06-28 16:56:36,873][12104][checkresult.py checkresult assert_db 63]：数据库断言未通过, 期望返回值:0, 实际返回值：1
+ERROR[2023-06-28 16:56:57,709][12104][checkresult.py checkresult assert_response 89]：返回结果断言未通过, 期望返回值:{'statusCode': 0}, 实际返回值:{'statusCode': -1, 'msg': '该指纹库正在计算中，请稍后修改！'}
+ERROR[2023-06-28 16:57:03,409][12104][checkresult.py checkresult assert_response 89]：返回结果断言未通过, 期望返回值:{'statusCode': 0}, 实际返回值:{'statusCode': -1, 'msg': '该指纹库正在计算中，请稍后修改！'}

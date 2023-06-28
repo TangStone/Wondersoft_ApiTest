@@ -40,7 +40,7 @@ loggers:
     propagate: False
 
 root:
-  level: DEBUG
+  level: INFO
   handlers:
     - log_file
     - log_errfile

@@ -1,0 +1,14 @@
+[32mINFO    [0m root:test_19_sysconfig.py:37 ==========开始执行用例：sysconfig_getValueByPropKey_02==========
+[32mINFO    [0m root:runcase.py:31 -·-·-·-·-·-·-·-·-·-发送请求并接受信息 START-·-·-·-·-·-·-·-·-·-
+[32mINFO    [0m root:handleyaml.py:94 Yaml测试用例基础架构检查通过
+[32mINFO    [0m root:runcase.py:50 重组后的用例信息：{'name': '根据propKey获取对应的propValue-不存在的propKey', 'description': '根据propKey获取对应的propValue-不存在的propKey', 'request': {'data': {'propKey': 'test'}, 'method': 'POST', 'address': '/api/system/v1/system/getValueByPropKey', 'headers': {'Content-Type': 'application/x-www-form-urlencoded', 'token': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJhdWQiOiJhcHBsaWNhdGlvbiIsInN1YiI6Ijc2ZDQ0NmFlLTdkMGEtNDVhYy04NzE0LTgxNmQzMzRjYzg4ZSIsImlzcyI6ImJtc19zZXJ2ZXIiLCJzZXNzaW9uSWQiOiI3NmQ0NDZhZS03ZDBhLTQ1YWMtODcxNC04MTZkMzM0Y2M4OGUiLCJleHAiOjE2ODgxMjIyMDEsImlhdCI6MTY4Nzk0MjIwMX0.FWYPT5nPgOdBtOT0wGRVZNVTB6oggV1ehXLgP2gppALL2Djxp_46T_KhaOizqJlxUPAYRWJs7nKHiU-ug2qGKA', 'Referer': 'https://192.168.148.174:31000/sub-app-unity/systemConfig'}}, 'validate': {'code': 200, 'response': {'statusCode': 0, 'data': {}}}, 'epic': '系统管理', 'feature': '参数管理-系统参数管理', 'story': '根据propKey获取对应的propValue接口', 'base_url': 'https://192.168.148.174:31000', 'caseid': 'sysconfig_getValueByPropKey_02'}
+[32mINFO    [0m root:runcase.py:81 请求地址：https://192.168.148.174:31000/api/system/v1/system/getValueByPropKey
+[32mINFO    [0m root:runcase.py:82 请求方法：POST
+[32mINFO    [0m root:runcase.py:83 请求头：{'Content-Type': 'application/x-www-form-urlencoded', 'token': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJhdWQiOiJhcHBsaWNhdGlvbiIsInN1YiI6Ijc2ZDQ0NmFlLTdkMGEtNDVhYy04NzE0LTgxNmQzMzRjYzg4ZSIsImlzcyI6ImJtc19zZXJ2ZXIiLCJzZXNzaW9uSWQiOiI3NmQ0NDZhZS03ZDBhLTQ1YWMtODcxNC04MTZkMzM0Y2M4OGUiLCJleHAiOjE2ODgxMjIyMDEsImlhdCI6MTY4Nzk0MjIwMX0.FWYPT5nPgOdBtOT0wGRVZNVTB6oggV1ehXLgP2gppALL2Djxp_46T_KhaOizqJlxUPAYRWJs7nKHiU-ug2qGKA', 'Referer': 'https://192.168.148.174:31000/sub-app-unity/systemConfig'}
+[32mINFO    [0m root:runcase.py:93 请求参数：{'propKey': 'test'}
+[35mDEBUG   [0m urllib3.connectionpool:connectionpool.py:1003 Starting new HTTPS connection (1): 192.168.148.174:31000
+[35mDEBUG   [0m urllib3.connectionpool:connectionpool.py:456 https://192.168.148.174:31000 "POST /api/system/v1/system/getValueByPropKey HTTP/1.1" 200 26
+[32mINFO    [0m root:runcase.py:155 请求接口结果： {'statusCode': 0, 'data': {}}
+[32mINFO    [0m root:checkresult.py:152 code断言通过, 期望状态码:200, 实际状态码:200
+[32mINFO    [0m root:checkresult.py:87 返回结果断言通过, 期望返回值:{'statusCode': 0, 'data': {}}, 实际返回值:{'statusCode': 0, 'data': {}}
+[32mINFO    [0m root:runcase.py:61 -·-·-·-·-·-·-·-·-·-发送请求并接受信息 END-·-·-·-·-·-·-·-·-·-

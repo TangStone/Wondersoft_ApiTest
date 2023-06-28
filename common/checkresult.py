@@ -45,22 +45,23 @@ def assert_db(hope_res):
             if db_type == 'mysql':
                 if db_sql[0:6].upper() == 'SELECT':
                     sql_date = database.MysqlConn().mysql_query(db_sql)
-                    for param in dbcheck_data['result']:
-                        sql_value = jsonpath.jsonpath(sql_date, param['path'])
-                        value = param['value']
-                        try:
-                            with allure.step("数据库校验校验"):
+                    with allure.step("数据库校验校验"):
+                        for param in dbcheck_data['result']:
+                            sql_value = jsonpath.jsonpath(sql_date, param['path'])
+                            value = param['value']
+                            try:
+                                allure.attach(name="查询sql", body=str(db_sql))
                                 allure.attach(name="期望返回值", body=str(value))
                                 if sql_value:
                                     allure.attach(name='实际返回值', body=str(sql_value[0]))
                                     assert str(value) == str(sql_value[0])
-                                    logging.info("json断言通过, 期望结果:%s, 实际结果:%s", value, sql_value[0])
+                                    logging.info("数据库断言通过, 期望结果:%s, 实际结果:%s", value, sql_value[0])
                                 else:
                                     allure.attach(name='实际返回值', body=str(sql_value))
                                     raise AssertionError("该条sql未查询出任何数据:" + str(db_sql))
-                        except AssertionError:
-                            logging.error("数据库断言未通过, 期望返回值:%s, 实际返回值：%s", value, sql_value[0])
-                            raise
+                            except AssertionError:
+                                logging.error("数据库断言未通过, 期望返回值:%s, 实际返回值：%s", value, sql_value[0])
+                                raise
                 else:
                     raise Exception("断言的 sql 必须是查询的 sql")
             else:
