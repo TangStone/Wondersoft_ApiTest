@@ -1,8 +1,0 @@
-- casename: 新增管理员
-  description: 新增管理员
-  steps:
-    # 新增角色
-    - case: testcases/bms/role_add.yaml
-    # 新增管理员
-    - api: [ api/bms/useradmin_add.yaml, useradmin_add ]
-      data: useradmin_add_01
