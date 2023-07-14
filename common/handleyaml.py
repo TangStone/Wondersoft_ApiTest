@@ -63,19 +63,6 @@ class YamlHandle:
         with open(self.path, 'w', encoding='utf-8') as file_obj:
             file_obj.truncate()
 
-    # def get_yaml_value(self):
-    #     """
-    #     获取yaml文件中的指定值
-    #     :return:
-    #     """
-    #     yaml_data = self.read_yaml()
-    #     expect_value_list = self.data.split(',')
-    #     if isinstance(yaml_data, dict):
-    #         for i in expect_value_list:
-    #             yaml_data = yaml_data[i]
-    #     return yaml_data
-
-
 def standard_yaml(casedata):
     """
     判断测试用例格式是否有误
@@ -86,20 +73,27 @@ def standard_yaml(casedata):
     msg = ''
     try:
         casedata_key = casedata.keys()
-        # 判断一级关键字是否包含有：name, base_url, request, validate
-        if "name" in casedata_key and "base_url" in casedata_key and "request" in casedata_key and "validate" in casedata_key:
-            # 判断request下是否包含有： method，url，headers
+        # 判断一级关键字是否包含有：name, base_url, request, postProcessors
+        if "name" in casedata_key and "base_url" in casedata_key and "request" in casedata_key and "postProcessors" in casedata_key:
+            # 判断request下是否包含有： method，address，headers
             request_key = casedata['request'].keys()
             if "method" in request_key and "address" in request_key and "headers" in request_key:
-                logging.info("Yaml测试用例基础架构检查通过")
+                # 判断postProcessors下是否有：extract
+                postProcessors_key = casedata['postProcessors'].keys()
+                if "assert" in postProcessors_key:
+                    logging.info("Yaml测试用例基础架构检查通过")
+                else:
+                    flag = False
+                    msg = '用例编写有误，postProcessors下必须包含：assert'
+                    logging.error("用例编写有误，postProcessors下必须包含：assert")
             else:
                 flag = False
                 msg = '用例编写有误，request下必须包含：method，address，headers'
                 logging.error("用例编写有误，request下必须包含：method，address，headers")
         else:
             flag = False
-            msg = '用例编写有误，一级关键字必须包含：name，base_url，request，validate'
-            logging.error("用例编写有误，一级关键字必须包含：name，base_url，request，validate")
+            msg = '用例编写有误，一级关键字必须包含：name，base_url，request，postProcessors'
+            logging.error("用例编写有误，一级关键字必须包含：name，base_url，request，postProcessors")
     except:
         ex_type, ex_val, ex_stack = sys.exc_info()
         error_info = exceptions.get_error_info(ex_type, ex_val, ex_stack)

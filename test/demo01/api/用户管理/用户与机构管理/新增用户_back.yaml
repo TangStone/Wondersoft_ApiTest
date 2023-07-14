@@ -1,0 +1,41 @@
+prmodule: 用户管理   # 一级模块
+secmodule: 基础数据管理  # 二级模块
+termodule: 用户与机构管理 # 三级模块
+apiname: 新增用户    # 接口名称
+# 接口基本信息
+case_info:
+  # 基础URL:https://192.168.148.174:31000
+  base_url: ${{host}}
+  # 请求信息
+  request:
+    # 请求类型
+    method: POST
+    # 请求地址
+    address: /api/user/v1/user
+    # 请求头
+    headers:
+      Content-Type: application/json
+      token: ${{token}}
+      Referer: ${{host}}/sub-app-unity/group
+    # 请求数据
+    data:
+      # 参数名称: [参数类型,是否必须,备注]
+      userName: ${{userName}}   #[ string,必须, 账号]
+      authentication: ${{authentication}}   #[ string,必须, 认证方式 ]
+      displayName: ${{displayName}}   #[ string,必须, 用户姓名 ]
+      groupId: ${{groupId}}   #[ string,必须, 所属用户组ID ]
+      roleId: ${{roleId}}   #[ string,必须, 角色ID ]
+      employeeId: ${{employeeId}}   #[ string,非必须, 工号 ]
+      phoneNumber: ${{phoneNumber}}   #[ string,非必须, 电话 ]
+      mobileNumber: ${{mobileNumber}}   #[ string,非必须, 手机 ]
+      email: ${{email}}   #[ string,非必须, 邮箱 ]
+      gender: ${{gender}}   #[ string,非必须, 性别 ]
+      ipAddress: ${{ipAddress}}   #[ string,非必须, IP地址 ]
+      leaderUserSid: ${{leaderUserSid}}   #[ string,非必须, 上级领导人SID ]
+      locationCode: ${{locationCode}}   #[ string,非必须, 区域]
+      idCard: ${{idCard}}   #[ string,非必须  ]
+      platformCode: ${{platformCode}}   #[ string,非必须 ]
+      remark: ${{remark}}   #[ string,非必须, 备注 ]
+    response:
+      statusCode: ${{statusCode}}   #[ number,必须,状态码 ]
+      msg: ${{msg}}   #[ string,必须,状态 ]

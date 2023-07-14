@@ -1,0 +1,22 @@
+# 接口名称
+name: 登录
+# 接口基本信息
+info:
+  # 接口类型
+  method: post
+  # 接口路径
+  address: /api/auth/v1/auth/login
+parameters:
+  # 请求头
+  headers:
+    Content-Type: application/json
+    Referer: /sub-app-unity/systemAdminLog
+  # 请求体
+  body:
+    # 参数名称: [参数类型,是否必须,备注]
+    unityId: ${unityId}    #[ boolean,非必须 ]
+    username: ${username}    #[ string,非必须 ]
+    gossip: ${gossip}    #[ string,非必须 ]
+response:
+
+

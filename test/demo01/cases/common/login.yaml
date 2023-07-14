@@ -1,0 +1,31 @@
+- epic: 用户登录   # 一级模块
+  feature: 用户登录模块  # 二级模块
+  story: 用户成功登录场景    # 接口名称
+  # 用例名称
+  name: 登录成功（正确用户名、密码）
+  # 用例描述
+  description: 输入正确用户名密码，管理员用户登录统一平台，获取token值
+
+  # 前置操作
+  setup:
+    pass
+  steps:
+    - description: 用户登录
+      api: ["统一平台接口信息.xlsx","用户登录","1"]   #接口信息文件路径，sheet页，接口id
+      data:
+        unityId: false   #是否启用验证码
+        username: admin  #用户名
+        gossip: ${enc(Ws-123456)}  #密码
+      extract:
+        token: $.data.token
+        userId: $.data.userId
+        realName: $.data.realName
+      # 校验
+      validate:
+        # 状态码校验
+        code: 200
+        # 通过jsonpath对返回数据进行校验
+        jsonpath:
+          - path: $.data.realName
+            value: admin
+            type: ==

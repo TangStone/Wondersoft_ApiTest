@@ -1,0 +1,23 @@
+# 接口名称
+name: 新增用户组
+# 接口基本信息
+info:
+  # 接口类型
+  method: POST
+  # 接口路径
+  address: /api/user/v1/group
+parameters:
+  # 请求头
+  headers:
+    Content-Type: application/json
+    token: ${token}
+    Referer: /sub-app-unity/group
+  # 请求体
+  body:
+    # 参数名称: [参数类型,是否必须,备注]
+    groupName: ${groupName}    #[ string,必须, 用户组名称 ]
+    parentGroupId: ${parentGroupId}    #[ string,必须, 父用户组id ]
+response:
+  statusCode: ${statusCode}    #[ number,必须 ]
+  msg: ${msg}    #[ string,必须 ]
+

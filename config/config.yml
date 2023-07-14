@@ -2,7 +2,7 @@
 project_name: 统一管理平台
 
 # 环境信息
-host: https://192.168.148.174:31000
+base_url: https://192.168.148.174:31000
 
 #全局登录接口
 logincase: login_01
@@ -16,4 +16,3 @@ mysql_db:
 
 # 用例路径
 casedata_path:
-  - bms/data

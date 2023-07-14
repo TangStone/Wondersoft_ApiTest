@@ -1,0 +1,61 @@
+- primodule: 用户管理   #一级模块   secondary module, tertiary module
+  secmodule: 基础数据管理   #二级模块
+  termodule: 用户与机构管理 # 三级模块
+  # 接口基本信息
+  usergroup_list:
+    # 接口名称
+    name: 用户组列表搜索
+    # 基础URL: (可去除该字段，不填写的按照配置文件中的host替换，填写的按照填写内容替换)
+    base_url: ${host}
+    # 请求类型
+    method: GET
+    # 请求地址
+    address: /api/user/v1/querygroups/${parentGroupId}
+    # 请求头
+    headers:
+      Content-Type: application/json
+      token: ${token}
+      Referer: ${host}/sub-app-unity/group
+    # 请求体
+    data:
+      groupName: ${groupName}
+      page: ${page}
+      rows: ${rows}
+    # 返回数据
+    response:
+      statusCode: ${statusCode}
+      msg: ${msg}
+      data: ..
+  # 用例信息，可包含多个用例，用例id需唯一
+  case_list:
+    # 用例id
+    usergroup_list_01:
+      # 用例名称
+      name: 用户组列表搜索-搜索一级组织机构下特定用户组信息
+      # 参数替换
+      replace_data:
+        host: ${config(host)}
+        parentGroupId: 1
+        groupName: 自动化测试根组
+        page: 1
+        rows: 20
+      # 后置操作
+      postProcessors:
+        # 断言
+        assert:
+          # 状态码校验
+          code: 200
+          # 返回值校验
+          response: { "statusCode": 0,"msg": "success" }
+          # jsonpath校验
+          jsonpath:
+            - path: $.data[0].groupName
+              value: 自动化测试根组
+              type: in
+        # 提取变量
+        extract:
+          # 提取变量
+          extract:
+            - name: groupId   #变量名称
+              type: temp   # 全局变量、临时变量
+              path: $.data[0].groupId   #jsonpath表达式

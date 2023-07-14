@@ -1,0 +1,12 @@
+- name: 新增用户
+  description: 初始化场景-新增用户
+  steps:
+    # 新增用户组
+    - api: [api/bms/usergroup_add.yaml, usergroup_add]
+      data: usergroup_add_01
+    # 用户组列表查询
+    - api: [api/bms/usergroup_list.yaml, usergroup_list]
+      data: usergroup_list_01
+    # 新增用户
+    - api: [api/bms/user_add.yaml, user_add]
+      data: user_add_01

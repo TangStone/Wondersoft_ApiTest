@@ -15,6 +15,7 @@ from config import *
 
 from common import exceptions
 from common import encryption
+from common import handleyaml
 from common.basefunc import config_dict
 
 class RegroupData:
@@ -22,50 +23,37 @@ class RegroupData:
     参数替换
     """
 
-    def __init__(self, casedata, relevance_dict, extract_dict, db_dict):
+    def __init__(self, api_casedata, temp_var_dict):
         """
-        :param casedata: 用例信息
-        :param relevance_dict: 关联参数
-        :param extract_dict: 全局参数
-        :param config_dict: 配置参数
-        :param db_dict: 数据库查询参数
+        :param api_casedata: 接口用例信息
+        :param temp_var_dict: 临时变量字典
         """
-        self.casedata = casedata
-        self.relevance_dict = relevance_dict
-        self.extract_dict = extract_dict
-        self.config_dict = config_dict
-        self.db_dict = db_dict
-        # logging.info("casedata:%s", self.casedata)
-        # logging.info("relevance_dict:%s", self.relevance_dict)
-        # logging.info("extract_dict:%s", self.extract_dict)
-        # logging.info("config_dict:%s", self.config_dict)
+        self.api_casedata = api_casedata    # 接口用例信息
+        self.global_var_dict = handleyaml.YamlHandle(EXTRACT_DIR).read_yaml()   #全局变量字典
+        self.temp_var_dict = temp_var_dict  # 临时变量字典
+        self.env_var_dict = config_dict     # 环境变量字典
+        # logging.info("api_casedata:%s", self.api_casedata)
+        # logging.info("global_var_dict:%s", self.global_var_dict)
+        # logging.info("temp_var_dict:%s", self.temp_var_dict)
+        # logging.info("env_var_dict:%s", self.env_var_dict)
 
-    @staticmethod
-    def get_value(param, data):
+    def get_value(self, param):
         """
         获取参数值
-        :param param: key
-        :param data: 取值字典
+        :param param: 取值参数
         :return:
         """
-        param_list = param.split(";")  # 拆分取值需求 docrule_01.c_id;type=list
-        #获取参数值
-        if isinstance(data, dict):
-            # 获取参数值
-            expect_value_list = param_list[0].split('.')
-            for i in expect_value_list:
-                data = data[i.strip()]
-
-            if len(param_list) >= 2:
-                for pa in param_list[1:]:
-                    pa_list = pa.split("=")
-                    if pa_list[0] == 'type':   #返回整个列表，针对a[*]取值类型
-                        return data
-            else:
-                if type(data) == list: #中间件参数使用jsonpath提取的是列表，取第一个值
-                    return data[0]
-                else:
-                    return data
+        # 从临时变量字典中取值
+        if self.temp_var_dict and param in self.temp_var_dict.keys():
+            return self.temp_var_dict[param]
+        # 从全局变量中取值
+        elif self.global_var_dict and param in self.global_var_dict.keys():
+            return self.global_var_dict[param]
+        # 从环境变量中取值
+        elif self.env_var_dict and param in self.env_var_dict.keys():
+            return self.env_var_dict[param]
+        else:
+            raise Exception("参数取值失败，参数名：%s" % param)
 
     def eval_data(self, param):
         """
@@ -73,7 +61,7 @@ class RegroupData:
         :param param: key
         :return:
         """
-        param_list = param.split(";;")  # 拆分取值需求 ${relevance(fileContent)};path=filelist[0].md5
+        param_list = param.split(";")  # 拆分取值需求 ${relevance(fileContent)};path=filelist[0].md5
         value = self.replace_value(param_list[0])
         try:
             path = None
@@ -147,61 +135,17 @@ class RegroupData:
             time_str = time_str.strftime(format)
         return time_str
 
-    # def replace_value(self):
-    #     """
-    #     参数替换
-    #     :return:
-    #     """
-    #     # 保存数据类型
-    #     data_type = type(self.casedata)
-    #     if isinstance(self.casedata, dict) or isinstance(self.casedata, list):
-    #         str_data = json.dumps(self.casedata)
-    #     else:
-    #         str_data = str(self.casedata)
-    #
-    #     relevance_list = re.findall(r"\$\{relevance\((.*?)\)\}", str_data)  # 关联参数替换
-    #     config_list = re.findall(r"\$\{config\((.*?)\)\}", str_data)  # 配置文件参数替换
-    #     extract_list = re.findall(r"\$\{extract\((.*?)\)\}", str_data)  # 配置文件参数替换
-    #
-    #     if len(config_list):
-    #         for i in config_list:
-    #             pattern = re.compile(r'\$\{config\(' + i + r'\)\}')
-    #             value = self.get_value(i, self.config_dict)
-    #             str_data = re.sub(pattern, str(value), str_data, count=1)
-    #
-    #     if len(extract_list):
-    #         for i in extract_list:
-    #             pattern = re.compile(r'\$\{extract\(' + i + r'\)\}')
-    #             # print("conf_patt: ", pattern)
-    #             value = self.get_value(i, self.extract_dict)
-    #             str_data = re.sub(pattern, str(value), str_data, count=1)
-    #
-    #     if len(relevance_list):
-    #         for i in relevance_list:
-    #             pattern = re.compile(r'\$\{relevance\(' + i + r'\)\}')
-    #             value = self.get_value(i, self.relevance_dict)
-    #             str_data = re.sub(pattern, str(value), str_data, count=1)
-    #
-    #     # 还原数据类型
-    #     if isinstance(self.casedata, dict) or isinstance(self.casedata, list):
-    #         casedata = json.loads(str_data)
-    #     else:
-    #         casedata = data_type(str_data)
-    #
-    #     return casedata
-
     def regroup_case_data(self):
         """
         重组用例数据
         :return:
         """
-        sign, rawDict = self.regroup_dict(self.casedata)
+        sign, rawDict = self.regroup_dict(self.api_casedata)
         return sign, rawDict
-
 
     def regroup_dict(self, rawDict):
         """
-        递归重组用例数据
+        递归重组接口用例数据
         :param rawdict: 用例数据字典
         :return:
         """
@@ -250,70 +194,39 @@ class RegroupData:
         :param data_str: 原始字符串
         :return:
         """
-        Eval_list = re.findall(r"\$\{Eval\((.*)\)\}", str_data)  # 格式转换,非贪婪模式
-        relevance_list = re.findall(r"\$\{relevance\((.*?)\)\}", str_data)  # 关联参数替换
-        config_list = re.findall(r"\$\{config\((.*?)\)\}", str_data)  # 配置文件参数替换
-        db_list = re.findall(r"\$\{db\((.*?)\)\}", str_data)  # 配置文件参数替换
-        extract_list = re.findall(r"\$\{extract\((.*?)\)\}", str_data)  # 配置文件参数替换
-        enc_list = re.findall(r"\$\{enc\((.*?)\)\}", str_data)  # 加密替换
-        time_list = re.findall(r"\$\{GetTime\((.*?)\)\}", str_data)  # 时间
+        var_list = re.findall(r"\$\{(.*)\}", str_data)  # 变量替换
+        eval_list = re.findall(r"\$Eval\((.*)\)", str_data)  # 格式转换,非贪婪模式
+        enc_list = re.findall(r"\$Enc\((.*)\)", str_data)  # 加密
+        time_list = re.findall(r"\$GetTime\((.*)\)", str_data)  # 时间
 
-        if len(Eval_list):
-            for i in Eval_list:
+        if len(eval_list):
+            for i in eval_list:
                 value = self.eval_data(i)
-                if str_data[0:7] == '${Eval(' and str_data[-2:] == ')}':  #当前值需要转换类型
+                if str_data[0:7] == '$Eval(' and str_data[-2:] == ')':  #当前值需要转换类型
                     return value
                 else:  #返回字符串
-                    rep_data = '${Eval(' + i + ')}'
+                    rep_data = '$Eval(' + i + ')'
                     str_data = str_data.replace(rep_data, str(value), 1)
                     return str_data
+
+        if var_list:
+            for var in var_list:
+                pattern = re.compile(r'\$\{' + var + r'\}')
+                value = self.get_value(var)
+                str_data = re.sub(pattern, str(value), str_data, count=1)
+
+        if len(enc_list):
+            for i in enc_list:
+                pattern = re.compile(r'\$Enc\(' + i + r'\)')
+                value = self.get_enc_value(i)
+                str_data = re.sub(pattern, str(value), str_data, count=1)
 
         if len(time_list):
             for i in time_list:
                 value = self.get_time(i)
                 if '+' in i:   #日期向后偏移时 +字符转换
                     i = i.replace('+', '\+')
-                pattern = re.compile(r'\$\{GetTime\(' + i + r'\)\}')
-                str_data = re.sub(pattern, str(value), str_data, count=1)
-
-        if len(config_list):
-            for i in config_list:
-                pattern = re.compile(r'\$\{config\(' + i + r'\)\}')
-                value = self.get_value(i, self.config_dict)
-                str_data = re.sub(pattern, str(value), str_data, count=1)
-
-        if len(extract_list):
-            for i in extract_list:
-                pattern = re.compile(r'\$\{extract\(' + i + r'\)\}')
-                value = self.get_value(i, self.extract_dict)
-                str_data = re.sub(pattern, str(value), str_data, count=1)
-
-        if len(relevance_list):
-            for i in relevance_list:
-                pattern = re.compile(r'\$\{relevance\(' + i + r'\)\}')
-                value = self.get_value(i, self.relevance_dict)
-                str_data = re.sub(pattern, str(value), str_data, count=1)
-
-        if len(db_list):
-            for i in db_list:
-                pattern = re.compile(r'\$\{db\(' + i + r'\)\}')
-                value = self.get_value(i, self.db_dict)
-                str_data = re.sub(pattern, str(value), str_data, count=1)
-
-        if len(enc_list):
-            for i in enc_list:
-                pattern = re.compile(r'\$\{enc\(' + i + r'\)\}')
-                value = self.get_enc_value(i)
+                pattern = re.compile(r'\$GetTime\(' + i + r'\)')
                 str_data = re.sub(pattern, str(value), str_data, count=1)
 
         return str_data
-
-    @staticmethod
-    def restore_datatype(data, str_data):
-        """
-        还原数据类型
-        :param data: 取值数据
-        :param str_data: 原始字符串数据
-        :return:
-        """
-        pass

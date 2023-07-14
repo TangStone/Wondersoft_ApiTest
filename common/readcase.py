@@ -55,7 +55,7 @@ class ReadCase:
         """
         yaml_data = handleyaml.YamlHandle(casepath).read_yaml()
 
-        casedata = yaml_data['case'][caseid]
+        casedata = yaml_data[caseid]
 
         return casedata
 
@@ -113,3 +113,56 @@ class ReadCase:
             else:
                 raise Exception(file_path + 'yaml文件编写有误，非列表格式！')
         return all_case
+
+    def get_api_casedata(self, api_path, api, api_caseid):
+        """
+        获取接口用例
+        :param api_path: 接口路径
+        :param api: 接口id
+        :param api_caseid: 接口用例id
+        :return: 接口用例
+        """
+        # 读取yaml文件
+        yaml_data = handleyaml.YamlHandle(api_path).read_yaml()
+        if isinstance(yaml_data, dict):
+            api_info = yaml_data[api]['ApiInfo']  #接口基本信息
+            api_data = yaml_data[api]['ApiData'][api_caseid]  #接口数据
+            api_casedata = handledict.dict_update(api_info, api_data)
+            return api_casedata
+        else:
+            raise Exception(api_path + 'yaml文件编写有误，非json格式！')
+
+    def get_apicase_list(self, casedata):
+        """
+        根据用例信息获取测试步骤中的接口用例列表
+        :param casedata: 测试用例数据
+        :return:
+        """
+        api_case_list = []
+        step_list = casedata['steps']
+        for step in step_list:
+            if 'api_path' in step.keys():    #调用接口用例
+                api_case_list.append(step)
+            elif 'case_path' in step.keys():    #引用其它用例
+                case_path = CASE_DIR + step['case_path']
+                case_id = step['case']
+                case_data = self.get_case_data(case_id, case_path)
+                api_case_list += self.get_apicase_list(case_data)
+            else:
+                raise Exception('用例步骤编写有误！步骤：' + step + '非接口用例或引用其它用例！')
+        return api_case_list
+
+    def get_case(self, file_pathlist):
+        """
+        获取yaml文件中的所有用例
+        :param file_pathlist: yaml文件路径列表
+        :return:
+        """
+        logging.info(file_pathlist)
+        case_list = []
+        if file_pathlist:
+            for file_path in file_pathlist:
+                file_data = handleyaml.YamlHandle(file_path).read_yaml()
+                for case, casedata in file_data.items():
+                    case_list.append((case, casedata))
+        return case_list

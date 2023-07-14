@@ -1,0 +1,63 @@
+- primodule: 用户管理   #一级模块   secondary module, tertiary module
+  secmodule: 基础数据管理   #二级模块
+  termodule: 用户与机构管理 # 三级模块
+  # 接口基本信息
+  user_add:
+    # 接口名称
+    name: 新增用户
+    # 基础URL: (可去除该字段，不填写的按照配置文件中的host替换，填写的按照填写内容替换)
+    base_url: ${host}
+    # 请求类型
+    method: post
+    # 请求地址
+    address: /api/user/v1/user
+    # 请求头
+    headers:
+      Content-Type: application/json
+      token: ${token}
+      Referer: ${host}/sub-app-unity/group
+    # 请求体
+    data:
+      userName: ${userName}   #[ string,必须, 账号]
+      authentication: ${authentication}   #[ string,必须, 认证方式 ]
+      displayName: ${displayName}   #[ string,必须, 用户姓名 ]
+      groupId: ${groupId}   #[ string,必须, 所属用户组ID ]
+      roleId: ${roleId}   #[ string,必须, 角色ID ]
+      employeeId: ${employeeId}   #[ string,非必须, 工号 ]
+      phoneNumber: ${phoneNumber}   #[ string,非必须, 电话 ]
+      mobileNumber: ${mobileNumber}   #[ string,非必须, 手机 ]
+      email: ${email}   #[ string,非必须, 邮箱 ]
+      gender: ${gender}   #[ string,非必须, 性别 ]
+      ipAddress: ${ipAddress}   #[ string,非必须, IP地址 ]
+      leaderUserSid: ${leaderUserSid}   #[ string,非必须, 上级领导人SID ]
+      locationCode: ${locationCode}   #[ string,非必须, 区域]
+      idCard: ${idCard}   #[ string,非必须  ]
+      platformCode: ${platformCode}   #[ string,非必须 ]
+      remark: ${remark}   #[ string,非必须, 备注 ]
+    # 返回数据
+    response:
+      statusCode: ${statusCode}
+      msg: ${msg}
+  # 用例信息，可包含多个用例，用例id需唯一
+  case_list:
+    # 用例id
+    user_add_01:
+      # 用例名称
+      name: 新增用户-成功
+      # 参数替换
+      replace_data:
+        host: ${config(host)}
+        userName: apiuser01
+        authentication: 0
+        displayName: 自动化测试用户01
+        groupId: ${groupId}
+        roleId: 0
+        gender: 男
+      # 后置操作
+      postProcessors:
+        # 断言
+        assert:
+          # 状态码校验
+          code: 200
+          # 返回值校验
+          response: { "statusCode": 0,"msg": "success" }

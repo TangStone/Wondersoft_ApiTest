@@ -1,0 +1,26 @@
+prmodule: 用户管理   # 一级模块
+secmodule: 基础数据管理  # 二级模块
+termodule: 用户与机构管理 # 三级模块
+apiname: 删除用户（批量）    # 接口名称
+# 接口基本信息
+case_info:
+  # 基础URL:https://192.168.148.174:31000
+  base_url: ${config(host)}
+  # 请求信息
+  request:
+    # 请求类型
+    method: DELETE
+    # 请求地址
+    address: /api/user/v1/users/delete
+    # 请求头
+    headers:
+      Content-Type: application/json
+      token: ${extract(token)}
+      Referer: ${config(host)}/sub-app-unity/group
+    # 请求数据
+    data:
+      # 参数名称: [参数类型,是否必须,备注]
+      [string,非必须,用户sids]
+    response:
+      statusCode: [ number,必须 ]
+      msg: [ string,必须 ]

@@ -17,10 +17,16 @@ ROOT_DIR = os.path.realpath(__file__).split('config')[0].replace('\\', '/')
 CONFIG_DIR = ROOT_DIR + 'config/config.yml'
 
 # 中间件参数传递文件路径
-EXTRACT_DIR = ROOT_DIR + 'bms/extract.yaml'
+EXTRACT_DIR = ROOT_DIR + 'testcases/extract.yaml'
 
 # 所有用例caseid文件
 # CASE_DIR = ROOT_DIR + 'bms/case.yaml'
 
 # 文件路径
 FILE_DIR = ROOT_DIR + 'files'
+
+# 接口，接口数据文件路径
+API_DIR = ROOT_DIR + 'ApiData'
+
+# 测试用例路径
+CASE_DIR = ROOT_DIR + 'testcases'

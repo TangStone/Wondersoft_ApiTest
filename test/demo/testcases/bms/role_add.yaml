@@ -1,0 +1,6 @@
+- casename: 新增角色
+  description: 新增角色
+  steps:
+    # 新增角色
+    - api: [ api/bms/role_add.yaml, role_add ]
+      data: role_add_01

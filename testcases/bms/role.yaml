@@ -1,0 +1,18 @@
+# 用例id
+roleadd:
+  # 一级模块
+  epic: 系统管理
+  # 二级模块
+  feature: 权限管理
+  # 用例名称
+  story: 角色配置
+  # 用例名称
+  name: 新增角色
+  # 用例描述
+  description: 新增角色
+  # 测试步骤
+  steps:
+    # 新增角色
+    - api_path: /bms/role/role_add.yaml        #接口路径
+      api: role_add                           #接口id
+      data: role_add_01                       #接口数据

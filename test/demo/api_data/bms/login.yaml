@@ -1,0 +1,89 @@
+- primodule: 用户登录   #一级模块   secondary module, tertiary module
+  # 接口ID
+  login:
+    # 接口名称
+    name: 登录
+    # 基础URL: (可去除该字段，不填写的按照配置文件中的host替换，填写的按照填写内容替换)
+    base_url: ${host}
+    # 请求类型
+    method: post
+    # 请求地址
+    address: /api/auth/v1/auth/login
+    # 请求头
+    headers:
+      Content-Type: application/json
+      Referer: ${host}/sub-app-unity/systemAdminLog
+    # 请求体
+    data:
+      unityId: ${unityId}   #是否启用验证码，[boolean,非必须]
+      username: ${username}  #用户名，[string,非必须]
+      gossip: ${gossip}  #密码，[string,非必须]
+    # 前置操作
+    preProcessors:
+      # 数据库操作
+      database:
+    # 后置操作
+    postProcessors:
+      # 断言
+      assert:
+      # 提取变量
+      extract:
+      # 数据库操作
+      database:
+    # 返回数据
+    response:
+  # 用例信息，可包含多个用例，用例id需唯一
+  case_list:
+    # 用例id
+    login_01:
+      # 用例名称
+      name: 登录-成功-获取token值
+      # 参数替换
+      replace_data:
+        host: ${config(host)}
+        unityId: false
+        username: admin
+        gossip: ${enc(Ws-123456)}
+      # 后置操作
+      postProcessors:
+        # 提取变量
+        extract:
+          - name: token   #变量名称
+            type: global   # 全局变量、临时变量
+            path: $.data.token   #jsonpath表达式
+          - name: userId   #变量名称
+            type: global   # 全局变量、临时变量
+            path: $.data.userId   #jsonpath表达式
+          - name: realName   #变量名称
+            type: global   # 全局变量、临时变量
+            path: $.data.realName   #jsonpath表达式
+        # 断言
+        assert:
+          # 状态码校验
+          code: 200
+          # 通过jsonpath对返回数据进行校验
+          jsonpath:
+            - path: $.data.realName
+              type: 等于
+              value: admin
+    # 用例id
+    login_02:
+      # 用例名称
+      name: 登录-失败-（正确用户名、错误密码）
+      # 参数替换
+      replace_data:
+        host: ${config(host)}
+        unityId: false
+        username: admin
+        gossip: ${enc(123456)}
+      # 后置操作
+      postProcessors:
+        # 断言
+        assert:
+          # 状态码校验
+          code: 200
+          # 通过jsonpath对返回数据进行校验
+          jsonpath:
+            - path: $.msg
+              type: 等于
+              value: 用户名或密码错误

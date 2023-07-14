@@ -1,0 +1,23 @@
+prmodule: 用户登录   # 一级模块
+apiname: 用户登录    # 接口名称
+# 接口基本信息
+case_info:
+  # 基础URL:https://192.168.148.174:31000
+  base_url: ${{host}}
+  # 请求信息
+  request:
+    # 请求类型
+    method: post
+    # 请求地址
+    address: /api/auth/v1/auth/login
+    # 请求头
+    headers:
+      Content-Type: application/json
+      Referer: ${{host}}/sub-app-unity/systemAdminLog
+    # 请求数据
+    data:
+      # 参数名称: [参数类型,是否必须,备注]
+      unityId: [boolean,非必须]
+      username: [string,非必须]
+      gossip: [string,非必须]
+    response:

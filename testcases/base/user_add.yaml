@@ -1,0 +1,26 @@
+# 用例id
+useradd:
+  # 一级模块
+  epic: 用户管理
+  # 二级模块
+  feature: 基础数据管理
+  # 用例名称
+  story: 用户与机构管理
+  # 用例名称
+  name: 新增用户
+  # 用例描述
+  description: 新增用户
+  # 测试步骤
+  steps:
+    # 新增用户组
+    - api_path: /bms/user/user_group_add.yaml        #接口路径
+      api: user_group_add                           #接口id
+      data: user_group_add_01                       #接口数据
+    # 用户组列表查询
+    - api_path: /bms/user/user_group_list.yaml        #接口路径
+      api: user_group_list                           #接口id
+      data: user_group_list_01                       #接口数据
+    # 新增用户
+    - api_path: /bms/user/user_add.yaml        #接口路径
+      api: user_add                           #接口id
+      data: user_add_01                       #接口数据

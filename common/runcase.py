@@ -21,26 +21,98 @@ from common import teardowncase
 from common import relevancecase
 from common import extract
 from common import database
+from common import handledict
 
-def excute_case(case_data):
+class RunCase:
+    """
+    执行测试用例
+    """
+
+    def __init__(self):
+        self.temp_var_dict = {}  # 临时变量字典
+
+    def excute_case(self, casedata):
+        """
+        执行测试用例
+        :param casedata: 用例信息
+        :return:
+        """
+        if 'steps' in casedata.keys():
+            # 获取测试步骤中的接口用例列表
+            get_apicase_list = readcase.ReadCase().get_apicase_list(casedata)
+            # 遍历接口用例列表
+            for apicase in get_apicase_list:
+                api_path = API_DIR + apicase['api_path']  # 接口用例路径
+                api = apicase['api']  # 接口用例
+                api_caseid = apicase['data']  # 接口用例id
+                # 获取接口用例数据
+                api_casedata = readcase.ReadCase().get_api_casedata(api_path, api, api_caseid)
+                # 执行接口用例
+                with allure.step(api_casedata['name']):
+                    self.excute_apicase(api, api_casedata)
+
+    def excute_apicase(self, api, api_casedata):
+        """
+        执行接口用例
+        :param api: 接口
+        :param api_casedata: 接口用例数据
+        :return:
+        """
+        logging.info('-·-·-·-·-·-·-·-·-·-执行接口 START：%s-·-·-·-·-·-·-·-·-·-', api)
+        # 校验用例格式
+        flag, msg = handleyaml.standard_yaml(api_casedata)
+        if flag:  # 用例格式无误
+            # 判断是否存在前置操作
+            if 'preProcessors' in api_casedata.keys():
+                # 判断是否存在前置操作-数据库操作
+                if 'database' in api_casedata['preProcessors'].keys():
+                    # 执行数据库操作，获取参数
+                    db_dict = database.SetUpDB().get_setup_sql_data(api_casedata['preProcessors']['database'])
+                    # 更新临时变量字典
+                    self.temp_var_dict = handledict.dict_update(self.temp_var_dict, db_dict)
+
+            # 重组接口用例数据
+            sign, api_casedata = regroupdata.RegroupData(api_casedata, self.temp_var_dict).regroup_case_data()
+            if sign:  # 重组数据成功
+                logging.info("重组后的用例信息：%s", api_casedata)
+                # 发送请求
+                recv_data, recv_code = send_request(api_casedata)
+                # 结果校验
+                hope_result = api_casedata['postProcessors']['assert']
+                checkresult.check_result(hope_result, recv_data, recv_code)
+                # 提取变量
+                if 'extract' in api_casedata['postProcessors'].keys():
+                    temp_value = extract.handle_extarct(api_casedata['postProcessors']['extract'], recv_data, api_casedata)
+                    self.temp_var_dict = handledict.dict_update(self.temp_var_dict, temp_value)
+                logging.info('-·-·-·-·-·-·-·-·-·-执行接口 END：%s-·-·-·-·-·-·-·-·-·-', api)
+                return api_casedata, recv_data
+            else:
+                raise Exception(api_casedata)
+        else:
+            logging.error("用例格式错误：%s", msg)
+            raise Exception("用例格式校验失败，" + msg)
+
+def excute_apicase(api_casedata):
     """
     执行用例
-    :param case_data: 用例数据
+    :param api_casedata: 接口用例数据
     :return:
     """
     logging.info('-·-·-·-·-·-·-·-·-·-发送请求并接受信息 START-·-·-·-·-·-·-·-·-·-')
     # 校验用例格式
-    flag, msg = handleyaml.standard_yaml(case_data)
+    flag, msg = handleyaml.standard_yaml(api_casedata)
     if flag:  # 用例格式无误
         extract_dict = handleyaml.YamlHandle(EXTRACT_DIR).read_yaml()  # 全局参数
         db_dict = {}   #数据库参数
-        # 判断是否存在前置sql，若存在，执行前置sql
-        if 'setup_sql' in case_data.keys():
-            db_dict = database.SetUpDB().get_setup_sql_data(case_data['setup_sql'])
-        relevance_dict = {}  # 关联参数
-        # 判断是否存在关联用例，若存在，执行前置用例获取参数值
-        if 'relevance' in case_data.keys():
-            relevance_dict = relevancecase.Relevance().get_relevance_data(case_data['relevance'])
+        # 判断是否存在前置操作
+        if 'preProcessors' in api_casedata.keys():
+            # 判断是否存在前置操作-数据库操作
+            if 'database' in api_casedata['preProcessors'].keys():
+                db_dict = database.SetUpDB().get_setup_sql_data(api_casedata['preProcessors']['database'])
+        # relevance_dict = {}  # 关联参数
+        # # 判断是否存在关联用例，若存在，执行前置用例获取参数值
+        # if 'relevance' in case_data.keys():
+        #     relevance_dict = relevancecase.Relevance().get_relevance_data(case_data['relevance'])
 
         # 重组用例信息
         # casedata = regroupdata.RegroupData(case_data, relevance_dict, extract_dict, config_dict).replace_value()
@@ -72,7 +144,7 @@ def send_request(casedata):
     :param casedata: 用例信息
     :return:
     """
-    with allure.step("执行当前接口：" + casedata['name']):
+    with allure.step("发送请求"):
         request_data = casedata['request']
         url = casedata['base_url'] + request_data['address']
         method = request_data['method']

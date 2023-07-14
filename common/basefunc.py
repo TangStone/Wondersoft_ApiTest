@@ -29,27 +29,34 @@ def clean_dir(path):
         else:
             os.rmdir(dir_path)
 
-def file_execute_list(rootpath, filetype):
+def file_execute_list(path_list, filetype, exclude=[]):
     """
-    获取当前目录下所有的文件
-    :param rootpath: 文件夹路/文件路径
+    获取目录列表下所有的文件
+    :param path_list: 文件夹路/文件路径列表
     :param filetype: 文件类型
+    :param exclude: 排除目录/文件列表
     :return: 文件绝对路径列表
     """
-    # 获取当前路径下所有文件
-    file_path_list = []
-
-    if os.path.isdir(rootpath):   #文件夹
-        for root, dirs, files in os.walk(rootpath):
-            if files:
-                for file in files:
-                    if filetype in file:
-                        file_path_list.append(root + '/' + file)
-    else:
-        if filetype in rootpath:
-            file_path_list.append(rootpath)
-
-    return file_path_list
+    if isinstance(path_list, list):
+        # 获取所有文件路径
+        file_path_list = []
+        for path in path_list:
+            if os.path.isdir(path):   #文件夹
+                for root, dirs, files in os.walk(path):
+                    if root.replace('\\', '/') in exclude:
+                        continue
+                    if files:
+                        for file in files:
+                            if root.replace('\\', '/') + '/' + file in exclude:
+                                continue
+                            if filetype in file:
+                                file_path_list.append(root + '/' + file)
+            else:
+                if path in exclude:
+                    continue
+                if filetype in path:
+                    file_path_list.append(path)
+        return file_path_list
 
 
 def pre_process():
@@ -63,9 +70,9 @@ def pre_process():
     clean_dir(ROOT_DIR + 'report/report')
     # 清空中间件文件
     handleyaml.YamlHandle(EXTRACT_DIR).clear_yaml()
-    # 获取用例数据
-    casedata_path = [ ROOT_DIR + i for i in config_dict['casedata_path']]
-    readcase.ReadCase().read_case(casedata_path)
+    # # 获取用例数据
+    # casedata_path = [ ROOT_DIR + i for i in config_dict['casedata_path']]
+    # readcase.ReadCase().read_case(casedata_path)
 
 def post_process():
     """
@@ -74,7 +81,7 @@ def post_process():
     """
     # 添加environment.properties到allure目录
     # project_name = config_dict['project_name']
-    baseurl = config_dict['host']
+    baseurl = config_dict['base_url']
     environment = 'BaseURL=' + baseurl + '\n'
     with open(ROOT_DIR + 'report/tmp/environment.properties', 'w', encoding='ascii', errors='ignore') as file_obj:
         file_obj.write(environment)

@@ -1,0 +1,73 @@
+- epic: 用户管理   # 一级模块
+  feature: 基础数据管理-用户与机构管理  # 二级模块
+  story: 批量删除用户场景    # 接口名称
+  # 用例名称
+  name: 删除多个测试用户
+  # 用例描述
+  description: 删除多个测试用户
+
+  # 前置操作
+  setup:
+    pass
+  # 后置操作
+  teardown:
+    pass
+  steps:
+    - description: 新增用户组
+      api: ["统一平台接口信息.xlsx","用户与机构管理","1"]   #接口信息文件路径，sheet页，接口id
+      data:
+        groupName: 自动化测试根组
+        parentGroupId: '1'
+      # 校验
+      validate:
+        # 状态码校验
+        code: 200
+        # 返回值校验
+        response: { "statusCode": 0,"msg": "success" }
+        # 数据库校验
+        dbcheck:
+          - type: mysql
+            sql: select * from `bms-general-uba`.t_group_info where groupName = '自动化测试根组' and isRemoved = '0'
+            result:
+              - path: $.parentGroupId
+                value: 1
+    - description: 新增用户
+      repe: 3
+      api: [ "统一平台接口信息.xlsx","用户与机构管理","2" ]   #接口信息文件路径，sheet页，接口id
+      data: {"userName": "apiuser01","authentication": 0,"displayName": "自动化测试用户01","groupId": "${relevance(groupId)}","roleId": 0,"employeeId": "","phoneNumber":"","mobileNumber": "","email": "","gender": "男","ipAddress": "","leaderUserSid": "","locationCode": "","idCard": "","platformCode":"","remark": "",}
+      # 前置sql
+      setup_sql:
+        - type: mysql    #数据库类型：mysql
+          #sql语句，取返回的第一组数据
+          sql: select * from `bms-general-uba`.t_group_info where groupName = '自动化测试根组' and isRemoved = '0'
+          #sql取值
+          sqldata:
+            - value: $.groupId
+              name: groupId
+      # 校验
+      validate:
+        # 状态码校验
+        code: 200
+        # 返回值校验
+        response: { "statusCode": 0,"msg": "success" }
+    - description: 批量删除用户
+      api: [ "统一平台接口信息.xlsx","用户与机构管理","4" ]   #接口信息文件路径，sheet页，接口id
+      data:
+        sidList: ["${relevance(groupId)}"]
+      # 前置sql
+      setup_sql:
+        - type: mysql    #数据库类型：mysql
+          #sql语句，取返回的第一组数据
+          sql: select * from `bms-general-uba`.t_group_info where groupName = '自动化测试根组' and isRemoved = '0'
+          #sql取值
+          sqldata:
+            - value: $.groupId
+              name: groupId
+      # 校验
+      validate:
+        # 状态码校验
+        code: 200
+        # 返回值校验
+        response: { "statusCode": 0,"msg": "success" }
+
+
