@@ -26,53 +26,6 @@ def dict_update(old_dict, update_dict):
         old_dict = update_dict
     return old_dict
 
-# def cmp_dict(expect_dict, recv_dict):
-#     """
-#     字典比较
-#     :param expect_dict: 期望字典
-#     :param recv: 返回值
-#     :return:
-#     """
-#     flag = True
-#     if set(expect_dict.keys()).issubset(set(recv_dict.keys())):
-#         for field, data in expect_dict.items():
-#             if type(data) == dict:   #预期值为字典
-#                 if type(recv_dict[field]) == dict: #返回值也为字典
-#                     flag = cmp_dict(data, recv_dict[field])  #递归比较
-#                 else:
-#                     flag = False
-#                 if not flag:
-#                     break
-#             elif type(data) == list:  #预期值为列表
-#                 if type(recv_dict[field]) == list: #返回值也为列表
-#                     for i in data:
-#                         print("====",i)
-#                         if type(i) == dict:
-#                             flag = False
-#                             for j in recv_dict[field]:
-#                                 flag = cmp_dict(i, j)
-#                                 if flag:   #字典中有一个比较成功就返回
-#                                     break
-#                             if not flag:
-#                                 break
-#                         else:  #非字典格式直接比较
-#                             # if data != recv_dict[field]:
-#                             if str(data) != str(recv_dict[field]):  #暂时只进行字符串比较
-#                                 flag = False
-#                             break
-#                 else:
-#                     flag = False
-#                 if not flag:
-#                     break
-#             else:  #非字典，列表格式直接比较
-#                 # if expect_dict[field] != recv_dict[field]:
-#                 if str(expect_dict[field]) != str(recv_dict[field]):  #暂时只进行字符串比较
-#                     flag = False
-#                     break
-#     else:
-#         flag = False
-#     return flag
-
 
 def cmp_dict(expect_data, recv_data):
     """

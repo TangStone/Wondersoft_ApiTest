@@ -1,0 +1,1 @@
+select count(1) as count from `bms-general-aa`.t_monitor_alarm_rule tmar where  alarmName like '自动化测试' and isEnable ='0' and isRemoved = '0'

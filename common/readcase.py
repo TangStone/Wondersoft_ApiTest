@@ -8,6 +8,7 @@
 @description: 处理用例数据
 """
 import collections, logging
+import copy
 
 from config import *
 from common import basefunc
@@ -20,31 +21,6 @@ class ReadCase:
     """
     获取用例数据
     """
-
-    def read_all_case(self, path_list):
-        """
-        获取当前目录下所有测试用例
-        :param path_list: 路径列表
-        :return: 用例数据{'casepath': 'E:/Wondersoft_ApiTest/bms/data/roles/roles_add.yaml', 'epic': '系统管理', 'feature': '权限管理-角色配置', 'story': '角色新增接口'}
-        """
-        global all_case
-        # 获取yaml文件路径
-        files_paths_list = []
-        for path in path_list:
-            # 获取当前路径下所有yaml文件
-            files_paths_list += basefunc.file_execute_list(path, '.yaml')
-
-        # 遍历读取yaml文件
-        for file_path in files_paths_list:
-            file_data = handleyaml.YamlHandle(file_path).read_yaml()
-
-            case_data = file_data.pop('case')
-            # 获取用例
-            for caseid in case_data.keys():
-                all_case[caseid] = handledict.dict_update({"casepath": file_path}, file_data)
-                all_case[caseid]['title'] = case_data[caseid]['name']
-        return all_case
-
 
     def get_case_data(self, caseid, casepath):
         """
@@ -85,35 +61,6 @@ class ReadCase:
         else:
             raise Exception(casepath + 'yaml文件编写有误，非列表格式！')
 
-
-    def read_case(self, path_list):
-        """
-        获取当前目录下所有测试用例
-        :param path_list: 路径列表
-        :return: 用例数据{'caseid':'casepath': 'E:/Wondersoft_ApiTest/bms/data/roles/roles_add.yaml'}
-        """
-        global all_case
-        # 获取yaml文件路径
-        files_paths_list = []
-        for path in path_list:
-            # 获取当前路径下所有yaml文件
-            files_paths_list += basefunc.file_execute_list(path, '.yaml')
-
-        # 遍历读取yaml文件
-        for file_path in files_paths_list:
-            file_data = handleyaml.YamlHandle(file_path).read_yaml()
-            if isinstance(file_data, list):
-                for api in file_data:
-                    case_data = api.pop('case_data')  # 用例信息
-                    if isinstance(case_data, dict):
-                        for caseid in case_data.keys():
-                            all_case[caseid] = file_path
-                    else:
-                        raise Exception(api['story'] + '用例case_data模块编写有误，非字典格式！')
-            else:
-                raise Exception(file_path + 'yaml文件编写有误，非列表格式！')
-        return all_case
-
     def get_api_casedata(self, api_path, api, api_caseid):
         """
         获取接口用例
@@ -142,7 +89,13 @@ class ReadCase:
         step_list = casedata['steps']
         for step in step_list:
             if 'api_path' in step.keys():    #调用接口用例
-                api_case_list.append(step)
+                if type(step['data']) == list:
+                    for api_data in step['data']:
+                        tem_step = step.copy()
+                        tem_step['data'] = api_data
+                        api_case_list.append(tem_step)
+                else:
+                    api_case_list.append(step)
             elif 'case_path' in step.keys():    #引用其它用例
                 case_path = CASE_DIR + step['case_path']
                 case_id = step['case']

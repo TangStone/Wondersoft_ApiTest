@@ -1,0 +1,28 @@
+ERROR[2023-08-03 17:51:17,183][15404][checkresult.py checkresult assert_response 89]：返回结果断言未通过, 期望返回值:{'statusCode': -1}, 实际返回值:{'statusCode': 0}
+ERROR[2023-08-03 17:51:22,729][15404][checkresult.py checkresult assert_response 89]：返回结果断言未通过, 期望返回值:{'statusCode': -1}, 实际返回值:{'statusCode': 0}
+ERROR[2023-08-03 17:51:28,055][15404][checkresult.py checkresult assert_response 89]：返回结果断言未通过, 期望返回值:{'statusCode': -1}, 实际返回值:{'statusCode': 0}
+ERROR[2023-08-03 17:51:33,437][15404][checkresult.py checkresult assert_response 89]：返回结果断言未通过, 期望返回值:{'statusCode': -1}, 实际返回值:{'statusCode': 0}
+ERROR[2023-08-03 17:51:33,565][15404][checkresult.py checkresult assert_response 89]：返回结果断言未通过, 期望返回值:{'statusCode': -1}, 实际返回值:{'statusCode': 0}
+ERROR[2023-08-03 17:51:38,790][15404][checkresult.py checkresult assert_response 89]：返回结果断言未通过, 期望返回值:{'statusCode': -1}, 实际返回值:{'statusCode': 0}
+ERROR[2023-08-03 17:51:43,982][15404][checkresult.py checkresult assert_response 89]：返回结果断言未通过, 期望返回值:{'statusCode': -1}, 实际返回值:{'statusCode': 0}
+ERROR[2023-08-03 17:51:49,208][15404][checkresult.py checkresult assert_response 89]：返回结果断言未通过, 期望返回值:{'statusCode': -1}, 实际返回值:{'statusCode': 0}
+ERROR[2023-08-03 17:51:54,833][15404][checkresult.py checkresult assert_db 63]：数据库断言未通过, 期望返回值:0, 实际返回值：1
+ERROR[2023-08-03 17:52:00,024][15404][checkresult.py checkresult assert_db 63]：数据库断言未通过, 期望返回值:0, 实际返回值：1
+ERROR[2023-08-03 17:52:05,152][15404][checkresult.py checkresult assert_db 63]：数据库断言未通过, 期望返回值:0, 实际返回值：1
+ERROR[2023-08-03 17:52:10,329][15404][checkresult.py checkresult assert_db 63]：数据库断言未通过, 期望返回值:0, 实际返回值：1
+ERROR[2023-08-03 17:52:10,496][15404][checkresult.py checkresult assert_db 63]：数据库断言未通过, 期望返回值:0, 实际返回值：1
+ERROR[2023-08-03 17:52:15,631][15404][checkresult.py checkresult assert_db 63]：数据库断言未通过, 期望返回值:0, 实际返回值：1
+ERROR[2023-08-03 17:52:20,777][15404][checkresult.py checkresult assert_db 63]：数据库断言未通过, 期望返回值:0, 实际返回值：1
+ERROR[2023-08-03 17:52:25,904][15404][checkresult.py checkresult assert_db 63]：数据库断言未通过, 期望返回值:0, 实际返回值：1
+ERROR[2023-08-03 17:52:36,821][15404][checkresult.py checkresult assert_db 63]：数据库断言未通过, 期望返回值:394f481895a1c5bef3da3d0685f41453385ef0aa, 实际返回值：3d4f2bf07dc1be38b20cd6e46949a1071f9d0e3d
+ERROR[2023-08-03 17:52:42,672][15404][checkresult.py checkresult assert_db 63]：数据库断言未通过, 期望返回值:394f481895a1c5bef3da3d0685f41453385ef0aa, 实际返回值：3d4f2bf07dc1be38b20cd6e46949a1071f9d0e3d
+ERROR[2023-08-03 17:52:48,585][15404][checkresult.py checkresult assert_db 63]：数据库断言未通过, 期望返回值:394f481895a1c5bef3da3d0685f41453385ef0aa, 实际返回值：3d4f2bf07dc1be38b20cd6e46949a1071f9d0e3d
+ERROR[2023-08-03 17:52:54,440][15404][checkresult.py checkresult assert_db 63]：数据库断言未通过, 期望返回值:394f481895a1c5bef3da3d0685f41453385ef0aa, 实际返回值：3d4f2bf07dc1be38b20cd6e46949a1071f9d0e3d
+ERROR[2023-08-03 17:52:55,326][15404][checkresult.py checkresult assert_db 63]：数据库断言未通过, 期望返回值:394f481895a1c5bef3da3d0685f41453385ef0aa, 实际返回值：3d4f2bf07dc1be38b20cd6e46949a1071f9d0e3d
+ERROR[2023-08-03 17:53:01,245][15404][checkresult.py checkresult assert_db 63]：数据库断言未通过, 期望返回值:394f481895a1c5bef3da3d0685f41453385ef0aa, 实际返回值：3d4f2bf07dc1be38b20cd6e46949a1071f9d0e3d
+ERROR[2023-08-03 17:53:07,158][15404][checkresult.py checkresult assert_db 63]：数据库断言未通过, 期望返回值:394f481895a1c5bef3da3d0685f41453385ef0aa, 实际返回值：3d4f2bf07dc1be38b20cd6e46949a1071f9d0e3d
+ERROR[2023-08-03 17:53:13,009][15404][checkresult.py checkresult assert_db 63]：数据库断言未通过, 期望返回值:394f481895a1c5bef3da3d0685f41453385ef0aa, 实际返回值：3d4f2bf07dc1be38b20cd6e46949a1071f9d0e3d
+ERROR[2023-08-03 17:53:21,947][15404][checkresult.py checkresult assert_response 89]：返回结果断言未通过, 期望返回值:{'statusCode': 0, 'msg': 'success'}, 实际返回值:{'statusCode': 1114886, 'msg': '找不到对应的组织机构'}
+ERROR[2023-08-03 17:53:27,721][15404][checkresult.py checkresult assert_response 89]：返回结果断言未通过, 期望返回值:{'statusCode': 0, 'msg': 'success'}, 实际返回值:{'statusCode': 1114886, 'msg': '找不到对应的组织机构'}
+ERROR[2023-08-03 17:53:39,761][15404][checkresult.py checkresult assert_response 89]：返回结果断言未通过, 期望返回值:{'statusCode': 0, 'msg': 'success'}, 实际返回值:{'statusCode': 1114886, 'msg': '找不到对应的组织机构'}
+ERROR[2023-08-03 17:53:50,574][15404][checkresult.py checkresult assert_response 89]：返回结果断言未通过, 期望返回值:{'statusCode': 0, 'msg': 'success'}, 实际返回值:{'statusCode': 1114886, 'msg': '找不到对应的组织机构'}

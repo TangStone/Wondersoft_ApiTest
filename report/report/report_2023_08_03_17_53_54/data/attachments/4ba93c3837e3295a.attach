@@ -1,0 +1,1 @@
+[{'childAssets': [{'assetId': 'system_admin_log_audit', 'assetName': '审计日志'}], 'assetId': '1', 'assetName': '统一基础平台'}, {'childAssets': [{'assetId': 'sas_v3_doc', 'assetName': '终端行为审计'}, {'assetId': 'sas_v3_behavior_doc', 'assetName': '终端业务告警'}], 'assetId': '4', 'assetName': '数据安全管理系统'}]

@@ -1,0 +1,15 @@
+INFO     root:test_cases.py:43 ==========执行用例START：monitorAlarmRules_add==========
+INFO     root:runcase.py:42 -·-·-·-·-·-·-·-·-·-执行用例 START：新增告警规则-·-·-·-·-·-·-·-·-·-
+INFO     root:runcase.py:69 -·-·-·-·-·-·-·-·-·-执行接口 START：新增告警规则-·-·-·-·-·-·-·-·-·-
+INFO     root:handleyaml.py:84 Yaml测试用例基础架构检查通过
+INFO     root:runcase.py:85 重组后的用例信息：{'api_name': '新增告警规则', 'base_url': 'https://192.168.148.174:31000', 'request': {'method': 'POST', 'address': '/api/auth/v1/monitor/monitorAlarmRules/add', 'headers': {'Content-Type': 'application/json', 'token': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJhdWQiOiJhcHBsaWNhdGlvbiIsInN1YiI6ImY0NGEwNWRkLTE0MjMtNDg2My04YjczLWU3OWIzNWUwMmY2NyIsImlzcyI6ImJtc19zZXJ2ZXIiLCJzZXNzaW9uSWQiOiJmNDRhMDVkZC0xNDIzLTQ4NjMtOGI3My1lNzliMzVlMDJmNjciLCJleHAiOjE2OTEyMzU4MjUsImlhdCI6MTY5MTA1NTgyNX0.kkcBwDevuks2JY3ibi8YYWVBYLUU1nNHln4MqSZQN2M3Dots5SlPVmwILTdLXOUgfIdbpI6pWITBr3a81tNa2A', 'Referer': 'https://192.168.148.174:31000/sub-app-unity/sysManage/systemOperation/clusterList/index'}, 'data': {'alarmName': '自动化测试CPU告警', 'alarmDesc': 'CPU超过80%向自动化测试管理人员发送告警', 'alarmType': 1, 'alarmObject': 'CPU', 'thresholdRelation': 1, 'threshold': 80, 'durationTime': 5, 'durationUnit': 2, 'noticeType': 0}}, 'name': '新增告警规则', 'description': '输入正确的CPU告警规则配置，新增告警规则', 'preProcessors': {'database': [{'type': 'mysql', 'sql': "update `bms-general-aa`.t_monitor_alarm_rule set isRemoved = '1' where alarmName like '自动化测试CPU%' and isRemoved ='0'"}]}, 'postProcessors': {'assert': {'code': 200, 'response': {'statusCode': 0, 'msg': 'success'}}}}
+INFO     root:runcase.py:123 请求地址：https://192.168.148.174:31000/api/auth/v1/monitor/monitorAlarmRules/add
+INFO     root:runcase.py:124 请求方法：POST
+INFO     root:runcase.py:125 请求头：{'Content-Type': 'application/json', 'token': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJhdWQiOiJhcHBsaWNhdGlvbiIsInN1YiI6ImY0NGEwNWRkLTE0MjMtNDg2My04YjczLWU3OWIzNWUwMmY2NyIsImlzcyI6ImJtc19zZXJ2ZXIiLCJzZXNzaW9uSWQiOiJmNDRhMDVkZC0xNDIzLTQ4NjMtOGI3My1lNzliMzVlMDJmNjciLCJleHAiOjE2OTEyMzU4MjUsImlhdCI6MTY5MTA1NTgyNX0.kkcBwDevuks2JY3ibi8YYWVBYLUU1nNHln4MqSZQN2M3Dots5SlPVmwILTdLXOUgfIdbpI6pWITBr3a81tNa2A', 'Referer': 'https://192.168.148.174:31000/sub-app-unity/sysManage/systemOperation/clusterList/index'}
+INFO     root:runcase.py:135 请求参数：{'alarmName': '自动化测试CPU告警', 'alarmDesc': 'CPU超过80%向自动化测试管理人员发送告警', 'alarmType': 1, 'alarmObject': 'CPU', 'thresholdRelation': 1, 'threshold': 80, 'durationTime': 5, 'durationUnit': 2, 'noticeType': 0}
+INFO     root:runcase.py:197 请求接口结果： {'statusCode': 0, 'msg': 'success'}
+INFO     root:checkresult.py:152 code断言通过, 期望状态码:200, 实际状态码:200
+INFO     root:checkresult.py:87 返回结果断言通过, 期望返回值:{'statusCode': 0, 'msg': 'success'}, 实际返回值:{'statusCode': 0, 'msg': 'success'}
+INFO     root:runcase.py:102 -·-·-·-·-·-·-·-·-·-执行接口 END：新增告警规则-·-·-·-·-·-·-·-·-·-
+INFO     root:runcase.py:60 -·-·-·-·-·-·-·-·-·-执行用例 END：新增告警规则-·-·-·-·-·-·-·-·-·-
+INFO     root:test_cases.py:45 ==========执行用例END：monitorAlarmRules_add==========

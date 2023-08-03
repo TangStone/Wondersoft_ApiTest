@@ -194,15 +194,15 @@ class RegroupData:
         :param data_str: 原始字符串
         :return:
         """
-        var_list = re.findall(r"\$\{(.*)\}", str_data)  # 变量替换
+        var_list = re.findall(r"\$\{(.*?)\}", str_data)  # 变量替换
         eval_list = re.findall(r"\$Eval\((.*)\)", str_data)  # 格式转换,非贪婪模式
-        enc_list = re.findall(r"\$Enc\((.*)\)", str_data)  # 加密
-        time_list = re.findall(r"\$GetTime\((.*)\)", str_data)  # 时间
+        enc_list = re.findall(r"\$Enc\((.*?)\)", str_data)  # 加密
+        time_list = re.findall(r"\$GetTime\((.*?)\)", str_data)  # 时间
 
         if len(eval_list):
             for i in eval_list:
                 value = self.eval_data(i)
-                if str_data[0:7] == '$Eval(' and str_data[-2:] == ')':  #当前值需要转换类型
+                if str_data[0:6] == '$Eval(' and str_data[-1:] == ')':  #当前值需要转换类型
                     return value
                 else:  #返回字符串
                     rep_data = '$Eval(' + i + ')'

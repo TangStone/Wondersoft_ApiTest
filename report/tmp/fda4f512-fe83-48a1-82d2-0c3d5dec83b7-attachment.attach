@@ -1,0 +1,1 @@
+select * from `bms-general-dlpparam`.t_dlp_doc_finger_print tddfp where fingerPrintName like '自动化测试指纹库-本地上传-挂载%' and isRemoved = '0'

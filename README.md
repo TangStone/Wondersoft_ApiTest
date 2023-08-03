@@ -115,12 +115,12 @@ user_group_list:
 ```
 ## 取值方式
 1. 参数取值：${}
-2. 时间取值: ${GetTime()}
-   - 获取当前时间，指定格式：${GetTime(format=%Y-%m-%d %H:%M:%S)} 
-   - 获取当前时间，时间偏移：${GetTime(format=%Y-%m-%d %H:%M:%S;cal=m+1)}
+2. 时间取值: $GetTime()
+   - 获取当前时间，指定格式：$GetTime(format=%Y-%m-%d %H:%M:%S)
+   - 获取当前时间，时间偏移：$GetTime(format=%Y-%m-%d %H:%M:%S;cal=m+1)
      - +：向后偏移；-：向前偏移
      - w：周偏移；d：天偏移；h：小时偏移；m：分钟偏移
 3. 公式计算
-   - 取值后，进行公示计算：${Eval(${};cal=+1)} 
-   - 取值后，转换格式，根据jsonpath获取指定值：${Eval(${};path=)}  
+   - 取值后，进行公示计算：$Eval(${};cal=+1)
+   - 取值后，转换格式，根据jsonpath获取指定值：$Eval(${};path=)  
       （针对获取的值为字符串，需要获取字符串中的特定参数的场景）

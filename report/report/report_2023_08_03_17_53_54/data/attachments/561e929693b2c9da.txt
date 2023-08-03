@@ -1,0 +1,26 @@
+INFO     root:test_cases.py:43 ==========执行用例START：login==========
+INFO     root:runcase.py:42 -·-·-·-·-·-·-·-·-·-执行用例 START：用户登录-·-·-·-·-·-·-·-·-·-
+INFO     root:runcase.py:69 -·-·-·-·-·-·-·-·-·-执行接口 START：登录失败（正确用户名、错误密码）-·-·-·-·-·-·-·-·-·-
+INFO     root:handleyaml.py:84 Yaml测试用例基础架构检查通过
+INFO     root:runcase.py:85 重组后的用例信息：{'api_name': '登录', 'base_url': 'https://192.168.148.174:31000', 'request': {'method': 'post', 'address': '/api/auth/v1/auth/login', 'headers': {'Content-Type': 'application/json', 'Referer': 'https://192.168.148.174:31000/sub-app-unity/systemAdminLog'}, 'data': {'unityId': False, 'username': 'admin', 'gossip': 'LMGwwS4zkSuyYdNS1GrjTkx69YiSI9uksLHJKKX5jLL9vA6GlrsabdL5/MCljyBXE5klN4CJXoTsIMLA/kTsZGbQcvEwFJpYe5wapp0GWTzpyD8stjWk/zDTIermdMIDooMCBjqgraq1GwzXjGEOJOVh885zx2RPtP1s+GpwJG8='}}, 'name': '登录失败（正确用户名、错误密码）', 'description': '输入正确用户名，错误密码，登录失败', 'postProcessors': {'assert': {'code': 200, 'response': {'statusCode': 1048835, 'msg': '用户名或密码错误'}}}}
+INFO     root:runcase.py:123 请求地址：https://192.168.148.174:31000/api/auth/v1/auth/login
+INFO     root:runcase.py:124 请求方法：post
+INFO     root:runcase.py:125 请求头：{'Content-Type': 'application/json', 'Referer': 'https://192.168.148.174:31000/sub-app-unity/systemAdminLog'}
+INFO     root:runcase.py:135 请求参数：{'unityId': False, 'username': 'admin', 'gossip': 'LMGwwS4zkSuyYdNS1GrjTkx69YiSI9uksLHJKKX5jLL9vA6GlrsabdL5/MCljyBXE5klN4CJXoTsIMLA/kTsZGbQcvEwFJpYe5wapp0GWTzpyD8stjWk/zDTIermdMIDooMCBjqgraq1GwzXjGEOJOVh885zx2RPtP1s+GpwJG8='}
+INFO     root:runcase.py:197 请求接口结果： {'statusCode': 1048835, 'msg': '用户名或密码错误'}
+INFO     root:checkresult.py:152 code断言通过, 期望状态码:200, 实际状态码:200
+INFO     root:checkresult.py:87 返回结果断言通过, 期望返回值:{'statusCode': 1048835, 'msg': '用户名或密码错误'}, 实际返回值:{'statusCode': 1048835, 'msg': '用户名或密码错误'}
+INFO     root:runcase.py:102 -·-·-·-·-·-·-·-·-·-执行接口 END：登录失败（正确用户名、错误密码）-·-·-·-·-·-·-·-·-·-
+INFO     root:runcase.py:69 -·-·-·-·-·-·-·-·-·-执行接口 START：登录失败（错误用户名、正确密码）-·-·-·-·-·-·-·-·-·-
+INFO     root:handleyaml.py:84 Yaml测试用例基础架构检查通过
+INFO     root:runcase.py:85 重组后的用例信息：{'api_name': '登录', 'base_url': 'https://192.168.148.174:31000', 'request': {'method': 'post', 'address': '/api/auth/v1/auth/login', 'headers': {'Content-Type': 'application/json', 'Referer': 'https://192.168.148.174:31000/sub-app-unity/systemAdminLog'}, 'data': {'unityId': False, 'username': 'admin1', 'gossip': 'Ubf/weE+Nj/zaapI75y3uY14NmURYIfZXO6dgkaDoX9oJhzufea9SU3Zg5cbfSDdtBI9zoL0mr2SBiM26KNVoeU0S3TB5zbRSbGN6FBf6kkItLzDW/qaIWa6p9aYARVARAKghWpuKbCHZ6hZpAPvyqFI44zmShYlVcW3YBdeSq4='}}, 'name': '登录失败（错误用户名、正确密码）', 'description': '输入错误用户名，正确密码，登录失败', 'postProcessors': {'assert': {'code': 200, 'response': {'statusCode': 1048835, 'msg': '用户名或密码错误'}}}}
+INFO     root:runcase.py:123 请求地址：https://192.168.148.174:31000/api/auth/v1/auth/login
+INFO     root:runcase.py:124 请求方法：post
+INFO     root:runcase.py:125 请求头：{'Content-Type': 'application/json', 'Referer': 'https://192.168.148.174:31000/sub-app-unity/systemAdminLog'}
+INFO     root:runcase.py:135 请求参数：{'unityId': False, 'username': 'admin1', 'gossip': 'Ubf/weE+Nj/zaapI75y3uY14NmURYIfZXO6dgkaDoX9oJhzufea9SU3Zg5cbfSDdtBI9zoL0mr2SBiM26KNVoeU0S3TB5zbRSbGN6FBf6kkItLzDW/qaIWa6p9aYARVARAKghWpuKbCHZ6hZpAPvyqFI44zmShYlVcW3YBdeSq4='}
+INFO     root:runcase.py:197 请求接口结果： {'statusCode': 1048835, 'msg': '用户名或密码错误'}
+INFO     root:checkresult.py:152 code断言通过, 期望状态码:200, 实际状态码:200
+INFO     root:checkresult.py:87 返回结果断言通过, 期望返回值:{'statusCode': 1048835, 'msg': '用户名或密码错误'}, 实际返回值:{'statusCode': 1048835, 'msg': '用户名或密码错误'}
+INFO     root:runcase.py:102 -·-·-·-·-·-·-·-·-·-执行接口 END：登录失败（错误用户名、正确密码）-·-·-·-·-·-·-·-·-·-
+INFO     root:runcase.py:60 -·-·-·-·-·-·-·-·-·-执行用例 END：用户登录-·-·-·-·-·-·-·-·-·-
+INFO     root:test_cases.py:45 ==========执行用例END：login==========

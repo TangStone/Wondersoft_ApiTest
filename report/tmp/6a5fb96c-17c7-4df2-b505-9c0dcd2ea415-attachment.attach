@@ -1,0 +1,1 @@
+{'statusCode': 0, 'msg': 'success', 'data': [{'groupName': '自动化测试根组', 'parentName': '默认组', 'createTime': '2023-08-03 17:49:20', 'parentCode': 'G001', 'groupBusinessCode': 'G001132', 'groupId': 386, 'domainGUID': '', 'parentGroupId': 1, 'methodId': 0, 'isLimit': False, 'groupPath': '默认组 -> 自动化测试根组'}]}

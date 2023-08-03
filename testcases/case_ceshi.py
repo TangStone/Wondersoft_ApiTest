@@ -44,16 +44,21 @@ def case_ceshi(casepath, case):
 
 if __name__ == '__main__':
     logger.MyLogs().setup_logging(ROOT_DIR)
-    # 单接口测试
-    # api_path = API_DIR + '/bms/login/login.yaml'  # 接口用例路径
-    # api = 'login'  # 接口用例
-    # api_caseid = 'login_01'  # 接口用例id
+    # 登录
+    api_path = API_DIR + '/bms/login/login.yaml'  # 接口用例路径
+    api = 'login'  # 接口用例
+    api_caseid = 'login_01'  # 接口用例id
+    api_ceshi(api_path, api, api_caseid)
+
+    # 单接口测试s
+    # api_path = API_DIR + '/bms/alarmrules/alarmrules_del.yaml'  # 接口用例路径
+    # api = 'alarmrules_del'  # 接口用例
+    # api_caseid = 'alarmrules_del_01'  # 接口用例id
     # api_ceshi(api_path, api, api_caseid)
 
-    # 单用例测试
-    casepath = CASE_DIR + '/base/user_add.yaml'  # 用例路径
-    case = 'useradd'
+    # # 单用例测试
+    casepath = CASE_DIR + '/bms/useradmin.yaml'  # 用例路径
+    case = 'useradminPasswdUpdate'
     case_ceshi(casepath, case)
-
 
 

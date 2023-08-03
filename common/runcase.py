@@ -9,6 +9,8 @@
 """
 import copy
 import logging, allure, sys, requests, random, json
+import time
+
 from requests_toolbelt import MultipartEncoder
 
 from config import *
@@ -37,6 +39,7 @@ class RunCase:
         :param casedata: 用例信息
         :return:
         """
+        logging.info('-·-·-·-·-·-·-·-·-·-执行用例 START：%s-·-·-·-·-·-·-·-·-·-', casedata['name'])
         if 'steps' in casedata.keys():
             # 获取测试步骤中的接口用例列表
             get_apicase_list = readcase.ReadCase().get_apicase_list(casedata)
@@ -45,11 +48,16 @@ class RunCase:
                 api_path = API_DIR + apicase['api_path']  # 接口用例路径
                 api = apicase['api']  # 接口用例
                 api_caseid = apicase['data']  # 接口用例id
+                # 判断是否存在等待时间
+                if 'sleep' in apicase.keys():
+                    logging.info("========等待时间：%s秒", apicase['sleep'])
+                    time.sleep(apicase['sleep'])
                 # 获取接口用例数据
                 api_casedata = readcase.ReadCase().get_api_casedata(api_path, api, api_caseid)
                 # 执行接口用例
                 with allure.step(api_casedata['name']):
                     self.excute_apicase(api, api_casedata)
+        logging.info('-·-·-·-·-·-·-·-·-·-执行用例 END：%s-·-·-·-·-·-·-·-·-·-', casedata['name'])
 
     def excute_apicase(self, api, api_casedata):
         """
@@ -58,7 +66,7 @@ class RunCase:
         :param api_casedata: 接口用例数据
         :return:
         """
-        logging.info('-·-·-·-·-·-·-·-·-·-执行接口 START：%s-·-·-·-·-·-·-·-·-·-', api)
+        logging.info('-·-·-·-·-·-·-·-·-·-执行接口 START：%s-·-·-·-·-·-·-·-·-·-', api_casedata['name'])
         # 校验用例格式
         flag, msg = handleyaml.standard_yaml(api_casedata)
         if flag:  # 用例格式无误
@@ -84,58 +92,20 @@ class RunCase:
                 if 'extract' in api_casedata['postProcessors'].keys():
                     temp_value = extract.handle_extarct(api_casedata['postProcessors']['extract'], recv_data, api_casedata)
                     self.temp_var_dict = handledict.dict_update(self.temp_var_dict, temp_value)
-                logging.info('-·-·-·-·-·-·-·-·-·-执行接口 END：%s-·-·-·-·-·-·-·-·-·-', api)
+                # 判断是否存在后置操作-数据库操作
+                if 'database' in api_casedata['postProcessors'].keys():
+                    # 执行数据库操作，获取参数
+                    db_dict = database.SetUpDB().get_setup_sql_data(api_casedata['postProcessors']['database'])
+                    # 更新临时变量字典
+                    self.temp_var_dict = handledict.dict_update(self.temp_var_dict, db_dict)
+
+                logging.info('-·-·-·-·-·-·-·-·-·-执行接口 END：%s-·-·-·-·-·-·-·-·-·-', api_casedata['name'])
                 return api_casedata, recv_data
             else:
                 raise Exception(api_casedata)
         else:
             logging.error("用例格式错误：%s", msg)
             raise Exception("用例格式校验失败，" + msg)
-
-def excute_apicase(api_casedata):
-    """
-    执行用例
-    :param api_casedata: 接口用例数据
-    :return:
-    """
-    logging.info('-·-·-·-·-·-·-·-·-·-发送请求并接受信息 START-·-·-·-·-·-·-·-·-·-')
-    # 校验用例格式
-    flag, msg = handleyaml.standard_yaml(api_casedata)
-    if flag:  # 用例格式无误
-        extract_dict = handleyaml.YamlHandle(EXTRACT_DIR).read_yaml()  # 全局参数
-        db_dict = {}   #数据库参数
-        # 判断是否存在前置操作
-        if 'preProcessors' in api_casedata.keys():
-            # 判断是否存在前置操作-数据库操作
-            if 'database' in api_casedata['preProcessors'].keys():
-                db_dict = database.SetUpDB().get_setup_sql_data(api_casedata['preProcessors']['database'])
-        # relevance_dict = {}  # 关联参数
-        # # 判断是否存在关联用例，若存在，执行前置用例获取参数值
-        # if 'relevance' in case_data.keys():
-        #     relevance_dict = relevancecase.Relevance().get_relevance_data(case_data['relevance'])
-
-        # 重组用例信息
-        # casedata = regroupdata.RegroupData(case_data, relevance_dict, extract_dict, config_dict).replace_value()
-        sign, casedata = regroupdata.RegroupData(copy.deepcopy(case_data), relevance_dict, extract_dict,
-                                                 db_dict).regroup_case_data()
-        if sign == 'success':
-            logging.info("重组后的用例信息：%s", casedata)
-            # 发送请求
-            recv_data, recv_code = send_request(casedata)
-            # 结果校验
-            hope_result = casedata['validate']
-            checkresult.check_result(hope_result, recv_data, recv_code)
-            # 取值
-            if 'extract' in casedata.keys():
-                extract.handle_extarct(casedata['extract'], recv_data, casedata['caseid'])
-            # 执行后置接口
-            teardowncase.case_teardown(casedata)
-            logging.info('-·-·-·-·-·-·-·-·-·-发送请求并接受信息 END-·-·-·-·-·-·-·-·-·-')
-            return casedata, recv_data
-        else:
-            raise Exception(casedata)
-    else:
-        raise Exception("用例格式校验失败，" + msg)
 
 
 def send_request(casedata):

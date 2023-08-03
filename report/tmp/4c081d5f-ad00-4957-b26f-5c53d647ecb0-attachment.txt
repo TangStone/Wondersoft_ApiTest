@@ -1,0 +1,24 @@
+INFO     root:test_cases.py:43 ==========执行用例START：updateInfoByPropKey_PropKey_absent==========
+INFO     root:runcase.py:42 -·-·-·-·-·-·-·-·-·-执行用例 START：系统配置修改-参数不存在-·-·-·-·-·-·-·-·-·-
+INFO     root:runcase.py:69 -·-·-·-·-·-·-·-·-·-执行接口 START：系统配置修改-参数不存在-·-·-·-·-·-·-·-·-·-
+INFO     root:handleyaml.py:84 Yaml测试用例基础架构检查通过
+INFO     root:runcase.py:85 重组后的用例信息：{'api_name': '系统配置修改', 'base_url': 'https://192.168.148.174:31000', 'request': {'method': 'POST', 'address': '/api/system/v1/system/updateInfoByPropKey', 'headers': {'Content-Type': 'application/x-www-form-urlencoded', 'token': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJhdWQiOiJhcHBsaWNhdGlvbiIsInN1YiI6ImY0NGEwNWRkLTE0MjMtNDg2My04YjczLWU3OWIzNWUwMmY2NyIsImlzcyI6ImJtc19zZXJ2ZXIiLCJzZXNzaW9uSWQiOiJmNDRhMDVkZC0xNDIzLTQ4NjMtOGI3My1lNzliMzVlMDJmNjciLCJleHAiOjE2OTEyMzU4MjUsImlhdCI6MTY5MTA1NTgyNX0.kkcBwDevuks2JY3ibi8YYWVBYLUU1nNHln4MqSZQN2M3Dots5SlPVmwILTdLXOUgfIdbpI6pWITBr3a81tNa2A', 'Referer': 'https://192.168.148.174:31000/sub-app-unity/systemConfig'}, 'data': {'updateInfo': '{"自动化测试": "自动化测试"}'}}, 'name': '系统配置修改-参数不存在', 'description': '系统配置修改-参数不存在', 'postProcessors': {'assert': {'code': 200, 'response': {'statusCode': -1}}}}
+INFO     root:runcase.py:123 请求地址：https://192.168.148.174:31000/api/system/v1/system/updateInfoByPropKey
+INFO     root:runcase.py:124 请求方法：POST
+INFO     root:runcase.py:125 请求头：{'Content-Type': 'application/x-www-form-urlencoded', 'token': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJhdWQiOiJhcHBsaWNhdGlvbiIsInN1YiI6ImY0NGEwNWRkLTE0MjMtNDg2My04YjczLWU3OWIzNWUwMmY2NyIsImlzcyI6ImJtc19zZXJ2ZXIiLCJzZXNzaW9uSWQiOiJmNDRhMDVkZC0xNDIzLTQ4NjMtOGI3My1lNzliMzVlMDJmNjciLCJleHAiOjE2OTEyMzU4MjUsImlhdCI6MTY5MTA1NTgyNX0.kkcBwDevuks2JY3ibi8YYWVBYLUU1nNHln4MqSZQN2M3Dots5SlPVmwILTdLXOUgfIdbpI6pWITBr3a81tNa2A', 'Referer': 'https://192.168.148.174:31000/sub-app-unity/systemConfig'}
+INFO     root:runcase.py:135 请求参数：{'updateInfo': '{"自动化测试": "自动化测试"}'}
+INFO     root:runcase.py:197 请求接口结果： {'statusCode': 0}
+INFO     root:checkresult.py:152 code断言通过, 期望状态码:200, 实际状态码:200
+ERROR    root:checkresult.py:89 返回结果断言未通过, 期望返回值:{'statusCode': -1}, 实际返回值:{'statusCode': 0}
+INFO     root:test_cases.py:43 ==========执行用例START：updateInfoByPropKey_PropKey_absent==========
+INFO     root:runcase.py:42 -·-·-·-·-·-·-·-·-·-执行用例 START：系统配置修改-参数不存在-·-·-·-·-·-·-·-·-·-
+INFO     root:runcase.py:69 -·-·-·-·-·-·-·-·-·-执行接口 START：系统配置修改-参数不存在-·-·-·-·-·-·-·-·-·-
+INFO     root:handleyaml.py:84 Yaml测试用例基础架构检查通过
+INFO     root:runcase.py:85 重组后的用例信息：{'api_name': '系统配置修改', 'base_url': 'https://192.168.148.174:31000', 'request': {'method': 'POST', 'address': '/api/system/v1/system/updateInfoByPropKey', 'headers': {'Content-Type': 'application/x-www-form-urlencoded', 'token': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJhdWQiOiJhcHBsaWNhdGlvbiIsInN1YiI6ImY0NGEwNWRkLTE0MjMtNDg2My04YjczLWU3OWIzNWUwMmY2NyIsImlzcyI6ImJtc19zZXJ2ZXIiLCJzZXNzaW9uSWQiOiJmNDRhMDVkZC0xNDIzLTQ4NjMtOGI3My1lNzliMzVlMDJmNjciLCJleHAiOjE2OTEyMzU4MjUsImlhdCI6MTY5MTA1NTgyNX0.kkcBwDevuks2JY3ibi8YYWVBYLUU1nNHln4MqSZQN2M3Dots5SlPVmwILTdLXOUgfIdbpI6pWITBr3a81tNa2A', 'Referer': 'https://192.168.148.174:31000/sub-app-unity/systemConfig'}, 'data': {'updateInfo': '{"自动化测试": "自动化测试"}'}}, 'name': '系统配置修改-参数不存在', 'description': '系统配置修改-参数不存在', 'postProcessors': {'assert': {'code': 200, 'response': {'statusCode': -1}}}}
+INFO     root:runcase.py:123 请求地址：https://192.168.148.174:31000/api/system/v1/system/updateInfoByPropKey
+INFO     root:runcase.py:124 请求方法：POST
+INFO     root:runcase.py:125 请求头：{'Content-Type': 'application/x-www-form-urlencoded', 'token': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJhdWQiOiJhcHBsaWNhdGlvbiIsInN1YiI6ImY0NGEwNWRkLTE0MjMtNDg2My04YjczLWU3OWIzNWUwMmY2NyIsImlzcyI6ImJtc19zZXJ2ZXIiLCJzZXNzaW9uSWQiOiJmNDRhMDVkZC0xNDIzLTQ4NjMtOGI3My1lNzliMzVlMDJmNjciLCJleHAiOjE2OTEyMzU4MjUsImlhdCI6MTY5MTA1NTgyNX0.kkcBwDevuks2JY3ibi8YYWVBYLUU1nNHln4MqSZQN2M3Dots5SlPVmwILTdLXOUgfIdbpI6pWITBr3a81tNa2A', 'Referer': 'https://192.168.148.174:31000/sub-app-unity/systemConfig'}
+INFO     root:runcase.py:135 请求参数：{'updateInfo': '{"自动化测试": "自动化测试"}'}
+INFO     root:runcase.py:197 请求接口结果： {'statusCode': 0}
+INFO     root:checkresult.py:152 code断言通过, 期望状态码:200, 实际状态码:200
+ERROR    root:checkresult.py:89 返回结果断言未通过, 期望返回值:{'statusCode': -1}, 实际返回值:{'statusCode': 0}
