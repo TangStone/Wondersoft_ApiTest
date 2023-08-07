@@ -1,1 +1,0 @@
-select roleName from `bms-general-aa`.t_sys_role tsr where id = 'A2B71E70-94D0422A-A1838C41-A9BDC058'

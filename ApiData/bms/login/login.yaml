@@ -98,3 +98,29 @@ login:
           code: 200
           # 返回值校验
           response: {'statusCode': 1048835, 'msg': '用户名或密码错误'}
+    # 接口用例ID
+    login_04:
+      # 接口用例名称
+      name: 自动化测试管理员登录
+      # 接口用例描述
+      description: 自动化测试管理员登录
+      # 请求信息，包括data，file
+      request:
+        # 请求数据
+        data:
+          unityId: false   #是否启用验证码
+          username: ${account}  #用户名
+          gossip: $Enc(111111)  #密码
+      # 后置操作
+      postProcessors:
+        # 断言
+        assert:
+          # 状态码校验
+          code: 200
+          # 返回值校验
+          response: { 'statusCode': 0, 'msg': 'success', 'data': { 'realName': '${realName}' } }
+        # 提取变量
+        extract:
+          - name: token     #变量名称
+            # jsonpath表达式
+            jsonpath: $.data.token

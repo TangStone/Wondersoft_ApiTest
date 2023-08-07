@@ -62,7 +62,11 @@ useradminPasswdUpdate:
     - api_path: /bms/useradmin/useradmin_list.yaml        #接口路径
       api: useradmin_list                           #接口id
       data: useradmin_list_04                       #接口数据
-    # 管理员修改密码
+    # 自动化测试超级管理员-登录
+    - api_path: /bms/login/login.yaml        #接口路径
+      api: login                           #接口id
+      data: login_04                       #接口数据
+    # 自动化测试超级管理员
     - api_path: /bms/useradmin/useradmin_passwd_update.yaml        #接口路径
       api: useradmin_passwd_update                           #接口id
       data: useradmin_passwd_update_01                       #接口数据
@@ -108,7 +112,7 @@ useradminUpdate:
 #    - api_path: /bms/useradmin/useradmin_list.yaml        #接口路径
 #      api: useradmin_list                           #接口id
 #      data: useradmin_list_04                       #接口数据
-    # 管理员修改密码
+    # 修改自动化测试超级管理员为系统管理员
     - api_path: /bms/useradmin/useradmin_update.yaml        #接口路径
       api: useradmin_update                           #接口id
       data: useradmin_update_01                       #接口数据

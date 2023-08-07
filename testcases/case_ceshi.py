@@ -58,7 +58,7 @@ if __name__ == '__main__':
 
     # # 单用例测试
     casepath = CASE_DIR + '/bms/useradmin.yaml'  # 用例路径
-    case = 'useradminPasswdUpdate'
+    case = 'useradminPasswdReset'
     case_ceshi(casepath, case)
 
 

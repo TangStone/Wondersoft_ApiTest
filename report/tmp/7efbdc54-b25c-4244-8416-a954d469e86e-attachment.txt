@@ -1,0 +1,15 @@
+INFO     root:test_cases.py:43 ==========执行用例START：insertDlpDocRules_keywords==========
+INFO     root:runcase.py:42 -·-·-·-·-·-·-·-·-·-执行用例 START：新增关键字规则-·-·-·-·-·-·-·-·-·-
+INFO     root:runcase.py:69 -·-·-·-·-·-·-·-·-·-执行接口 START：新增关键字规则-·-·-·-·-·-·-·-·-·-
+INFO     root:handleyaml.py:84 Yaml测试用例基础架构检查通过
+INFO     root:runcase.py:85 重组后的用例信息：{'api_name': '文档规则新增', 'base_url': 'https://192.168.148.174:31000', 'request': {'method': 'POST', 'address': '/api/dlpparam/v1/dlpDocRule/insertDlpDocRules', 'headers': {'Content-Type': 'application/x-www-form-urlencoded', 'token': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJhdWQiOiJhcHBsaWNhdGlvbiIsInN1YiI6IjI3ZjJhMGIwLTg5NDUtNDBjYy04MmUwLTM3N2I1ZTg2ZGI2MyIsImlzcyI6ImJtc19zZXJ2ZXIiLCJzZXNzaW9uSWQiOiIyN2YyYTBiMC04OTQ1LTQwY2MtODJlMC0zNzdiNWU4NmRiNjMiLCJleHAiOjE2OTE1NjkzOTgsImlhdCI6MTY5MTM4OTM5OH0.ZpiL3oYv83DFiGf1FXbdmCrrv6lSaX04Rp1SRXVAngMe5EtgXSY9AtmTiI4_2K15W5jhtaYjpilLwNFUn0RpVA', 'Referer': 'https://192.168.148.174:31000/sub-app-dlpparam/dlpFileDocRule'}, 'data': {'c_rule_type': '1', 'c_rule_name': '自动化测试关键字规则', 'c_rule_content': '自动化测试,关键字', 'c_creater': 'B5A33586-15104954-9B752AE1-53333EC10', 'c_note': '自动化测试关键字规则备注', 'c_reverse_key': '1', 'c_reverse_content': '{"keyList":"手工测试","threshold":"1","countType":1}', 'c_traditional_match': '1'}}, 'name': '新增关键字规则', 'description': '输入正确的关键字规则配置，新增关键字规则', 'preProcessors': {'database': [{'type': 'mysql', 'sql': "update `bms-general-dlpparam`.t_dlp_doc_rule tddr set c_is_remove = '1' where c_rule_name like '自动化测试关键字规则%' and c_rule_type = '1' and c_is_remove = '0'"}]}, 'postProcessors': {'assert': {'code': 200, 'response': {'statusCode': 0}}}}
+INFO     root:runcase.py:123 请求地址：https://192.168.148.174:31000/api/dlpparam/v1/dlpDocRule/insertDlpDocRules
+INFO     root:runcase.py:124 请求方法：POST
+INFO     root:runcase.py:125 请求头：{'Content-Type': 'application/x-www-form-urlencoded', 'token': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJhdWQiOiJhcHBsaWNhdGlvbiIsInN1YiI6IjI3ZjJhMGIwLTg5NDUtNDBjYy04MmUwLTM3N2I1ZTg2ZGI2MyIsImlzcyI6ImJtc19zZXJ2ZXIiLCJzZXNzaW9uSWQiOiIyN2YyYTBiMC04OTQ1LTQwY2MtODJlMC0zNzdiNWU4NmRiNjMiLCJleHAiOjE2OTE1NjkzOTgsImlhdCI6MTY5MTM4OTM5OH0.ZpiL3oYv83DFiGf1FXbdmCrrv6lSaX04Rp1SRXVAngMe5EtgXSY9AtmTiI4_2K15W5jhtaYjpilLwNFUn0RpVA', 'Referer': 'https://192.168.148.174:31000/sub-app-dlpparam/dlpFileDocRule'}
+INFO     root:runcase.py:135 请求参数：{'c_rule_type': '1', 'c_rule_name': '自动化测试关键字规则', 'c_rule_content': '自动化测试,关键字', 'c_creater': 'B5A33586-15104954-9B752AE1-53333EC10', 'c_note': '自动化测试关键字规则备注', 'c_reverse_key': '1', 'c_reverse_content': '{"keyList":"手工测试","threshold":"1","countType":1}', 'c_traditional_match': '1'}
+INFO     root:runcase.py:197 请求接口结果： {'statusCode': 0}
+INFO     root:checkresult.py:152 code断言通过, 期望状态码:200, 实际状态码:200
+INFO     root:checkresult.py:87 返回结果断言通过, 期望返回值:{'statusCode': 0}, 实际返回值:{'statusCode': 0}
+INFO     root:runcase.py:102 -·-·-·-·-·-·-·-·-·-执行接口 END：新增关键字规则-·-·-·-·-·-·-·-·-·-
+INFO     root:runcase.py:60 -·-·-·-·-·-·-·-·-·-执行用例 END：新增关键字规则-·-·-·-·-·-·-·-·-·-
+INFO     root:test_cases.py:45 ==========执行用例END：insertDlpDocRules_keywords==========

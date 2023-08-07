@@ -1,0 +1,37 @@
+INFO     root:test_cases.py:43 ==========执行用例START：roleDelete==========
+INFO     root:runcase.py:42 -·-·-·-·-·-·-·-·-·-执行用例 START：删除职位成功-·-·-·-·-·-·-·-·-·-
+INFO     root:runcase.py:69 -·-·-·-·-·-·-·-·-·-执行接口 START：新增职位成功-·-·-·-·-·-·-·-·-·-
+INFO     root:handleyaml.py:84 Yaml测试用例基础架构检查通过
+INFO     root:runcase.py:85 重组后的用例信息：{'api_name': '新建职位', 'base_url': 'https://192.168.148.174:31000', 'request': {'method': 'POST', 'address': '/api/user/v1/role', 'headers': {'Content-Type': 'application/json', 'token': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJhdWQiOiJhcHBsaWNhdGlvbiIsInN1YiI6IjI3ZjJhMGIwLTg5NDUtNDBjYy04MmUwLTM3N2I1ZTg2ZGI2MyIsImlzcyI6ImJtc19zZXJ2ZXIiLCJzZXNzaW9uSWQiOiIyN2YyYTBiMC04OTQ1LTQwY2MtODJlMC0zNzdiNWU4NmRiNjMiLCJleHAiOjE2OTE1NjkzOTgsImlhdCI6MTY5MTM4OTM5OH0.ZpiL3oYv83DFiGf1FXbdmCrrv6lSaX04Rp1SRXVAngMe5EtgXSY9AtmTiI4_2K15W5jhtaYjpilLwNFUn0RpVA', 'Referer': 'https://192.168.148.174:31000/sub-app-unity/jobGroup'}, 'data': {'roleName': '自动化测试职位'}}, 'name': '新增职位成功', 'description': '输入正确的职位名称，新增成功', 'preProcessors': {'database': [{'type': 'mysql', 'sql': "update `bms-general-uba`.t_role_info tri set isRemoved = '1' where roleName like '自动化测试职位%' and isRemoved = '0'"}]}, 'postProcessors': {'assert': {'code': 200, 'response': {'statusCode': 0, 'msg': 'success'}}}}
+INFO     root:runcase.py:123 请求地址：https://192.168.148.174:31000/api/user/v1/role
+INFO     root:runcase.py:124 请求方法：POST
+INFO     root:runcase.py:125 请求头：{'Content-Type': 'application/json', 'token': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJhdWQiOiJhcHBsaWNhdGlvbiIsInN1YiI6IjI3ZjJhMGIwLTg5NDUtNDBjYy04MmUwLTM3N2I1ZTg2ZGI2MyIsImlzcyI6ImJtc19zZXJ2ZXIiLCJzZXNzaW9uSWQiOiIyN2YyYTBiMC04OTQ1LTQwY2MtODJlMC0zNzdiNWU4NmRiNjMiLCJleHAiOjE2OTE1NjkzOTgsImlhdCI6MTY5MTM4OTM5OH0.ZpiL3oYv83DFiGf1FXbdmCrrv6lSaX04Rp1SRXVAngMe5EtgXSY9AtmTiI4_2K15W5jhtaYjpilLwNFUn0RpVA', 'Referer': 'https://192.168.148.174:31000/sub-app-unity/jobGroup'}
+INFO     root:runcase.py:135 请求参数：{'roleName': '自动化测试职位'}
+INFO     root:runcase.py:197 请求接口结果： {'statusCode': 0, 'msg': 'success'}
+INFO     root:checkresult.py:152 code断言通过, 期望状态码:200, 实际状态码:200
+INFO     root:checkresult.py:87 返回结果断言通过, 期望返回值:{'statusCode': 0, 'msg': 'success'}, 实际返回值:{'statusCode': 0, 'msg': 'success'}
+INFO     root:runcase.py:102 -·-·-·-·-·-·-·-·-·-执行接口 END：新增职位成功-·-·-·-·-·-·-·-·-·-
+INFO     root:runcase.py:69 -·-·-·-·-·-·-·-·-·-执行接口 START：职位列表搜索-按职位名称条件-·-·-·-·-·-·-·-·-·-
+INFO     root:handleyaml.py:84 Yaml测试用例基础架构检查通过
+INFO     root:runcase.py:85 重组后的用例信息：{'api_name': '职位列表搜索', 'base_url': 'https://192.168.148.174:31000', 'request': {'method': 'GET', 'address': '/api/user/v1/roles', 'headers': {'Content-Type': 'application/json', 'token': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJhdWQiOiJhcHBsaWNhdGlvbiIsInN1YiI6IjI3ZjJhMGIwLTg5NDUtNDBjYy04MmUwLTM3N2I1ZTg2ZGI2MyIsImlzcyI6ImJtc19zZXJ2ZXIiLCJzZXNzaW9uSWQiOiIyN2YyYTBiMC04OTQ1LTQwY2MtODJlMC0zNzdiNWU4NmRiNjMiLCJleHAiOjE2OTE1NjkzOTgsImlhdCI6MTY5MTM4OTM5OH0.ZpiL3oYv83DFiGf1FXbdmCrrv6lSaX04Rp1SRXVAngMe5EtgXSY9AtmTiI4_2K15W5jhtaYjpilLwNFUn0RpVA', 'Referer': 'https://192.168.148.174:31000/sub-app-unity/jobGroup'}, 'data': {'pageNum': 1, 'pageSize': 20, 'filters': '{"roleName":"自动化测试职位"}'}}, 'name': '职位列表搜索-按职位名称条件', 'description': '输入职位名称搜索条件，点击搜索，查看职位列表', 'postProcessors': {'assert': {'code': 200, 'response': {'statusCode': 0, 'msg': 'success'}, 'jsonpath': [{'path': '$.data.list[0].roleName', 'value': '自动化测试职位', 'type': 'in'}]}, 'extract': [{'name': 'roleId', 'jsonpath': '$.data.list[0].roleId'}]}}
+INFO     root:runcase.py:123 请求地址：https://192.168.148.174:31000/api/user/v1/roles
+INFO     root:runcase.py:124 请求方法：GET
+INFO     root:runcase.py:125 请求头：{'Content-Type': 'application/json', 'token': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJhdWQiOiJhcHBsaWNhdGlvbiIsInN1YiI6IjI3ZjJhMGIwLTg5NDUtNDBjYy04MmUwLTM3N2I1ZTg2ZGI2MyIsImlzcyI6ImJtc19zZXJ2ZXIiLCJzZXNzaW9uSWQiOiIyN2YyYTBiMC04OTQ1LTQwY2MtODJlMC0zNzdiNWU4NmRiNjMiLCJleHAiOjE2OTE1NjkzOTgsImlhdCI6MTY5MTM4OTM5OH0.ZpiL3oYv83DFiGf1FXbdmCrrv6lSaX04Rp1SRXVAngMe5EtgXSY9AtmTiI4_2K15W5jhtaYjpilLwNFUn0RpVA', 'Referer': 'https://192.168.148.174:31000/sub-app-unity/jobGroup'}
+INFO     root:runcase.py:135 请求参数：{'pageNum': 1, 'pageSize': 20, 'filters': '{"roleName":"自动化测试职位"}'}
+INFO     root:runcase.py:208 请求接口结果： {'statusCode': 0, 'msg': 'success', 'data': {'totalCount': 1, 'list': [{'roleId': 71, 'roleName': '自动化测试职位', 'priority': 0, 'createTime': '2023-08-07 14:28:43', 'isRemoved': 0}]}}
+INFO     root:checkresult.py:152 code断言通过, 期望状态码:200, 实际状态码:200
+INFO     root:checkresult.py:87 返回结果断言通过, 期望返回值:{'statusCode': 0, 'msg': 'success'}, 实际返回值:{'statusCode': 0, 'msg': 'success', 'data': {'totalCount': 1, 'list': [{'roleId': 71, 'roleName': '自动化测试职位', 'priority': 0, 'createTime': '2023-08-07 14:28:43', 'isRemoved': 0}]}}
+INFO     root:checkresult.py:130 json断言通过, 期望结果'{'path': '$.data.list[0].roleName', 'value': '自动化测试职位', 'type': 'in'}', 实际结果'{'statusCode': 0, 'msg': 'success', 'data': {'totalCount': 1, 'list': [{'roleId': 71, 'roleName': '自动化测试职位', 'priority': 0, 'createTime': '2023-08-07 14:28:43', 'isRemoved': 0}]}}'
+INFO     root:runcase.py:102 -·-·-·-·-·-·-·-·-·-执行接口 END：职位列表搜索-按职位名称条件-·-·-·-·-·-·-·-·-·-
+INFO     root:runcase.py:69 -·-·-·-·-·-·-·-·-·-执行接口 START：删除职位成功-·-·-·-·-·-·-·-·-·-
+INFO     root:handleyaml.py:84 Yaml测试用例基础架构检查通过
+INFO     root:runcase.py:85 重组后的用例信息：{'api_name': '删除职位', 'base_url': 'https://192.168.148.174:31000', 'request': {'method': 'DELETE', 'address': '/api/user/v1/role/71', 'headers': {'Content-Type': 'application/x-www-form-urlencoded', 'token': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJhdWQiOiJhcHBsaWNhdGlvbiIsInN1YiI6IjI3ZjJhMGIwLTg5NDUtNDBjYy04MmUwLTM3N2I1ZTg2ZGI2MyIsImlzcyI6ImJtc19zZXJ2ZXIiLCJzZXNzaW9uSWQiOiIyN2YyYTBiMC04OTQ1LTQwY2MtODJlMC0zNzdiNWU4NmRiNjMiLCJleHAiOjE2OTE1NjkzOTgsImlhdCI6MTY5MTM4OTM5OH0.ZpiL3oYv83DFiGf1FXbdmCrrv6lSaX04Rp1SRXVAngMe5EtgXSY9AtmTiI4_2K15W5jhtaYjpilLwNFUn0RpVA', 'Referer': 'https://192.168.148.174:31000/sub-app-unity/jobGroup'}}, 'name': '删除职位成功', 'description': '删除职位成功', 'postProcessors': {'assert': {'code': 200, 'response': {'statusCode': 0, 'msg': 'success'}}}}
+INFO     root:runcase.py:123 请求地址：https://192.168.148.174:31000/api/user/v1/role/71
+INFO     root:runcase.py:124 请求方法：DELETE
+INFO     root:runcase.py:125 请求头：{'Content-Type': 'application/x-www-form-urlencoded', 'token': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJhdWQiOiJhcHBsaWNhdGlvbiIsInN1YiI6IjI3ZjJhMGIwLTg5NDUtNDBjYy04MmUwLTM3N2I1ZTg2ZGI2MyIsImlzcyI6ImJtc19zZXJ2ZXIiLCJzZXNzaW9uSWQiOiIyN2YyYTBiMC04OTQ1LTQwY2MtODJlMC0zNzdiNWU4NmRiNjMiLCJleHAiOjE2OTE1NjkzOTgsImlhdCI6MTY5MTM4OTM5OH0.ZpiL3oYv83DFiGf1FXbdmCrrv6lSaX04Rp1SRXVAngMe5EtgXSY9AtmTiI4_2K15W5jhtaYjpilLwNFUn0RpVA', 'Referer': 'https://192.168.148.174:31000/sub-app-unity/jobGroup'}
+INFO     root:runcase.py:239 请求接口结果： {'statusCode': 0, 'msg': 'success'}
+INFO     root:checkresult.py:152 code断言通过, 期望状态码:200, 实际状态码:200
+INFO     root:checkresult.py:87 返回结果断言通过, 期望返回值:{'statusCode': 0, 'msg': 'success'}, 实际返回值:{'statusCode': 0, 'msg': 'success'}
+INFO     root:runcase.py:102 -·-·-·-·-·-·-·-·-·-执行接口 END：删除职位成功-·-·-·-·-·-·-·-·-·-
+INFO     root:runcase.py:60 -·-·-·-·-·-·-·-·-·-执行用例 END：删除职位成功-·-·-·-·-·-·-·-·-·-
+INFO     root:test_cases.py:45 ==========执行用例END：roleDelete==========

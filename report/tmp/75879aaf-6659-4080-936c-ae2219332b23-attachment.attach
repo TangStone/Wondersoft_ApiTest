@@ -1,0 +1,1 @@
+select password from `bms-general-aa`.t_sys_admin tsa where id = '87647592-40A04866-AEB111CA-33D0B1BB'

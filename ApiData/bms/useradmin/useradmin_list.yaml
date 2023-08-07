@@ -114,3 +114,9 @@ useradmin_list:
           - name: id     #变量名称
             # jsonpath表达式
             jsonpath: $.data.list[0].id
+          - name: account     #变量名称
+            # jsonpath表达式
+            jsonpath: $.data.list[0].account
+          - name: realName     #变量名称
+            # jsonpath表达式
+            jsonpath: $.data.list[0].realName

@@ -1,0 +1,1 @@
+{'backupTaskName': '终端日志备份', 'nameDatabase': 'sas_v3_doc', 'description': '终端日志备份-自动化测试', 'retentionTime': 5, 'firstExecutionTime': '2023-08-07 15:30:57', 'intervalPeriod': 1, 'cycleUnit': '1', 'retentionUnit': '1'}

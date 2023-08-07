@@ -1,0 +1,17 @@
+INFO     root:test_cases.py:43 ==========执行用例START：importDocFinger==========
+INFO     root:runcase.py:42 -·-·-·-·-·-·-·-·-·-执行用例 START：MD5导入-不覆盖-·-·-·-·-·-·-·-·-·-
+INFO     root:runcase.py:69 -·-·-·-·-·-·-·-·-·-执行接口 START：MD5导入不覆盖-·-·-·-·-·-·-·-·-·-
+INFO     root:handleyaml.py:84 Yaml测试用例基础架构检查通过
+INFO     root:runcase.py:85 重组后的用例信息：{'api_name': 'MD5导入', 'base_url': 'https://192.168.148.174:31000', 'request': {'method': 'POST', 'address': '/api/dlpparam/v1/docFinger/importDocFinger', 'headers': {'Content-Type': 'multipart/form-data', 'token': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJhdWQiOiJhcHBsaWNhdGlvbiIsInN1YiI6IjI3ZjJhMGIwLTg5NDUtNDBjYy04MmUwLTM3N2I1ZTg2ZGI2MyIsImlzcyI6ImJtc19zZXJ2ZXIiLCJzZXNzaW9uSWQiOiIyN2YyYTBiMC04OTQ1LTQwY2MtODJlMC0zNzdiNWU4NmRiNjMiLCJleHAiOjE2OTE1NjkzOTgsImlhdCI6MTY5MTM4OTM5OH0.ZpiL3oYv83DFiGf1FXbdmCrrv6lSaX04Rp1SRXVAngMe5EtgXSY9AtmTiI4_2K15W5jhtaYjpilLwNFUn0RpVA', 'Referer': 'https://192.168.148.174:31000/sub-app-dlpparam/dlpFileMd5'}, 'data': {'fingerPrintType': '2', 'creater': 'B5A33586-15104954-9B752AE1-53333EC10', 'updater': 'B5A33586-15104954-9B752AE1-53333EC10', 'fingerPrintName': '自动化测试MD5'}, 'file': {'file': 'MD5-demo.json'}}, 'name': 'MD5导入不覆盖', 'description': 'MD5导入不覆盖', 'preProcessors': {'database': [{'type': 'mysql', 'sql': "update `bms-general-dlpparam`.t_dlp_doc_finger_print tddfp set isRemoved = '1' where fingerPrintName like '自动化测试MD5%' and fingerPrintType = '2' and isRemoved = '0'"}]}, 'postProcessors': {'assert': {'code': 200, 'response': {'statusCode': 0}, 'dbcheck': [{'type': 'mysql', 'sql': "select count(1) as cou from `bms-general-dlpparam`.t_dlp_doc_finger_print tddfp where fingerPrintName like '自动化测试MD5%' and fingerPrintType = '2' and isRemoved = '0'", 'result': [{'path': '$.cou', 'value': 1}]}]}, 'database': [{'type': 'mysql', 'sql': "select * from `bms-general-dlpparam`.t_dlp_doc_finger_print tddfp where fingerPrintName like '自动化测试MD5%' and fingerPrintType = '2' and isRemoved = '0'", 'sqldata': [{'value': '$.fingerPrintId', 'name': 'fingerPrintId'}, {'value': '$.id', 'name': 'id'}, {'value': '$.fileContent', 'name': 'fileContent'}]}]}}
+INFO     root:runcase.py:123 请求地址：https://192.168.148.174:31000/api/dlpparam/v1/docFinger/importDocFinger
+INFO     root:runcase.py:124 请求方法：POST
+INFO     root:runcase.py:125 请求头：{'Content-Type': 'multipart/form-data', 'token': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJhdWQiOiJhcHBsaWNhdGlvbiIsInN1YiI6IjI3ZjJhMGIwLTg5NDUtNDBjYy04MmUwLTM3N2I1ZTg2ZGI2MyIsImlzcyI6ImJtc19zZXJ2ZXIiLCJzZXNzaW9uSWQiOiIyN2YyYTBiMC04OTQ1LTQwY2MtODJlMC0zNzdiNWU4NmRiNjMiLCJleHAiOjE2OTE1NjkzOTgsImlhdCI6MTY5MTM4OTM5OH0.ZpiL3oYv83DFiGf1FXbdmCrrv6lSaX04Rp1SRXVAngMe5EtgXSY9AtmTiI4_2K15W5jhtaYjpilLwNFUn0RpVA', 'Referer': 'https://192.168.148.174:31000/sub-app-dlpparam/dlpFileMd5'}
+INFO     root:runcase.py:135 请求参数：{'fingerPrintType': '2', 'creater': 'B5A33586-15104954-9B752AE1-53333EC10', 'updater': 'B5A33586-15104954-9B752AE1-53333EC10', 'fingerPrintName': '自动化测试MD5'}
+INFO     root:runcase.py:139 上传文件：{'file': 'MD5-demo.json'}
+INFO     root:runcase.py:197 请求接口结果： {'statusCode': 0}
+INFO     root:checkresult.py:152 code断言通过, 期望状态码:200, 实际状态码:200
+INFO     root:checkresult.py:87 返回结果断言通过, 期望返回值:{'statusCode': 0}, 实际返回值:{'statusCode': 0}
+INFO     root:checkresult.py:58 数据库断言通过, 期望结果:1, 实际结果:1
+INFO     root:runcase.py:102 -·-·-·-·-·-·-·-·-·-执行接口 END：MD5导入不覆盖-·-·-·-·-·-·-·-·-·-
+INFO     root:runcase.py:60 -·-·-·-·-·-·-·-·-·-执行用例 END：MD5导入-不覆盖-·-·-·-·-·-·-·-·-·-
+INFO     root:test_cases.py:45 ==========执行用例END：importDocFinger==========

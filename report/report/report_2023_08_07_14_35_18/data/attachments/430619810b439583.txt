@@ -1,0 +1,14 @@
+INFO     root:test_cases.py:43 ==========执行用例START：downloadMd5JsonModel==========
+INFO     root:runcase.py:42 -·-·-·-·-·-·-·-·-·-执行用例 START：MD5模板下载-·-·-·-·-·-·-·-·-·-
+INFO     root:runcase.py:69 -·-·-·-·-·-·-·-·-·-执行接口 START：MD5模板下载-·-·-·-·-·-·-·-·-·-
+INFO     root:handleyaml.py:84 Yaml测试用例基础架构检查通过
+INFO     root:runcase.py:85 重组后的用例信息：{'api_name': 'MD5模板下载', 'base_url': 'https://192.168.148.174:31000', 'request': {'method': 'POST', 'address': '/api/dlpparam/v1/docFinger/downloadMd5JsonModel', 'headers': {'Content-Type': 'application/x-www-form-urlencoded', 'token': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJhdWQiOiJhcHBsaWNhdGlvbiIsInN1YiI6IjI3ZjJhMGIwLTg5NDUtNDBjYy04MmUwLTM3N2I1ZTg2ZGI2MyIsImlzcyI6ImJtc19zZXJ2ZXIiLCJzZXNzaW9uSWQiOiIyN2YyYTBiMC04OTQ1LTQwY2MtODJlMC0zNzdiNWU4NmRiNjMiLCJleHAiOjE2OTE1NjkzOTgsImlhdCI6MTY5MTM4OTM5OH0.ZpiL3oYv83DFiGf1FXbdmCrrv6lSaX04Rp1SRXVAngMe5EtgXSY9AtmTiI4_2K15W5jhtaYjpilLwNFUn0RpVA', 'Referer': 'https://192.168.148.174:31000/sub-app-dlpparam/dlpFileMd5'}}, 'name': 'MD5模板下载', 'description': 'MMD5模板下载', 'postProcessors': {'assert': {'code': 200, 'response': {'filelist': [{'name': 'E:\\使用说明-策略匹配-2.txt'}]}}}}
+INFO     root:runcase.py:123 请求地址：https://192.168.148.174:31000/api/dlpparam/v1/docFinger/downloadMd5JsonModel
+INFO     root:runcase.py:124 请求方法：POST
+INFO     root:runcase.py:125 请求头：{'Content-Type': 'application/x-www-form-urlencoded', 'token': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJhdWQiOiJhcHBsaWNhdGlvbiIsInN1YiI6IjI3ZjJhMGIwLTg5NDUtNDBjYy04MmUwLTM3N2I1ZTg2ZGI2MyIsImlzcyI6ImJtc19zZXJ2ZXIiLCJzZXNzaW9uSWQiOiIyN2YyYTBiMC04OTQ1LTQwY2MtODJlMC0zNzdiNWU4NmRiNjMiLCJleHAiOjE2OTE1NjkzOTgsImlhdCI6MTY5MTM4OTM5OH0.ZpiL3oYv83DFiGf1FXbdmCrrv6lSaX04Rp1SRXVAngMe5EtgXSY9AtmTiI4_2K15W5jhtaYjpilLwNFUn0RpVA', 'Referer': 'https://192.168.148.174:31000/sub-app-dlpparam/dlpFileMd5'}
+INFO     root:runcase.py:197 请求接口结果： {'filelist': [{'name': 'E:\\使用说明-策略匹配-2.txt', 'md5': 'e9049a03bc547130efe4ebfce71d2cac'}, {'name': 'E:\\更新说明-策略匹配.txt', 'md5': '42d2ef4a25d023a47721b74f963b94c1'}, {'name': 'E:\\更新说明-策略匹配.docx', 'md5': '06dbcc09a6922af66310a51713737019'}]}
+INFO     root:checkresult.py:152 code断言通过, 期望状态码:200, 实际状态码:200
+INFO     root:checkresult.py:87 返回结果断言通过, 期望返回值:{'filelist': [{'name': 'E:\\使用说明-策略匹配-2.txt'}]}, 实际返回值:{'filelist': [{'name': 'E:\\使用说明-策略匹配-2.txt', 'md5': 'e9049a03bc547130efe4ebfce71d2cac'}, {'name': 'E:\\更新说明-策略匹配.txt', 'md5': '42d2ef4a25d023a47721b74f963b94c1'}, {'name': 'E:\\更新说明-策略匹配.docx', 'md5': '06dbcc09a6922af66310a51713737019'}]}
+INFO     root:runcase.py:102 -·-·-·-·-·-·-·-·-·-执行接口 END：MD5模板下载-·-·-·-·-·-·-·-·-·-
+INFO     root:runcase.py:60 -·-·-·-·-·-·-·-·-·-执行用例 END：MD5模板下载-·-·-·-·-·-·-·-·-·-
+INFO     root:test_cases.py:45 ==========执行用例END：downloadMd5JsonModel==========
