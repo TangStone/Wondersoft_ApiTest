@@ -143,6 +143,51 @@ class RegroupData:
         sign, rawDict = self.regroup_dict(self.api_casedata)
         return sign, rawDict
 
+    # def regroup_dict(self, rawDict):
+    #     """
+    #     递归重组接口用例数据
+    #     :param rawdict: 用例数据字典
+    #     :return:
+    #     """
+    #     try:
+    #         sign = 'success'   #标识参数
+    #         if isinstance(rawDict, dict):
+    #             for dict_key in rawDict:    #遍历字典
+    #                 if isinstance(rawDict[dict_key], dict):
+    #                     sign, tem_rawDict = self.regroup_dict(rawDict[dict_key])   #递归处理
+    #                     if sign == 'success':
+    #                         rawDict[dict_key] = tem_rawDict
+    #                     else:
+    #                         rawDict = tem_rawDict
+    #                         break
+    #                 elif isinstance(rawDict[dict_key], list):
+    #                     tem_raw_list = []
+    #                     for list_value in rawDict[dict_key]:
+    #                         if isinstance(list_value, dict):
+    #                             sign, tem_rawDict = self.regroup_dict(list_value)
+    #                             if sign == 'success':
+    #                                 tem_raw_list.append(tem_rawDict)
+    #                             else:
+    #                                 rawDict = tem_rawDict
+    #                                 break
+    #                         elif isinstance(list_value, str):
+    #                             tem_str = self.replace_value(list_value)
+    #                             tem_raw_list.append(tem_str)
+    #                         else:
+    #                             tem_raw_list.append(list_value)
+    #                     rawDict[dict_key] = tem_raw_list
+    #                 elif isinstance(rawDict[dict_key], str):
+    #                     tem_str = self.replace_value(rawDict[dict_key])
+    #                     rawDict[dict_key] = tem_str
+    #     except:
+    #         # 异常处理
+    #         ex_type, ex_val, ex_stack = sys.exc_info()
+    #         error_info = exceptions.get_error_info(ex_type, ex_val, ex_stack)
+    #         rawDict = "重组用例数据异常" + str(error_info)
+    #         sign = 'error'
+    #     return sign, rawDict
+
+
     def regroup_dict(self, rawDict):
         """
         递归重组接口用例数据
@@ -153,32 +198,27 @@ class RegroupData:
             sign = 'success'   #标识参数
             if isinstance(rawDict, dict):
                 for dict_key in rawDict:    #遍历字典
-                    if isinstance(rawDict[dict_key], dict):
-                        sign, tem_rawDict = self.regroup_dict(rawDict[dict_key])   #递归处理
-                        if sign == 'success':
-                            rawDict[dict_key] = tem_rawDict
-                        else:
-                            rawDict = tem_rawDict
-                            break
-                    elif isinstance(rawDict[dict_key], list):
-                        tem_raw_list = []
-                        for list_value in rawDict[dict_key]:
-                            if isinstance(list_value, dict):
-                                sign, tem_rawDict = self.regroup_dict(list_value)
-                                if sign == 'success':
-                                    tem_raw_list.append(tem_rawDict)
-                                else:
-                                    rawDict = tem_rawDict
-                                    break
-                            elif isinstance(list_value, str):
-                                tem_str = self.replace_value(list_value)
-                                tem_raw_list.append(tem_str)
-                            else:
-                                tem_raw_list.append(list_value)
-                        rawDict[dict_key] = tem_raw_list
-                    elif isinstance(rawDict[dict_key], str):
-                        tem_str = self.replace_value(rawDict[dict_key])
-                        rawDict[dict_key] = tem_str
+                    sign, tem_rawDict = self.regroup_dict(rawDict[dict_key])  # 递归处理
+                    if sign == 'success':
+                        rawDict[dict_key] = tem_rawDict
+                    else:
+                        rawDict = tem_rawDict
+                        break
+            elif isinstance(rawDict, list):
+                tem_raw_list = []
+                for list_value in rawDict:
+                    sign, tem_rawDict = self.regroup_dict(list_value)
+                    if sign == 'success':
+                        tem_raw_list.append(tem_rawDict)
+                    else:
+                        rawDict = tem_rawDict
+                        break
+                if sign == 'success':
+                    rawDict = tem_raw_list
+            elif isinstance(rawDict, str):
+                rawDict = self.replace_value(rawDict)
+            else:
+                pass
         except:
             # 异常处理
             ex_type, ex_val, ex_stack = sys.exc_info()
@@ -187,7 +227,6 @@ class RegroupData:
             sign = 'error'
         return sign, rawDict
 
-
     def replace_value(self, str_data):
         """
         参数值替换
@@ -195,7 +234,7 @@ class RegroupData:
         :return:
         """
         var_list = re.findall(r"\$\{(.*?)\}", str_data)  # 变量替换
-        eval_list = re.findall(r"\$Eval\((.*)\)", str_data)  # 格式转换,非贪婪模式
+        eval_list = re.findall(r"\$Eval\((.*)\)", str_data)  # 格式转换
         enc_list = re.findall(r"\$Enc\((.*?)\)", str_data)  # 加密
         time_list = re.findall(r"\$GetTime\((.*?)\)", str_data)  # 时间
 

@@ -1,0 +1,14 @@
+INFO     root:test_cases.py:43 ==========执行用例START：syncConfig_alllist==========
+INFO     root:runcase.py:42 -·-·-·-·-·-·-·-·-·-执行用例 START：查询所有同步配置-·-·-·-·-·-·-·-·-·-
+INFO     root:runcase.py:117 -·-·-·-·-·-·-·-·-·-执行接口 START：查询所有同步配置-·-·-·-·-·-·-·-·-·-
+INFO     root:handleyaml.py:84 Yaml测试用例基础架构检查通过
+INFO     root:runcase.py:128 重组后的用例信息：{'api_name': '查询所有同步配置', 'base_url': 'https://192.168.148.174:31000', 'request': {'method': 'GET', 'address': '/api/usersync/v1/syncConfig', 'headers': {'Content-Type': 'application/json', 'token': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJhdWQiOiJhcHBsaWNhdGlvbiIsInN1YiI6Ijk2NGJiYjI5LWQ5MmUtNGYxMS04NmE2LTliMDMzZmU3MzI1NCIsImlzcyI6ImJtc19zZXJ2ZXIiLCJzZXNzaW9uSWQiOiI5NjRiYmIyOS1kOTJlLTRmMTEtODZhNi05YjAzM2ZlNzMyNTQiLCJleHAiOjE2OTIxODU5MjUsImlhdCI6MTY5MjAwNTkyNX0.QaEUj72R10OUSPFkSrNptyby2e1XoYmTgr3PBkYtFJALpiZ0pxklN7IItaxdKaO2NRYeRvgtzRCmv1wFF1---A', 'Referer': 'https://192.168.148.174:31000/sub-app-unity/userSync'}}, 'name': '查询所有同步配置', 'description': '查询所有同步配置', 'postProcessors': {'assert': {'code': 200, 'response': {'statusCode': 0, 'msg': 'success'}}}}
+INFO     root:runcase.py:177 请求地址：https://192.168.148.174:31000/api/usersync/v1/syncConfig
+INFO     root:runcase.py:178 请求方法：GET
+INFO     root:runcase.py:179 请求头：{'Content-Type': 'application/json', 'token': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJhdWQiOiJhcHBsaWNhdGlvbiIsInN1YiI6Ijk2NGJiYjI5LWQ5MmUtNGYxMS04NmE2LTliMDMzZmU3MzI1NCIsImlzcyI6ImJtc19zZXJ2ZXIiLCJzZXNzaW9uSWQiOiI5NjRiYmIyOS1kOTJlLTRmMTEtODZhNi05YjAzM2ZlNzMyNTQiLCJleHAiOjE2OTIxODU5MjUsImlhdCI6MTY5MjAwNTkyNX0.QaEUj72R10OUSPFkSrNptyby2e1XoYmTgr3PBkYtFJALpiZ0pxklN7IItaxdKaO2NRYeRvgtzRCmv1wFF1---A', 'Referer': 'https://192.168.148.174:31000/sub-app-unity/userSync'}
+INFO     root:runcase.py:262 请求接口结果： {'statusCode': 0, 'msg': 'success', 'data': [{'id': 174, 'modifyTime': '2023-08-14 17:44:22', 'userSourceId': '251', 'jobTime': '00 40 15 10 * ?', 'isIncrement': 1, 'threshold': 0, 'taskSavePeriod': 100, 'syncName': '自动化测试同步配置修改', 'syncType': '0', 'allowUpdate': False}]}
+INFO     root:checkresult.py:152 code断言通过, 期望状态码:200, 实际状态码:200
+INFO     root:checkresult.py:87 返回结果断言通过, 期望返回值:{'statusCode': 0, 'msg': 'success'}, 实际返回值:{'statusCode': 0, 'msg': 'success', 'data': [{'id': 174, 'modifyTime': '2023-08-14 17:44:22', 'userSourceId': '251', 'jobTime': '00 40 15 10 * ?', 'isIncrement': 1, 'threshold': 0, 'taskSavePeriod': 100, 'syncName': '自动化测试同步配置修改', 'syncType': '0', 'allowUpdate': False}]}
+INFO     root:runcase.py:135 -·-·-·-·-·-·-·-·-·-执行接口 END：查询所有同步配置-·-·-·-·-·-·-·-·-·-
+INFO     root:runcase.py:60 -·-·-·-·-·-·-·-·-·-执行用例 END：查询所有同步配置-·-·-·-·-·-·-·-·-·-
+INFO     root:test_cases.py:45 ==========执行用例END：syncConfig_alllist==========

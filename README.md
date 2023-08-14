@@ -1,7 +1,6 @@
 # 接口自动化:python+pytest+yaml+allure
 
 ## 流程图
-
 ![img.png](img.png)
 
 ## 目录结构

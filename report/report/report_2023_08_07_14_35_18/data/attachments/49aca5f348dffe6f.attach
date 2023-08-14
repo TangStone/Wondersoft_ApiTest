@@ -1,1 +1,0 @@
-select * from `bms-general-uba`.t_user_info tui where sid = '05D9C8EE-19544946-9E400AFE-6914B15B'

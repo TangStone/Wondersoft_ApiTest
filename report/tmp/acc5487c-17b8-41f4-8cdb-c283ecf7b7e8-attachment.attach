@@ -1,1 +1,0 @@
-{'c_id': 'bc94133687a94841996d0eb16be06f56', 'c_rule_type': '2', 'c_rule_name': '自动化测试正则规则修改', 'c_rule_content': '(?<!(纯|手|工))测试', 'c_creater': 'admin', 'c_updater': 'B5A33586-15104954-9B752AE1-53333EC10', 'c_note': '不匹配自动化测试文本修改'}

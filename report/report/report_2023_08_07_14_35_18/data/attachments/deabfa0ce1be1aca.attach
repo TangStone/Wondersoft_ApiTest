@@ -1,1 +1,0 @@
-select roleName from `bms-general-uba`.t_role_info tri where id = '70'

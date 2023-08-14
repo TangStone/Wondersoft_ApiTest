@@ -14,7 +14,7 @@ from common import handleyaml
 from common.basefunc import config_dict
 
 
-def handle_extarct(extract, recv_data, send_data):
+def handle_extarct(extract, recv_data):
     """
     处理中间参数
     :param extract: 提取参数字典

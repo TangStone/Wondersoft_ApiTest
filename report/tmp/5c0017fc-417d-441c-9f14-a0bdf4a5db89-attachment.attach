@@ -1,0 +1,1 @@
+select * from `bms-general-aa`.t_syslog_rule_info tsri where id = '119'

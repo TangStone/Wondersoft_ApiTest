@@ -59,6 +59,54 @@ class RunCase:
                     self.excute_apicase(api, api_casedata)
         logging.info('-·-·-·-·-·-·-·-·-·-执行用例 END：%s-·-·-·-·-·-·-·-·-·-', casedata['name'])
 
+    # def excute_apicase(self, api, api_casedata):
+    #     """
+    #     执行接口用例
+    #     :param api: 接口
+    #     :param api_casedata: 接口用例数据
+    #     :return:
+    #     """
+    #     logging.info('-·-·-·-·-·-·-·-·-·-执行接口 START：%s-·-·-·-·-·-·-·-·-·-', api_casedata['name'])
+    #     # 校验用例格式
+    #     flag, msg = handleyaml.standard_yaml(api_casedata)
+    #     if flag:  # 用例格式无误
+    #         # 判断是否存在前置操作
+    #         if 'preProcessors' in api_casedata.keys():
+    #             # 判断是否存在前置操作-数据库操作
+    #             if 'database' in api_casedata['preProcessors'].keys():
+    #                 # 执行数据库操作，获取参数
+    #                 db_dict = database.SetUpDB().get_setup_sql_data(api_casedata['preProcessors']['database'])
+    #                 # 更新临时变量字典
+    #                 self.temp_var_dict = handledict.dict_update(self.temp_var_dict, db_dict)
+    #
+    #         # 重组接口用例数据
+    #         sign, api_casedata = regroupdata.RegroupData(api_casedata, self.temp_var_dict).regroup_case_data()
+    #         if sign:  # 重组数据成功
+    #             logging.info("重组后的用例信息：%s", api_casedata)
+    #             # 发送请求
+    #             recv_data, recv_code = send_request(api_casedata)
+    #             # 结果校验
+    #             hope_result = api_casedata['postProcessors']['assert']
+    #             checkresult.check_result(hope_result, recv_data, recv_code)
+    #             # 提取变量
+    #             if 'extract' in api_casedata['postProcessors'].keys():
+    #                 temp_value = extract.handle_extarct(api_casedata['postProcessors']['extract'], recv_data)
+    #                 self.temp_var_dict = handledict.dict_update(self.temp_var_dict, temp_value)
+    #             # 判断是否存在后置操作-数据库操作
+    #             if 'database' in api_casedata['postProcessors'].keys():
+    #                 # 执行数据库操作，获取参数
+    #                 db_dict = database.SetUpDB().get_setup_sql_data(api_casedata['postProcessors']['database'])
+    #                 # 更新临时变量字典
+    #                 self.temp_var_dict = handledict.dict_update(self.temp_var_dict, db_dict)
+    #
+    #             logging.info('-·-·-·-·-·-·-·-·-·-执行接口 END：%s-·-·-·-·-·-·-·-·-·-', api_casedata['name'])
+    #             return api_casedata, recv_data
+    #         else:
+    #             raise Exception(api_casedata)
+    #     else:
+    #         logging.error("用例格式错误：%s", msg)
+    #         raise Exception("用例格式校验失败，" + msg)
+
     def excute_apicase(self, api, api_casedata):
         """
         执行接口用例
@@ -72,12 +120,7 @@ class RunCase:
         if flag:  # 用例格式无误
             # 判断是否存在前置操作
             if 'preProcessors' in api_casedata.keys():
-                # 判断是否存在前置操作-数据库操作
-                if 'database' in api_casedata['preProcessors'].keys():
-                    # 执行数据库操作，获取参数
-                    db_dict = database.SetUpDB().get_setup_sql_data(api_casedata['preProcessors']['database'])
-                    # 更新临时变量字典
-                    self.temp_var_dict = handledict.dict_update(self.temp_var_dict, db_dict)
+                self.apicase_processors(api_casedata['preProcessors'])
 
             # 重组接口用例数据
             sign, api_casedata = regroupdata.RegroupData(api_casedata, self.temp_var_dict).regroup_case_data()
@@ -85,19 +128,9 @@ class RunCase:
                 logging.info("重组后的用例信息：%s", api_casedata)
                 # 发送请求
                 recv_data, recv_code = send_request(api_casedata)
-                # 结果校验
-                hope_result = api_casedata['postProcessors']['assert']
-                checkresult.check_result(hope_result, recv_data, recv_code)
-                # 提取变量
-                if 'extract' in api_casedata['postProcessors'].keys():
-                    temp_value = extract.handle_extarct(api_casedata['postProcessors']['extract'], recv_data, api_casedata)
-                    self.temp_var_dict = handledict.dict_update(self.temp_var_dict, temp_value)
-                # 判断是否存在后置操作-数据库操作
-                if 'database' in api_casedata['postProcessors'].keys():
-                    # 执行数据库操作，获取参数
-                    db_dict = database.SetUpDB().get_setup_sql_data(api_casedata['postProcessors']['database'])
-                    # 更新临时变量字典
-                    self.temp_var_dict = handledict.dict_update(self.temp_var_dict, db_dict)
+                # 判断是否存在后置操作
+                if 'postProcessors' in api_casedata.keys():
+                    self.apicase_processors(api_casedata['postProcessors'], recv_data, recv_code)
 
                 logging.info('-·-·-·-·-·-·-·-·-·-执行接口 END：%s-·-·-·-·-·-·-·-·-·-', api_casedata['name'])
                 return api_casedata, recv_data
@@ -107,6 +140,27 @@ class RunCase:
             logging.error("用例格式错误：%s", msg)
             raise Exception("用例格式校验失败，" + msg)
 
+    def apicase_processors(self, pro_data, recv_data=None, recv_code=None):
+        """
+        接口用例前后置操作
+        :param recv_data: 返回数据
+        :param recv_code: 返回状态码
+        :param pro_data: 前后置操作数据
+        :return:
+        """
+        # 结果校验
+        if 'assert' in pro_data.keys():
+            checkresult.check_result(pro_data['assert'], recv_data, recv_code)
+        # 数据库操作
+        if 'database' in pro_data.keys():
+            # 执行数据库操作，获取参数
+            db_dict = database.SetUpDB().get_setup_sql_data(pro_data['database'])
+            # 更新临时变量字典
+            self.temp_var_dict = handledict.dict_update(self.temp_var_dict, db_dict)
+        # 提取变量
+        if 'extract' in pro_data.keys():
+            temp_value = extract.handle_extarct(pro_data['extract'], recv_data)
+            self.temp_var_dict = handledict.dict_update(self.temp_var_dict, temp_value)
 
 def send_request(casedata):
     """
