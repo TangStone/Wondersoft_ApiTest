@@ -1,1 +1,0 @@
-{'statusCode': 0, 'msg': 'success', 'data': {'totalCount': 3, 'list': [{'id': 252, 'taskId': 116, 'modifyTime': '2023-08-14 17:42:02', 'errInfo': '更新用户[yonghu1934]失败'}, {'id': 253, 'taskId': 116, 'modifyTime': '2023-08-14 17:42:03', 'errInfo': '更新用户[yonghu1957]失败'}, {'id': 254, 'taskId': 116, 'modifyTime': '2023-08-14 17:42:05', 'errInfo': '创建用户[gaojie]失败'}]}}

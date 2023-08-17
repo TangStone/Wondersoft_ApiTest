@@ -1,1 +1,0 @@
-select * from `bms-general-aa`.t_monitor_alarm_rule tmar where id = '96'

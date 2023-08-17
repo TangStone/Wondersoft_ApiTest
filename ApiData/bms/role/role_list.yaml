@@ -40,7 +40,7 @@ role_list:
             sql: select count(*) as count from `bms-general-aa`.t_sys_role tsr where `type` != 0
             #sql取值
             sqldata:
-              - value: $.count
+              - jsonpath: $.count
                 name: totalCount
       # 后置操作
       postProcessors:

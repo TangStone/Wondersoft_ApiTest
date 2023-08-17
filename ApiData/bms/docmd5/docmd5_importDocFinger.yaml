@@ -63,11 +63,11 @@ docmd5_importDocFinger:
             sql: select * from `bms-general-dlpparam`.t_dlp_doc_finger_print tddfp where fingerPrintName like '自动化测试MD5%' and fingerPrintType = '2' and isRemoved = '0'
             #sql取值
             sqldata:
-              - value: $.fingerPrintId
+              - jsonpath: $.fingerPrintId
                 name: fingerPrintId
-              - value: $.id
+              - jsonpath: $.id
                 name: id
-              - value: $.fileContent
+              - jsonpath: $.fileContent
                 name: fileContent
     # 接口用例ID
     docmd5_importDocFinger_02:

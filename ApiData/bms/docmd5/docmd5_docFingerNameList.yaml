@@ -39,8 +39,8 @@ docmd5_docFingerNameList:
             sql: select * from `bms-general-dlpparam`.t_dlp_doc_finger_print tddfp where fingerPrintType = '2' and isRemoved = '0'
             #sql取值
             sqldata:
-              - value: $.fingerPrintId
-                name: fingerPrintId
+              - name: fingerPrintId
+                jsonpath: $.fingerPrintId
       # 后置操作
       postProcessors:
         # 断言

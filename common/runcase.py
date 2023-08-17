@@ -148,19 +148,20 @@ class RunCase:
         :param pro_data: 前后置操作数据
         :return:
         """
-        # 结果校验
-        if 'assert' in pro_data.keys():
-            checkresult.check_result(pro_data['assert'], recv_data, recv_code)
-        # 数据库操作
-        if 'database' in pro_data.keys():
-            # 执行数据库操作，获取参数
-            db_dict = database.SetUpDB().get_setup_sql_data(pro_data['database'])
-            # 更新临时变量字典
-            self.temp_var_dict = handledict.dict_update(self.temp_var_dict, db_dict)
-        # 提取变量
-        if 'extract' in pro_data.keys():
-            temp_value = extract.handle_extarct(pro_data['extract'], recv_data)
-            self.temp_var_dict = handledict.dict_update(self.temp_var_dict, temp_value)
+        for pro in pro_data.keys():
+            # 结果校验
+            if pro == 'assert':
+                checkresult.check_result(pro_data['assert'], recv_data, recv_code)
+            # 数据库操作
+            if pro == 'database':
+                # 执行数据库操作，获取参数
+                db_dict = database.SetUpDB().get_setup_sql_data(pro_data['database'])
+                # 更新临时变量字典
+                self.temp_var_dict = handledict.dict_update(self.temp_var_dict, db_dict)
+            # 提取变量
+            if pro == 'extract':
+                temp_value = extract.handle_extarct(pro_data['extract'], recv_data)
+                self.temp_var_dict = handledict.dict_update(self.temp_var_dict, temp_value)
 
 def send_request(casedata):
     """

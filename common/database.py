@@ -92,7 +92,7 @@ class SetUpDB(MysqlConn):
                         if db_sql[0:6].upper() == 'SELECT':
                             sql_date = self.mysql_query(db_sql)
                             for param in sql_data['sqldata']:
-                                value = jsonpath.jsonpath(sql_date, param['value'])
+                                value = jsonpath.jsonpath(sql_date, param['jsonpath'])
                                 name = param['name']
                                 if value:
                                     db_dict[name] = value[0]

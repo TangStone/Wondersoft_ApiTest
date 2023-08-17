@@ -53,8 +53,8 @@ docFinger_updateFingerPrintLib:
             sql: select fingerPrintId from `bms-general-dlpparam`.t_dlp_doc_finger_print tddfp where fingerPrintName like '自动化测试指纹库-服务器导入-挂载%' and isRemoved = '0'
             #sql取值
             sqldata:
-              - value: $.fingerPrintId
-                name: fingerPrintId
+              - name: fingerPrintId
+                jsonpath: $.fingerPrintId
       # 后置操作
       postProcessors:
         # 断言
@@ -106,8 +106,8 @@ docFinger_updateFingerPrintLib:
             sql: select fingerPrintId from `bms-general-dlpparam`.t_dlp_doc_finger_print tddfp where fingerPrintName like '自动化测试指纹库-本地上传-挂载%' and isRemoved = '0'
             #sql取值
             sqldata:
-              - value: $.fingerPrintId
-                name: fingerPrintId
+              - name: fingerPrintId
+                jsonpath: $.fingerPrintId
       # 后置操作
       postProcessors:
         # 断言
