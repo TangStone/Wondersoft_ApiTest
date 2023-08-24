@@ -55,9 +55,11 @@
 
 ```
 # 接口ID
-user_group_list:
+alarminfo_list:
   # 接口基本信息
   ApiInfo:
+    # 接口名称
+    api_name: 查询告警信息
     # 基础URL:https://192.168.148.174:31000
     base_url: ${base_url}
     # 请求信息
@@ -65,27 +67,40 @@ user_group_list:
       # 请求类型
       method: GET
       # 请求地址
-      address: /api/user/v1/querygroups/1
+      address: /api/auth/v1/monitor/listAlarmInfo
       # 请求头
       headers:
         Content-Type: application/json
         token: ${token}
-        Referer: ${base_url}/sub-app-unity/group
+        Referer: ${base_url}/sub-app-unity/monitor/listAlarmInfo
   # 接口用例，填写接口发送数据、前置操作、后置操作，发送请求时将接口基本信息与接口数据组合
   ApiData:
     # 接口用例ID
-    user_group_list_01:
+    alarminfo_list_01:
       # 接口用例名称
-      name: 搜索一级组织机构下特定用户组信息
+      name: 查询告警信息
       # 接口用例描述
-      description: 搜索一级组织机构下特定用户组信息
+      description: 查询告警信息
       # 请求信息，包括data，file
       request:
         # 请求数据
         data:
-          groupName: 自动化测试根组
           page: 1
           rows: 20
+      # 前置操作
+      preProcessors:
+        # 数据库操作
+        database:
+          - type: mysql
+            sql: update `bms-general-uba`.t_user_source tus set isRemoved = '1' where name like '自动化测试%' and isRemoved = '0' 
+          - type: mysql    #数据库类型：mysql
+            #sql语句，取返回的第一组数据
+            sql: select fingerPrintId from `bms-general-dlpparam`.t_dlp_doc_finger_print tddfp where fingerPrintName like '自动化测试指纹库-服务器导入-挂载%' and isRemoved = '0'
+            #sql取值
+            sqldata:
+              - name: fingerPrintId     #变量名称
+                # jsonpath表达式
+                jsonpath: $.fingerPrintId
       # 后置操作
       postProcessors:
         # 断言
@@ -93,24 +108,44 @@ user_group_list:
           # 状态码校验
           code: 200
           # 返回值校验
-          response: { "statusCode": 0,"msg": "success" }
+          response: {'statusCode': 0, 'msg': 'success'}
           # jsonpath校验
           jsonpath:
-            - path: $.data[0].groupName
-              value: 自动化测试根组
+            - path: $.data.list[0].name
+              value: 自动化测试70.235数据源
               type: in
-#        # 数据库校验
-#        dbcheck:
-#          - type: mysql
-#            sql: select * from `bms-general-aa`.t_sys_role tsr where roleName = '自动化测试角色'
-#            result:
-#              - path: $.roleName
-#                value: 自动化测试角色
+          # 数据库校验
+          dbcheck:
+            - type: mysql
+              sql: select count(1) as count from `bms-general-aa`.t_monitor_alarm_rule tmar where  alarmName like '自动化测试' and isEnable ='0' and isRemoved = '0'
+              result:
+                - path: $.count
+                  value: 0        
         # 提取变量
         extract:
-          - name: groupId     #变量名称
+          - name: id     #变量名称
             # jsonpath表达式
-            jsonpath: $.data[0].groupId
+            jsonpath: $.data.list[0].id
+          - name: name     #变量名称
+            # jsonpath表达式
+            jsonpath: $.data.list[0].name
+          - name: token     #变量名称
+            # jsonpath表达式
+            jsonpath: $.data.token
+            # 变量类型：全局变量-global、临时变量-temp（不填写默认为临时变量）
+            type: global
+        database:
+          - type: mysql    #数据库类型：mysql
+            #sql语句，取返回的第一组数据
+            sql: select * from `bms-general-dlpparam`.t_dlp_doc_finger_print tddfp where fingerPrintName like '自动化测试MD5%' and fingerPrintType = '2' and isRemoved = '0'
+            #sql取值
+            sqldata:
+              - name: fingerPrintId
+                jsonpath: $.fingerPrintId     
+              - name: id
+                jsonpath: $.id 
+              - name: fileContent
+                jsonpath: $.fileContent
 ```
 ## 取值方式
 1. 参数取值：${}
@@ -119,7 +154,8 @@ user_group_list:
    - 获取当前时间，时间偏移：$GetTime(format=%Y-%m-%d %H:%M:%S;cal=m+1)
      - +：向后偏移；-：向前偏移
      - w：周偏移；d：天偏移；h：小时偏移；m：分钟偏移
-3. 公式计算
-   - 取值后，进行公示计算：$Eval(${};cal=+1)
+3. 表达式计算
+   - 取值后，进行公式计算：$Eval(${};cal=+1)
    - 取值后，转换格式，根据jsonpath获取指定值：$Eval(${};path=)  
       （针对获取的值为字符串，需要获取字符串中的特定参数的场景）
+4. 参数加密：$Enc()

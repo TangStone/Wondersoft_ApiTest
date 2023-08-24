@@ -2,7 +2,7 @@
 
 """
 @author: gaojie
-@File: api_ceshi.py
+@File: case_ceshi.py
 @IDE: PyCharm
 @time: 2023-07-14 15:24
 @description: 接口自测
@@ -50,15 +50,15 @@ if __name__ == '__main__':
     api_caseid = 'login_01'  # 接口用例id
     api_ceshi(api_path, api, api_caseid)
 
-    # 单接口测试s
+    # # 单接口测试
     # api_path = API_DIR + '/bms/alarmrules/alarmrules_del.yaml'  # 接口用例路径
     # api = 'alarmrules_del'  # 接口用例
     # api_caseid = 'alarmrules_del_01'  # 接口用例id
     # api_ceshi(api_path, api, api_caseid)
 
     # # 单用例测试
-    casepath = CASE_DIR + '/bms/useradmin.yaml'  # 用例路径
-    case = 'useradminPasswdReset'
+    casepath = CASE_DIR + '/bms/sysloginfo.yaml'  # 用例路径
+    case = 'getAllDlpEventLogListByParam'
     case_ceshi(casepath, case)
 
 
