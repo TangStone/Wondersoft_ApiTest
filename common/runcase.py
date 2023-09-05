@@ -227,18 +227,34 @@ class ApiMethod:
                                         json=self.data, verify=False)
         elif "multipart/form-data" in self.headers.values():
             if self.file:
+                # for key in self.file:
+                #     value = self.file[key]
+                #     # 判定参数值是否为文件，如果是则替换为二进制值
+                #     # if '/' in value:
+                #     file_path = FILE_DIR + '/' + value
+                #     self.file[key] = (os.path.basename(file_path), open(file_path, 'rb'), 'application/octet-stream')
+                # if self.data:
+                #     self.file = dict(self.file, **self.data)
+                # multipart = MultipartEncoder(
+                #     fields=self.file
+                #     # boundary='-----------------------------' + str(random.randint(int(1e28), int(1e29 - 1)))
+                # )
+
+                fields = []
+                for kv in self.data.items():
+                    fields.append(kv)
                 for key in self.file:
                     value = self.file[key]
-                    # 判定参数值是否为文件，如果是则替换为二进制值
-                    # if '/' in value:
-                    file_path = FILE_DIR + '/' + value
-                    self.file[key] = (os.path.basename(file_path), open(file_path, 'rb'), 'application/octet-stream')
-                if self.data:
-                    self.file = dict(self.file, **self.data)
-                multipart = MultipartEncoder(
-                    fields=self.file
-                    # boundary='-----------------------------' + str(random.randint(int(1e28), int(1e29 - 1)))
-                )
+                    if type(value) == list:
+                        for i in value:
+                            file_path = FILE_DIR + '/' + i
+                            file = (key, (os.path.basename(file_path), open(file_path, 'rb'), 'application/octet-stream'))
+                            fields.append(file)
+                    else:
+                        file_path = FILE_DIR + '/' + value
+                        file = (key, (os.path.basename(file_path), open(file_path, 'rb'), 'application/octet-stream'))
+                        fields.append(file)
+                multipart = MultipartEncoder(fields)
                 self.headers['Content-Type'] = multipart.content_type
                 recv_result = requests.post(url=self.url, data=multipart, headers=self.headers, verify=False)
             else:

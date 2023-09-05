@@ -51,14 +51,12 @@ if __name__ == '__main__':
     api_ceshi(api_path, api, api_caseid)
 
     # # 单接口测试
-    # api_path = API_DIR + '/bms/alarmrules/alarmrules_del.yaml'  # 接口用例路径
-    # api = 'alarmrules_del'  # 接口用例
-    # api_caseid = 'alarmrules_del_01'  # 接口用例id
-    # api_ceshi(api_path, api, api_caseid)
+    api_path = API_DIR + '/bms/docmd5/docmd5_importDocFinger.yaml'  # 接口用例路径
+    api = 'docmd5_importDocFinger'  # 接口用例
+    api_caseid = 'docmd5_importDocFinger_01'  # 接口用例id
+    api_ceshi(api_path, api, api_caseid)
 
     # # 单用例测试
-    casepath = CASE_DIR + '/bms/sysloginfo.yaml'  # 用例路径
-    case = 'getAllDlpEventLogListByParam'
-    case_ceshi(casepath, case)
-
-
+    # casepath = CASE_DIR + '/bms/sysloginfo.yaml'  # 用例路径
+    # case = 'getAllDlpEventLogListByParam'
+    # case_ceshi(casepath, case)

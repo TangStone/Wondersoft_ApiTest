@@ -32,3 +32,12 @@ def encryption(message):
     enc_message = result.decode()
 
     return enc_message
+
+def enc_base64(message):
+    """
+    base64加密
+    :param message: 需要加密的字符串
+    :return:
+    """
+    result = base64.b64encode(message.encode("utf-8")).decode()
+    return result

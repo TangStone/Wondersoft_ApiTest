@@ -87,7 +87,19 @@ class RegroupData:
         :param param: key
         :return:
         """
-        data = encryption.encryption(param)
+        param_list = param.split(';')  # 获取多个配置项
+        if len(param_list) >= 2:
+            for pa in param_list[1:]:
+                pa_list = pa.split("=")
+                if pa_list[0] == 'type':  # 获取字典中的特定值
+                    if pa_list[1] == 'base64':
+                        data = encryption.enc_base64(param_list[0])
+                    else:
+                        raise Exception("暂不支持此种加密方式：" + pa_list[1])
+                else:
+                    raise Exception("暂不支持此扩展" + pa_list)
+        else:
+            data = encryption.encryption(param)
         return data
 
     @staticmethod
