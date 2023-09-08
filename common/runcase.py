@@ -155,7 +155,8 @@ class RunCase:
             # 数据库操作
             if pro == 'database':
                 # 执行数据库操作，获取参数
-                db_dict = database.SetUpDB().get_setup_sql_data(pro_data['database'])
+                db_dict = database.HandleDB().handle_dbdata(pro_data['database'])
+                # db_dict = database.SetUpDB().get_setup_sql_data(pro_data['database'])
                 # 更新临时变量字典
                 self.temp_var_dict = handledict.dict_update(self.temp_var_dict, db_dict)
             # 提取变量

@@ -71,37 +71,80 @@ class MysqlConn:
         except Exception as e:
             raise Exception('执行数据库查询失败：' + str(e))
 
-class SetUpDB(MysqlConn):
+# class SetUpDB(MysqlConn):
+#     """
+#     处理前置数据库操作
+#     """
+#
+#     def get_setup_sql_data(self, setup_sql):
+#         """
+#         处理前置sql请求，获取sql参数
+#         :param setup_sql:
+#         :return:
+#         """
+#         try:
+#             db_dict = {}
+#             if setup_sql:
+#                 for sql_data in setup_sql:
+#                     db_type = sql_data['type']  #数据库类型
+#                     db_sql = sql_data['sql']
+#                     if db_type == 'mysql':
+#                         if db_sql[0:6].upper() == 'SELECT':
+#                             sql_date = self.mysql_query(db_sql)
+#                             for param in sql_data['sqldata']:
+#                                 value = jsonpath.jsonpath(sql_date, param['jsonpath'])
+#                                 name = param['name']
+#                                 if value:
+#                                     db_dict[name] = value[0]
+#                                 else:
+#                                     raise Exception("数据库参数：" + name + "获取失败，请检查用例！")
+#                         else:
+#                             self.mysql_execute(db_sql)
+#                     else:
+#                         raise Exception("当前暂不支持此种数据库类型：" + str(db_type))
+#             return db_dict
+#         except Exception as e:
+#             raise Exception("sql 数据查询失败，请检查setup_sql语句是否正确：报错信息：" + str(e))
+
+class HandleDB(MysqlConn):
     """
-    处理前置数据库操作
+    处理数据库操作
     """
 
-    def get_setup_sql_data(self, setup_sql):
+    def handle_dbdata(self, dbdata_list):
         """
-        处理前置sql请求，获取sql参数
-        :param setup_sql:
+        数据库操作
+        :param dbdata_list: 数据库操作数据
         :return:
         """
+        db_dict = {}
         try:
-            db_dict = {}
-            if setup_sql:
-                for sql_data in setup_sql:
-                    db_type = sql_data['type']  #数据库类型
-                    db_sql = sql_data['sql']
-                    if db_type == 'mysql':
-                        if db_sql[0:6].upper() == 'SELECT':
-                            sql_date = self.mysql_query(db_sql)
-                            for param in sql_data['sqldata']:
-                                value = jsonpath.jsonpath(sql_date, param['jsonpath'])
-                                name = param['name']
-                                if value:
-                                    db_dict[name] = value[0]
+            if isinstance(dbdata_list, list):
+                for dbdata in dbdata_list:
+                    db_type = dbdata['type']   #数据库类型
+                    db_sql = dbdata['sql']     #数据库操作语句
+                    if db_type == 'mysql':     #mysql数据库
+                        sql_list = db_sql.split(';')    #分割sql语句
+                        for sql in sql_list:
+                            if sql:
+                                if sql[0:6].upper() == 'SELECT':   #查询语句
+                                    sql_data = self.mysql_query(sql)
+                                    for param in dbdata['sqldata']:
+                                        value = jsonpath.jsonpath(sql_data, param['jsonpath'])
+                                        name = param['name']
+                                        if value:
+                                            db_dict[name] = value[0]
+                                        else:
+                                            raise Exception("数据库参数：" + name + "获取失败，请检查用例！")
                                 else:
-                                    raise Exception("数据库参数：" + name + "获取失败，请检查用例！")
-                        else:
-                            self.mysql_execute(db_sql)
+                                    self.mysql_execute(sql)    #增删改语句
                     else:
                         raise Exception("当前暂不支持此种数据库类型：" + str(db_type))
-            return db_dict
+            else:
+                raise Exception("数据库操作数据格式错误，非列表格式，请检查！")
         except Exception as e:
-            raise Exception("sql 数据查询失败，请检查setup_sql语句是否正确：报错信息：" + str(e))
+            raise Exception("数据库操作失败：" + str(e))
+        return db_dict
+
+
+
