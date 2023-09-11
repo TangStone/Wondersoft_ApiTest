@@ -16,3 +16,8 @@ mysql_db:
 
 # 用例路径
 casedata_path:
+
+# 证书文件
+cert:
+  - example.crt
+  - example.key

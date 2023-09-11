@@ -30,3 +30,6 @@ API_DIR = ROOT_DIR + 'ApiData'
 
 # 测试用例路径
 CASE_DIR = ROOT_DIR + 'testcases'
+
+# 证书文件路径
+CERT_DIR = ROOT_DIR + 'certs'
