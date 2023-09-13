@@ -46,18 +46,23 @@ class RunCase:
             get_apicase_list = readcase.ReadCase().get_apicase_list(casedata)
             # 遍历接口用例列表
             for apicase in get_apicase_list:
-                api_path = API_DIR + apicase['api_path']  # 接口用例路径
-                api = apicase['api']  # 接口用例
-                api_caseid = apicase['data']  # 接口用例id
-                # 判断是否存在等待时间
-                if 'sleep' in apicase.keys():
-                    logging.info("========等待时间：%s秒", apicase['sleep'])
-                    time.sleep(apicase['sleep'])
-                # 获取接口用例数据
-                api_casedata = readcase.ReadCase().get_api_casedata(api_path, api, api_caseid)
-                # 执行接口用例
-                with allure.step(api_casedata['name']):
-                    self.excute_apicase(api, api_casedata)
+                if 'script' in apicase.keys():  # 调用脚本
+                    logging.info('-·-·-·-·-·-·-·-·-·-执行脚本 START-·-·-·-·-·-·-·-·-·-')
+                    exec(apicase['script'])
+                    logging.info('-·-·-·-·-·-·-·-·-·-执行脚本 END-·-·-·-·-·-·-·-·-·-')
+                else:   # 调用接口
+                    api_path = API_DIR + apicase['api_path']  # 接口用例路径
+                    api = apicase['api']  # 接口用例
+                    api_caseid = apicase['data']  # 接口用例id
+                    # 判断是否存在等待时间
+                    if 'sleep' in apicase.keys():
+                        logging.info("========等待时间：%s秒", apicase['sleep'])
+                        time.sleep(apicase['sleep'])
+                    # 获取接口用例数据
+                    api_casedata = readcase.ReadCase().get_api_casedata(api_path, api, api_caseid)
+                    # 执行接口用例
+                    with allure.step(api_casedata['name']):
+                        self.excute_apicase(api, api_casedata)
         logging.info('-·-·-·-·-·-·-·-·-·-执行用例 END：%s-·-·-·-·-·-·-·-·-·-', casedata['name'])
 
     def excute_apicase(self, api, api_casedata):
@@ -116,6 +121,9 @@ class RunCase:
             if pro == 'extract':
                 temp_value = extract.handle_extarct(pro_data['extract'], recv_data)
                 self.temp_var_dict = handledict.dict_update(self.temp_var_dict, temp_value)
+            # 执行自定义脚本
+            if pro == 'script':
+                exec(pro_data['script'])
 
 def send_request(casedata):
     """
