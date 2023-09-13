@@ -51,12 +51,12 @@ if __name__ == '__main__':
     api_ceshi(api_path, api, api_caseid)
 
     # # 单接口测试
-    api_path = API_DIR + '/bms/role/role_list.yaml'  # 接口用例路径
-    api = 'role_list'  # 接口用例
-    api_caseid = 'role_list_01'  # 接口用例id
+    api_path = API_DIR + '/bms/datadictionary/datadictionary_analysisDicExcel.yaml'  # 接口用例路径
+    api = 'datadictionary_analysisDicExcel'  # 接口用例
+    api_caseid = 'datadictionary_analysisDicExcel_01'  # 接口用例id
     api_ceshi(api_path, api, api_caseid)
 
     # # 单用例测试
-    # casepath = CASE_DIR + '/bms/sysloginfo.yaml'  # 用例路径
-    # case = 'getAllDlpEventLogListByParam'
+    # casepath = CASE_DIR + '/ndlp/send_email.yaml'  # 用例路径
+    # case = 'send_email'
     # case_ceshi(casepath, case)

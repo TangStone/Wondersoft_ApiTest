@@ -121,3 +121,46 @@ class ReadCase:
                 for case, casedata in file_data.items():
                     case_list.append((case, casedata))
         return case_list
+
+    def get_yaml_case(self, file_path):
+        """
+        获取yaml文件中的所有用例
+        :param file_path: yaml文件路径
+        :return:
+        """
+        case_list = []
+        if file_path:
+            file_data = handleyaml.YamlHandle(file_path).read_yaml()
+            for case, casedata in file_data.items():
+                case_list.append((case, casedata))
+        return case_list
+
+    def get_cases(self, path_list, filetype, exclude=[]):
+        """
+        获取测试用例
+        :param path_list: 文件夹路/文件路径列表
+        :param filetype: 文件类型
+        :param exclude: 排除目录/文件列表
+        :return:
+        """
+        if isinstance(path_list, list):
+            for path in path_list:
+                if os.path.isdir(path):  # 文件夹
+                    for root, dirs, files in os.walk(path):
+                        if root.replace('\\', '/') in exclude:  # 排除目录
+                            continue
+                        if files:
+                            for file in files:
+                                if root.replace('\\', '/') + '/' + file in exclude:  # 排除目录
+                                    continue
+                                if filetype in file:
+                                    case_list = self.get_yaml_case(root + '/' + file)  # 获取yaml文件中的所有用例
+                                    for i in case_list:
+                                        yield i
+                else:  # 文件
+                    if path in exclude:  # 排除文件
+                        continue
+                    if filetype in path:
+                        case_list = self.get_yaml_case(path)  # 获取yaml文件中的所有用例
+                        for i in case_list:
+                            yield i

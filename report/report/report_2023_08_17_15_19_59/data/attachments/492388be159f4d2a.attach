@@ -1,1 +1,0 @@
-select count(1) as cou from `bms-general-aa`.t_sys_role tsr where roleName = '自动化测试角色'

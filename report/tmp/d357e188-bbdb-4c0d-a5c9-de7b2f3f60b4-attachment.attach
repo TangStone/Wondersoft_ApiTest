@@ -1,1 +1,0 @@
-select groupName from `bms-general-uba`.t_group_info tgi where id = '553'

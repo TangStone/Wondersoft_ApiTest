@@ -1,1 +1,0 @@
-select roleId from `bms-general-aa`.t_sys_admin tsa where id = '6D713589-95C34E90-87B0B1A3-D6E446BF'

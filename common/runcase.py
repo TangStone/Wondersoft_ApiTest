@@ -199,8 +199,9 @@ class ApiMethod:
         elif "multipart/form-data" in self.headers.values():
             if self.file:
                 fields = []
-                for kv in self.data.items():
-                    fields.append(kv)
+                if self.data:
+                    for kv in self.data.items():
+                        fields.append(kv)
                 for key in self.file:
                     value = self.file[key]
                     if type(value) == list:

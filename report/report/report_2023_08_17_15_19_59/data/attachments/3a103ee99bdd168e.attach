@@ -1,1 +1,0 @@
-select propValue from `bms-general-aa`.t_sys_param_config tspc where propKey = 'aa.administrator.lockTime'

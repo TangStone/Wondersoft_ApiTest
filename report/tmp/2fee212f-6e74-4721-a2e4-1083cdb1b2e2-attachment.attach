@@ -1,1 +1,0 @@
-select count(1) as cou from `bms-general-dlpparam`.t_dlp_doc_finger_print tddfp where fingerPrintName like '自动化测试MD5%' and fingerPrintType = '2' and isRemoved = '0'

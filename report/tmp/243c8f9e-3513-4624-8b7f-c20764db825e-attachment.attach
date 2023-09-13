@@ -1,1 +1,0 @@
-{'alarmName': '自动化测试CPU告警', 'alarmDesc': 'CPU超过80%向自动化测试管理人员发送告警', 'alarmType': 1, 'alarmObject': 'CPU', 'thresholdRelation': 1, 'threshold': 80, 'durationTime': 5, 'durationUnit': 2, 'noticeType': 0}

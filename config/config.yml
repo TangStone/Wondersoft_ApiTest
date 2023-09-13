@@ -14,7 +14,7 @@ mysql_db:
   password: ws-123456
   port: 3306
 
-# 用例路径
+# 用例路径,列表形式
 casedata_path:
 
 # 证书文件
