@@ -101,7 +101,7 @@ class ReadCase:
                 case_id = step['case']
                 case_data = self.get_case_data(case_id, case_path)
                 api_case_list += self.get_apicase_list(case_data)
-            elif 'script' in step.keys():   #调用脚本
+            elif 'script_path' in step.keys():   #调用脚本
                 api_case_list.append(step)
             else:
                 raise Exception('用例步骤编写有误！步骤：' + step + '非接口用例或引用其它用例！')

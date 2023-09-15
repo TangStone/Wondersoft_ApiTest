@@ -24,6 +24,7 @@ from common import relevancecase
 from common import extract
 from common import database
 from common import handledict
+from common import customscript
 from common.basefunc import config_dict
 
 class RunCase:
@@ -46,10 +47,8 @@ class RunCase:
             get_apicase_list = readcase.ReadCase().get_apicase_list(casedata)
             # 遍历接口用例列表
             for apicase in get_apicase_list:
-                if 'script' in apicase.keys():  # 调用脚本
-                    logging.info('-·-·-·-·-·-·-·-·-·-执行脚本 START-·-·-·-·-·-·-·-·-·-')
-                    exec(apicase['script'])
-                    logging.info('-·-·-·-·-·-·-·-·-·-执行脚本 END-·-·-·-·-·-·-·-·-·-')
+                if 'script_path' in apicase.keys():  # 调用脚本
+                    customscript.excute_custom_script(apicase)
                 else:   # 调用接口
                     api_path = API_DIR + apicase['api_path']  # 接口用例路径
                     api = apicase['api']  # 接口用例
