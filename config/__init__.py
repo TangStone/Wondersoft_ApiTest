@@ -33,3 +33,6 @@ CASE_DIR = ROOT_DIR + 'testcases'
 
 # 证书文件路径
 CERT_DIR = ROOT_DIR + 'certs'
+
+# 自定义脚本参数数据路径
+SCRIPT_DATA_DIR = ROOT_DIR + 'scripts/data'
