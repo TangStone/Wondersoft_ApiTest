@@ -29,7 +29,7 @@ usersync_sync:
       request:
         # 请求数据
         data:
-          syncConfigId: ${syncConfigid}
+          syncConfigId: ${syncConfigid;type=str}
       # 后置操作
       postProcessors:
         # 断言

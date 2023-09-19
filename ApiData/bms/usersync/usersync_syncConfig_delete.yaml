@@ -29,7 +29,7 @@ usersync_syncConfig_delete:
       request:
         # 请求数据
         data:
-          ids: "${syncConfigid}"
+          ids: ${syncConfigid;type=str}
       # 后置操作
       postProcessors:
         # 断言

@@ -40,7 +40,7 @@ docFinger_addFingerPrintLib:
           overlayExistFile: "0"
           fileSizeUnitFilter: "KB"
           fileSizeOpFilter: "ba"
-          fileTypeFilter: '${id}'
+          fileTypeFilter: ${id;type=str}
           fileNumFilter: "2"
           fileSizeFilter: "1"
           fileSizeMaxFilter: "200"
@@ -80,7 +80,7 @@ docFinger_addFingerPrintLib:
           overlayExistFile: "0"
           fileSizeUnitFilter: "KB"
           fileSizeOpFilter: "ba"
-          fileTypeFilter: '${id}'
+          fileTypeFilter: ${id;type=str}
           fileNumFilter: "2"
           fileSizeFilter: "1"
           fileSizeMaxFilter: "100"

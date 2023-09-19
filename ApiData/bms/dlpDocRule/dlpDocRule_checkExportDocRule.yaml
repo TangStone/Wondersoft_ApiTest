@@ -55,7 +55,7 @@ dlpDocRule_checkExportDocRule:
         # 请求数据
         data:
           userName: ${realName}
-          c_id: ${c_id}
+          c_id: ${c_id;type=str}
       # 后置操作
       postProcessors:
         # 断言
@@ -78,7 +78,7 @@ dlpDocRule_checkExportDocRule:
         # 请求数据
         data:
           userName: ${realName}
-          c_id: ${c_id}
+          c_id: ${c_id;type=str}
           c_rule_type: "4"
       # 后置操作
       postProcessors:
@@ -102,7 +102,7 @@ dlpDocRule_checkExportDocRule:
         # 请求数据
         data:
           userName: ${realName}
-          c_id: ${c_id}
+          c_id: ${c_id;type=str}
           c_rule_type: "4"
       # 后置操作
       postProcessors:

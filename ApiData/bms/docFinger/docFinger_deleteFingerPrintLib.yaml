@@ -29,7 +29,7 @@ docFinger_deleteFingerPrintLib:
       request:
         # 请求数据
         data:
-          fingerPrintIds: ${fingerPrintIds}
+          fingerPrintIds: ${fingerPrintIds;type=str}
       # 后置操作
       postProcessors:
         # 断言

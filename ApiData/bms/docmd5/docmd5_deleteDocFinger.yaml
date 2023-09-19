@@ -29,7 +29,7 @@ docmd5_deleteDocFinger:
       request:
         # 请求数据
         data:
-          fileContent: ${id}
+          fileContent: ${id;type=str}
           fingerPrintType: "2"
           updater: ${userId}
       # 后置操作

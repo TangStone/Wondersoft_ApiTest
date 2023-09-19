@@ -16,6 +16,7 @@ from config import *
 from common import exceptions
 from common import encryption
 from common import handleyaml
+from common import handledict
 from common.basefunc import config_dict
 
 class RegroupData:
@@ -32,12 +33,13 @@ class RegroupData:
         self.global_var_dict = handleyaml.YamlHandle(EXTRACT_DIR).read_yaml()   #全局变量字典
         self.temp_var_dict = temp_var_dict  # 临时变量字典
         self.env_var_dict = config_dict     # 环境变量字典
+        self.update_dict = {}               # 更新字典
         # logging.info("api_casedata:%s", self.api_casedata)
         # logging.info("global_var_dict:%s", self.global_var_dict)
         # logging.info("temp_var_dict:%s", self.temp_var_dict)
         # logging.info("env_var_dict:%s", self.env_var_dict)
 
-    def get_value(self, param):
+    def get_param_value(self, param):
         """
         获取参数值
         :param param: 取值参数
@@ -54,6 +56,29 @@ class RegroupData:
             return self.env_var_dict[param]
         else:
             raise Exception("参数取值失败，参数名：%s" % param)
+
+    def get_value(self, param):
+        """
+        获取参数值，并处理
+        :param param:
+        :return:
+        """
+        param_list = param.split(";")  # 拆分取值需求 ${data;update={"realName":"ceshi"}}
+        value = self.get_param_value(param_list[0])    # 获取参数值
+        if len(param_list) >= 2:
+            for pa in param_list[1:]:
+                pa_list = pa.split("=")
+                if pa_list[0] == 'type':  # 参数类型替换，针对值转换为字符串类型场景
+                    if pa_list[1] == 'str':
+                        value = str(value)
+                elif pa_list[0] == 'update':  # 更新字典中的值
+                    logging.info("pa_list[1]:%s", pa_list[1])
+                    update_dict = self.update_dict[pa_list[1]]
+                    value = handledict.dict_update(value, update_dict)
+                else:
+                    raise Exception("暂不支持此扩展" + pa)
+        return value
+
 
     def eval_data(self, param):
         """
@@ -97,8 +122,8 @@ class RegroupData:
                     else:
                         raise Exception("暂不支持此种加密方式：" + pa_list[1])
                 else:
-                    raise Exception("暂不支持此扩展" + pa_list)
-        else:
+                    raise Exception("暂不支持此扩展" + pa)
+        else:   #默认使用RSA加密+base64加密
             data = encryption.encryption(param)
         return data
 
@@ -152,53 +177,17 @@ class RegroupData:
         重组用例数据
         :return:
         """
+        # 若存在updatedata，先重组updatedata
+        if 'updatedata' in self.api_casedata['request'].keys():
+            sign, rawDict = self.regroup_dict(self.api_casedata['request']['updatedata'])    #重组updatedata
+            if sign == 'success':
+                # self.api_casedata['request']['updatedata'] = rawDict  #更新updatedata
+                self.update_dict = rawDict
+                self.api_casedata['request'].pop('updatedata')   #删除updatedata
+            else:
+                return sign, rawDict
         sign, rawDict = self.regroup_dict(self.api_casedata)
         return sign, rawDict
-
-    # def regroup_dict(self, rawDict):
-    #     """
-    #     递归重组接口用例数据
-    #     :param rawdict: 用例数据字典
-    #     :return:
-    #     """
-    #     try:
-    #         sign = 'success'   #标识参数
-    #         if isinstance(rawDict, dict):
-    #             for dict_key in rawDict:    #遍历字典
-    #                 if isinstance(rawDict[dict_key], dict):
-    #                     sign, tem_rawDict = self.regroup_dict(rawDict[dict_key])   #递归处理
-    #                     if sign == 'success':
-    #                         rawDict[dict_key] = tem_rawDict
-    #                     else:
-    #                         rawDict = tem_rawDict
-    #                         break
-    #                 elif isinstance(rawDict[dict_key], list):
-    #                     tem_raw_list = []
-    #                     for list_value in rawDict[dict_key]:
-    #                         if isinstance(list_value, dict):
-    #                             sign, tem_rawDict = self.regroup_dict(list_value)
-    #                             if sign == 'success':
-    #                                 tem_raw_list.append(tem_rawDict)
-    #                             else:
-    #                                 rawDict = tem_rawDict
-    #                                 break
-    #                         elif isinstance(list_value, str):
-    #                             tem_str = self.replace_value(list_value)
-    #                             tem_raw_list.append(tem_str)
-    #                         else:
-    #                             tem_raw_list.append(list_value)
-    #                     rawDict[dict_key] = tem_raw_list
-    #                 elif isinstance(rawDict[dict_key], str):
-    #                     tem_str = self.replace_value(rawDict[dict_key])
-    #                     rawDict[dict_key] = tem_str
-    #     except:
-    #         # 异常处理
-    #         ex_type, ex_val, ex_stack = sys.exc_info()
-    #         error_info = exceptions.get_error_info(ex_type, ex_val, ex_stack)
-    #         rawDict = "重组用例数据异常" + str(error_info)
-    #         sign = 'error'
-    #     return sign, rawDict
-
 
     def regroup_dict(self, rawDict):
         """
@@ -246,7 +235,7 @@ class RegroupData:
         :return:
         """
         var_list = re.findall(r"\$\{(.*?)\}", str_data)  # 变量替换
-        eval_list = re.findall(r"\$Eval\((.*)\)", str_data)  # 格式转换
+        eval_list = re.findall(r"\$Eval\((.*?)\)", str_data)  # 格式转换
         enc_list = re.findall(r"\$Enc\((.*?)\)", str_data)  # 加密
         time_list = re.findall(r"\$GetTime\((.*?)\)", str_data)  # 时间
 
@@ -264,17 +253,23 @@ class RegroupData:
             for var in var_list:
                 pattern = re.compile(r'\$\{' + var + r'\}')
                 value = self.get_value(var)
+                if '${' + var + '}' == str_data:
+                    return value
                 str_data = re.sub(pattern, str(value), str_data, count=1)
 
         if len(enc_list):
             for i in enc_list:
                 pattern = re.compile(r'\$Enc\(' + i + r'\)')
                 value = self.get_enc_value(i)
+                if '$Enc(' + i + ')' == str_data:
+                    return value
                 str_data = re.sub(pattern, str(value), str_data, count=1)
 
         if len(time_list):
             for i in time_list:
                 value = self.get_time(i)
+                if '$GetTime(' + i + ')' == str_data:
+                    return value
                 if '+' in i:   #日期向后偏移时 +字符转换
                     i = i.replace('+', '\+')
                 pattern = re.compile(r'\$GetTime\(' + i + r'\)')
