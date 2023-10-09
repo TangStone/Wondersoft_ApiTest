@@ -13,6 +13,7 @@ from common import logger
 urllib3.disable_warnings()
 from config import *
 from common import basefunc
+from common import sendemail
 
 if __name__ == '__main__':
 
@@ -27,3 +28,6 @@ if __name__ == '__main__':
     # 生成allure报告
     times = time.strftime("%Y_%m_%d_%H_%M_%S", time.localtime())
     os.system("allure generate ./report/tmp -o ./report/report/report_" + times + " --clean")
+    # 发送邮件
+    if basefunc.config_dict["email"]["sendemail"]:
+        sendemail.SendEmail("report_" + times).send_main()

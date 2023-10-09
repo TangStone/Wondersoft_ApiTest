@@ -39,10 +39,10 @@ def excute_custom_script(script_data):
     param_str = param_str[:-1]
 
     # 重组自定义脚本数据
-    run_code = """
-from scripts.""" + module + """ import """ + method + """
-""" + method + """(""" + param_str + """)
-"""
+    run_code = f"""
+from scripts.{module} import {method} 
+{method}({param_str})
+    """
 
     logging.info('执行自定义脚本：' + run_code)
     exec(run_code)

@@ -1,8 +1,9 @@
 allure_python_commons==2.13.1
+allure-pytest==2.13.1
 jsonpath==0.82
 pytest==7.2.2
 PyYAML==6.0
-PyYAML==6.0
+PyMySQL==1.0.3
 Requests==2.31.0
 requests_toolbelt==1.0.0
 pycryptodome==3.18.0
