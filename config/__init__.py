@@ -36,3 +36,6 @@ CERT_DIR = ROOT_DIR + 'certs'
 
 # 自定义脚本参数数据路径
 SCRIPT_DATA_DIR = ROOT_DIR + 'scripts/data'
+
+# 报告路径
+REPORT_DIR = ROOT_DIR + 'report/report'
