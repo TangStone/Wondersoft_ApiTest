@@ -7,7 +7,7 @@
 @time: 2023-06-04 21:31
 @description: 结果校验
 """
-import allure, logging, jsonpath
+import allure, logging, jsonpath, json
 
 from common import handledict
 from common import database
@@ -41,11 +41,11 @@ def assert_db(hope_res):
     if hope_res:
         for dbcheck_data in hope_res:
             db_type = dbcheck_data['type']  # 数据库类型
-            db_sql = dbcheck_data['sql']
             if db_type == 'mysql':
+                db_sql = dbcheck_data['sql']
                 if db_sql[0:6].upper() == 'SELECT':
                     sql_date = database.MysqlConn().mysql_query(db_sql)
-                    with allure.step("数据库校验校验"):
+                    with allure.step("数据库校验"):
                         for param in dbcheck_data['result']:
                             sql_value = jsonpath.jsonpath(sql_date, param['path'])
                             value = param['value']
@@ -64,6 +64,36 @@ def assert_db(hope_res):
                                 raise
                 else:
                     raise Exception("断言的 sql 必须是查询的 sql")
+            elif db_type == 'redis': # redis 数据库校验
+                redis_conn = database.RedisConn(dbcheck_data['db'])   # 连接 redis
+                cmd_list = dbcheck_data['cmd'].split(' ')
+                new_list = ['"' + item + '"' for item in cmd_list[1:]]
+                para = ','.join(new_list)    # 拼接参数
+                run_code = f"""redis_conn.conn.{cmd_list[0]}({para})"""    # 拼接执行代码
+                cmd_data = eval(run_code)  # 执行代码
+                with allure.step("redis校验"):
+                    for param in dbcheck_data['result']:
+                        if 'path' in param.keys():        # 存在 path 时，使用 jsonpath 校验
+                            cmd_value = jsonpath.jsonpath(json.loads(cmd_data), param['path'])
+                            value = param['value']
+                            try:
+                                allure.attach(name="操作命令", body=str(dbcheck_data['cmd']))
+                                allure.attach(name="期望返回值", body=str(value))
+                                if cmd_value:
+                                    allure.attach(name='实际返回值', body=str(cmd_value[0]))
+                                    assert str(value) == str(cmd_value[0])
+                                    logging.info("redis断言通过, 期望结果:%s, 实际结果:%s", value, cmd_value[0])
+                                else:
+                                    allure.attach(name='实际返回值', body=str(cmd_value))
+                                    raise AssertionError("该命令未查询出任何数据:" + str(dbcheck_data['cmd']))
+                            except AssertionError:
+                                logging.error("redis断言未通过, 期望返回值:%s, 实际返回值：%s", value, cmd_value[0])
+                                raise
+                        else:    # 不存在 path 时，直接使用 value 校验
+                            allure.attach(name="操作命令", body=str(dbcheck_data['cmd']))
+                            allure.attach(name="期望返回值", body=str(value))
+                            allure.attach(name='实际返回值', body=str(cmd_data))
+                            assert str(cmd_data) == str(value)
             else:
                 raise Exception("当前暂不支持此种数据库类型：" + str(db_type))
 
@@ -77,6 +107,7 @@ def assert_response(hope_res, real_res):
     """
     try:
         with allure.step("返回值校验"):
+            hope_res = json.loads(json.dumps(hope_res))
             allure.attach(name="期望返回值", body=str(hope_res))
             allure.attach(name='实际返回值', body=str(real_res))
             if isinstance(hope_res, (dict, list)) and isinstance(real_res, (dict, list)):

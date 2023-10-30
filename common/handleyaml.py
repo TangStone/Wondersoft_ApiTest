@@ -8,7 +8,7 @@
 @description: yaml文件处理
 """
 import yaml, logging, sys, traceback
-
+from collections import OrderedDict
 from common import exceptions
 from common import handledict
 
@@ -21,17 +21,44 @@ class YamlHandle:
         self.path = path    #yaml文件绝对路径
         self.data = data    #数据文件
 
-    def read_yaml(self):
+    # def read_yaml(self):
+    #     """
+    #     读取yaml文件
+    #     :return: yaml数据
+    #     """
+    #     try:
+    #         with open(self.path, 'r', encoding='utf-8') as file_obj:
+    #             yaml_data = yaml.load(file_obj, Loader=yaml.SafeLoader)
+    #         return yaml_data
+    #     except:
+    #         #异常处理
+    #         ex_type, ex_val, ex_stack = sys.exc_info()
+    #         error_info = exceptions.get_error_info(ex_type, ex_val, ex_stack)
+    #         logging.error("读取yaml文件【%s】异常：%s", self.path, error_info)
+    #         raise
+
+    def read_yaml(self, Loader=yaml.Loader, object_pairs_hook=OrderedDict):
         """
-        读取yaml文件
+        读取yaml文件,组成有序字典
         :return: yaml数据
         """
         try:
+            class OrderedLoader(Loader):
+                pass
+
+            def construct_mapping(loader, node):
+                loader.flatten_mapping(node)
+                return object_pairs_hook(loader.construct_pairs(node))
+
+            OrderedLoader.add_constructor(
+                yaml.resolver.BaseResolver.DEFAULT_MAPPING_TAG,
+                construct_mapping)
+
             with open(self.path, 'r', encoding='utf-8') as file_obj:
-                yaml_data = yaml.load(file_obj, Loader=yaml.SafeLoader)
+                yaml_data = yaml.load(file_obj, OrderedLoader)
             return yaml_data
         except:
-            #异常处理
+            # 异常处理
             ex_type, ex_val, ex_stack = sys.exc_info()
             error_info = exceptions.get_error_info(ex_type, ex_val, ex_stack)
             logging.error("读取yaml文件【%s】异常：%s", self.path, error_info)

@@ -7,12 +7,20 @@ base_url: https://192.168.148.174:31000
 #全局登录接口
 logincase: login_01
 
+# 数据库类型
+db_type: mysql
 # 数据库相关配置
 mysql_db:
   host: 192.168.148.174
   user: root
   password: ws-123456
   port: 3306
+
+# redis相关配置
+redis:
+  host: 192.168.148.174
+  port: 6379
+  password: unity2.0@wondersoft
 
 # 用例路径,列表形式
 casedata_path:

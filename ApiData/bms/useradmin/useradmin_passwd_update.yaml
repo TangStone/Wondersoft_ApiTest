@@ -34,6 +34,7 @@ useradmin_passwd_update:
           newPassword: 394f481895a1c5bef3da3d0685f41453385ef0aa
       # 后置操作
       postProcessors:
+#        sleep: 2
         # 断言
         assert:
           # 状态码校验
@@ -47,3 +48,9 @@ useradmin_passwd_update:
               result:
                 - path: $.password
                   value: 394f481895a1c5bef3da3d0685f41453385ef0aa
+            - type: redis    # 数据库类型
+              db: 0          # 数据库
+              cmd: get bms-general-uba:user:${id}      # 操作命令
+              result:
+                - path: $.password       # 返回值路径
+                  value: 394f481895a1c5bef3da3d0685f41453385ef0aa   # 返回值

@@ -7,7 +7,8 @@
 @time: 2023-06-12 16:06
 @description: 数据库操作
 """
-import pymysql, logging, jsonpath
+import logging, jsonpath, redis
+import pymysql
 import pymysql.cursors
 from warnings import filterwarnings
 from common.basefunc import config_dict
@@ -71,40 +72,21 @@ class MysqlConn:
         except Exception as e:
             raise Exception('执行数据库查询失败：' + str(e))
 
-# class SetUpDB(MysqlConn):
-#     """
-#     处理前置数据库操作
-#     """
-#
-#     def get_setup_sql_data(self, setup_sql):
-#         """
-#         处理前置sql请求，获取sql参数
-#         :param setup_sql:
-#         :return:
-#         """
-#         try:
-#             db_dict = {}
-#             if setup_sql:
-#                 for sql_data in setup_sql:
-#                     db_type = sql_data['type']  #数据库类型
-#                     db_sql = sql_data['sql']
-#                     if db_type == 'mysql':
-#                         if db_sql[0:6].upper() == 'SELECT':
-#                             sql_date = self.mysql_query(db_sql)
-#                             for param in sql_data['sqldata']:
-#                                 value = jsonpath.jsonpath(sql_date, param['jsonpath'])
-#                                 name = param['name']
-#                                 if value:
-#                                     db_dict[name] = value[0]
-#                                 else:
-#                                     raise Exception("数据库参数：" + name + "获取失败，请检查用例！")
-#                         else:
-#                             self.mysql_execute(db_sql)
-#                     else:
-#                         raise Exception("当前暂不支持此种数据库类型：" + str(db_type))
-#             return db_dict
-#         except Exception as e:
-#             raise Exception("sql 数据查询失败，请检查setup_sql语句是否正确：报错信息：" + str(e))
+
+class RedisConn:
+    """
+    封装Redis常用方法。
+    """
+
+    def __init__(self, db=0, decode_responses=True):
+        redis_config = config_dict['redis']
+        redis_config['db'] = db
+        redis_config['decode_responses'] = decode_responses
+        self.conn = redis.StrictRedis(**redis_config)
+
+    def __del__(self):
+        self.conn.close()
+
 
 class HandleDB(MysqlConn):
     """

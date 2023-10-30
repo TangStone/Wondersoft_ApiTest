@@ -123,6 +123,8 @@ class RunCase:
             # 执行自定义脚本
             if pro == 'script':
                 exec(pro_data['script'])
+            if pro == 'sleep':
+                time.sleep(pro_data['sleep'])
 
 def send_request(casedata):
     """
