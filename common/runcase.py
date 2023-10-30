@@ -47,16 +47,16 @@ class RunCase:
             get_apicase_list = readcase.ReadCase().get_apicase_list(casedata)
             # 遍历接口用例列表
             for apicase in get_apicase_list:
+                # 判断是否存在等待时间
+                if 'sleep' in apicase.keys():
+                    logging.info("========等待时间：%s秒", apicase['sleep'])
+                    time.sleep(apicase['sleep'])
                 if 'script_path' in apicase.keys():  # 调用脚本
                     customscript.excute_custom_script(apicase)
                 else:   # 调用接口
                     api_path = API_DIR + apicase['api_path']  # 接口用例路径
                     api = apicase['api']  # 接口用例
                     api_caseid = apicase['data']  # 接口用例id
-                    # 判断是否存在等待时间
-                    if 'sleep' in apicase.keys():
-                        logging.info("========等待时间：%s秒", apicase['sleep'])
-                        time.sleep(apicase['sleep'])
                     # 获取接口用例数据
                     api_casedata = readcase.ReadCase().get_api_casedata(api_path, api, api_caseid)
                     # 执行接口用例
