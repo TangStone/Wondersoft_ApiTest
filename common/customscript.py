@@ -35,7 +35,10 @@ def excute_custom_script(script_data):
     params = yaml_data[params_id]
     param_str = ""
     for key, value in params.items():
-        param_str += key + '=' + str(value) + ','
+        if isinstance(value, str):
+            param_str += key + '="' + str(value) + '",'
+        else:
+            param_str += key + '=' + str(value) + ','
     param_str = param_str[:-1]
 
     # 重组自定义脚本数据
