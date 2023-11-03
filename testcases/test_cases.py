@@ -31,7 +31,7 @@ class TestCases:
         logging.info("==========执行用例END：%s==========", case)
 
     # 执行业务用例集
-    @pytest.mark.parametrize('case, casedata', readcase.ReadCase().get_cases([[CASE_DIR + '/' + i for i in config_dict['casedata_path']] if config_dict['casedata_path'] else CASE_DIR], 'yaml', [CASE_DIR + '/extract.yaml', CASE_DIR + '/base']))
+    @pytest.mark.parametrize('case, casedata', readcase.ReadCase().get_cases([CASE_DIR + '/' + i for i in config_dict['casedata_path']] if config_dict['casedata_path'] else [CASE_DIR], 'yaml', [CASE_DIR + '/extract.yaml', CASE_DIR + '/base']))
     def test_businesscases(self, case, casedata):
         handleallure.allure_display(casedata)
         logging.info("==========执行用例START：%s==========", case)
