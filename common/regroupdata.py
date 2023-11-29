@@ -7,7 +7,7 @@
 @time: 2023-06-04 20:19
 @description: 参数替换
 """
-import json, re, sys, logging, time, datetime
+import re, sys, logging, datetime, uuid
 
 import jsonpath
 
@@ -128,49 +128,51 @@ class RegroupData:
         return data
 
     @staticmethod
-    def get_time(str):
+    def get_time(param):
         """
         获取时间
         :param str: format='%Y-%m-%d %H:%M:%S'
         :return:
         """
-        param_list = str.split(';')   #获取多个配置项
+        param_list = param.split(';')   #获取多个配置项
         time_str = datetime.datetime.now()   #获取当前时间
-        format = None
+        format = None     #时间格式
+        timestamp_num = 13  #时间戳位数
         for param in param_list:
             pa_list = param.split('=')  #拆分配置项
             if pa_list[0] == 'format':   #时间格式
                 format = pa_list[1]
-                # time_str = time.strftime(pa_list[1])
+            if pa_list[0] == 'tds_num':   #时间戳位数
+                timestamp_num = int(pa_list[1])
             if pa_list[0] == 'cal':   #时间偏移
                 cal_list = pa_list[1].split(',')
                 for cal in cal_list:
                     num = int(cal[2:])
+                    cal_dict = {'w': 'weeks', 'd': 'days', 'h': 'hours', 'm': 'minutes'}
                     if cal[1] == '+': #向后偏移
-                        if cal[0] == 'w':  #周偏移
-                            time_str += datetime.timedelta(weeks=num)
-                        elif cal[0] == 'd': #天偏移
-                            time_str += datetime.timedelta(days=num)
-                        elif cal[0] == 'h': #天偏移
-                            time_str += datetime.timedelta(hours=num)
-                        elif cal[0] == 'm': #分钟偏移
-                            time_str += datetime.timedelta(minutes=num)
+                        if cal[0] in cal_dict.keys():
+                            time_str += datetime.timedelta(**{cal_dict[cal[0]]: num})
                         else:
                             raise Exception("暂不支持此种时间偏移：" + pa_list[1])
                     elif cal[1] == '-': #向前偏移
-                        if cal[0] == 'w':  #周偏移
-                            time_str -= datetime.timedelta(weeks=num)
-                        elif cal[0] == 'd': #天偏移
-                            time_str -= datetime.timedelta(days=num)
-                        elif cal[0] == 'h': #天偏移
-                            time_str -= datetime.timedelta(hours=num)
-                        elif cal[0] == 'm': #分钟偏移
-                            time_str -= datetime.timedelta(minutes=num)
+                        if cal[0] in cal_dict.keys():
+                            time_str -= datetime.timedelta(**{cal_dict[cal[0]]: num})
                         else:
                             raise Exception("暂不支持此种时间偏移：" + pa_list[1])
-        if format:
+        if format:   #时间格式转换
             time_str = time_str.strftime(format)
+        else:  # 不存在时间格式，返回时间戳
+            time_str = str(round(time_str.timestamp() * 1000))[0:timestamp_num]
         return time_str
+
+    @staticmethod
+    def get_uuid(param):
+        """
+        获取UUID
+        :param param:
+        :return:
+        """
+        return uuid.uuid1()
 
     def regroup_case_data(self):
         """
@@ -238,6 +240,15 @@ class RegroupData:
         eval_list = re.findall(r"\$Eval\((.*?)\)", str_data)  # 格式转换
         enc_list = re.findall(r"\$Enc\((.*?)\)", str_data)  # 加密
         time_list = re.findall(r"\$GetTime\((.*?)\)", str_data)  # 时间
+        uuid_list = re.findall(r"\$GetUuid\((.*?)\)", str_data)  # UUID
+
+        if len(uuid_list):
+            for i in uuid_list:
+                pattern = re.compile(r'\$GetUuid\(' + i + r'\)')
+                value = self.get_uuid(i)
+                if 'GetUuid(' + i + ')' == str_data:
+                    return value
+                str_data = re.sub(pattern, str(value), str_data, count=1)
 
         if len(eval_list):
             for i in eval_list:

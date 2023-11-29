@@ -228,23 +228,6 @@ class ApiMethod:
                                         json=self.data, cert=self.cert, verify=False)
         elif "multipart/form-data" in self.headers.values():
             if self.file:
-                # fields = []
-                # if self.data:
-                #     for kv in self.data.items():
-                #         fields.append(kv)
-                # for key in self.file:
-                #     value = self.file[key]
-                #     if type(value) == list:
-                #         for i in value:
-                #             file_path = FILE_DIR + '/' + i
-                #             file = (key, (os.path.basename(file_path), open(file_path, 'rb'), 'application/octet-stream'))
-                #             fields.append(file)
-                #     else:
-                #         file_path = FILE_DIR + '/' + value
-                #         file = (key, (os.path.basename(file_path), open(file_path, 'rb'), 'application/octet-stream'))
-                #         fields.append(file)
-                # multipart = MultipartEncoder(fields)
-                # self.headers['Content-Type'] = multipart.content_type
                 multipart = self.file_upload()
                 recv_result = requests.post(url=self.url, data=multipart, headers=self.headers, cert=self.cert, verify=False)
             else:
