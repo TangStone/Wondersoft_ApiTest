@@ -7,12 +7,10 @@
 @time: 2023-06-04 20:19
 @description: 参数替换
 """
-import re, sys, logging, datetime, uuid
-
-import jsonpath
+import re, sys, logging, datetime, uuid, random, string, jsonpath
+from faker import Faker
 
 from config import *
-
 from common import exceptions
 from common import encryption
 from common import handleyaml
@@ -174,6 +172,61 @@ class RegroupData:
         """
         return uuid.uuid1()
 
+    @staticmethod
+    def get_rand_int(param):
+        """
+        获取随机整数
+        :param param: 参数(1,100),取值范围1-100
+        :return:
+        """
+        try:
+            param_randint = tuple(map(int, param.split(",")))
+            number = random.randint(*param_randint)
+            return number
+        except:
+            raise Exception("随机整数取值参数有误：" + param)
+
+    @staticmethod
+    def get_rand_str(param):
+        """
+        获取随机字符串
+        :param param: 字符串长度
+        :return:
+        """
+        try:
+            number = int(param)
+            str_list = random.sample(string.ascii_letters, number)
+            return "".join(str_list)
+        except:
+            raise Exception("随机字符串取值参数有误：" + param)
+
+    @staticmethod
+    def fakedata(param):
+        """
+        获取随机数据
+        :param param: 随机类型
+        :return:
+        """
+        fake = Faker(locale='zh_CN')
+        if param == 'name':  # 随机姓名
+            return fake.name()
+        elif param == 'phone':  # 随机手机号
+            return fake.phone_number()
+        elif param == 'email':  # 随机邮箱
+            return fake.email()
+        else:
+            raise Exception("暂不支持此种随机类型：" + param)
+
+    @staticmethod
+    def get_rand_choice(param):
+        """
+        获取随机选择
+        :param param: 选择列表
+        :return:
+        """
+        choice_list = param.split(",")
+        return random.choice(choice_list)
+
     def regroup_case_data(self):
         """
         重组用例数据
@@ -241,6 +294,60 @@ class RegroupData:
         enc_list = re.findall(r"\$Enc\((.*?)\)", str_data)  # 加密
         time_list = re.findall(r"\$GetTime\((.*?)\)", str_data)  # 时间
         uuid_list = re.findall(r"\$GetUuid\((.*?)\)", str_data)  # UUID
+        int_list = re.findall(r"\$GetRandInt\((.*?)\)", str_data)  # 随机整数
+        str_list = re.findall(r"\$GetRandStr\((.*?)\)", str_data)  # 随机字符串
+        name_list = re.findall(r"\$GetRandName\((.*?)\)", str_data)  # 随机姓名
+        phone_list = re.findall(r"\$GetRandPhone\((.*?)\)", str_data)  # 随机手机号
+        email_list = re.findall(r"\$GetRandEmail\((.*?)\)", str_data)  # 随机邮箱
+        choice_list = re.findall(r"\$GetRandChoice\((.*?)\)", str_data)  # 随机选择
+
+        if len(choice_list):
+            for i in choice_list:
+                value = self.get_rand_choice(i)
+                if '$GetRandChoice(' + i + ')' == str_data:
+                    return value
+                pattern = re.compile(r'\$GetRandChoice\(' + i + r'\)')
+                str_data = re.sub(pattern, str(value), str_data, count=1)
+
+        if len(name_list):
+            for i in name_list:
+                value = self.fakedata('name')
+                if '$GetRandName(' + i + ')' == str_data:
+                    return value
+                pattern = re.compile(r'\$GetRandName\(' + i + r'\)')
+                str_data = re.sub(pattern, str(value), str_data, count=1)
+
+        if len(phone_list):
+            for i in phone_list:
+                value = self.fakedata('phone')
+                if '$GetRandPhone(' + i + ')' == str_data:
+                    return value
+                pattern = re.compile(r'\$GetRandPhone\(' + i + r'\)')
+                str_data = re.sub(pattern, str(value), str_data, count=1)
+
+        if len(email_list):
+            for i in email_list:
+                value = self.fakedata('email')
+                if '$GetRandEmail(' + i + ')' == str_data:
+                    return value
+                pattern = re.compile(r'\$GetRandEmail\(' + i + r'\)')
+                str_data = re.sub(pattern, str(value), str_data, count=1)
+
+        if len(str_list):
+            for i in str_list:
+                value = self.get_rand_str(i)
+                if '$GetRandStr(' + i + ')' == str_data:
+                    return value
+                pattern = re.compile(r'\$GetRandStr\(' + i + r'\)')
+                str_data = re.sub(pattern, str(value), str_data, count=1)
+
+        if len(int_list):
+            for i in int_list:
+                value = self.get_rand_int(i)
+                if '$GetRandInt(' + i + ')' == str_data:
+                    return value
+                pattern = re.compile(r'\$GetRandInt\(' + i + r'\)')
+                str_data = re.sub(pattern, str(value), str_data, count=1)
 
         if len(uuid_list):
             for i in uuid_list:
