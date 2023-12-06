@@ -172,7 +172,7 @@ class RegroupData:
         :param param:
         :return:
         """
-        return uuid.uuid1()
+        return str(uuid.uuid1())
 
     @staticmethod
     def get_rand_int(param):
@@ -338,7 +338,6 @@ class RegroupData:
                         expre_par = expre_par.replace('+', '\+')
                     pattern = re.compile(expre_par)
                     str_data = re.sub(pattern, str(value), str_data, count=1)
-                    print(str_data)
 
         return str_data
 
@@ -412,7 +411,7 @@ class RegroupData:
     #         for i in uuid_list:
     #             pattern = re.compile(r'\$GetUuid\(' + i + r'\)')
     #             value = self.get_uuid(i)
-    #             if 'GetUuid(' + i + ')' == str_data:
+    #             if '$GetUuid(' + i + ')' == str_data:
     #                 return value
     #             str_data = re.sub(pattern, str(value), str_data, count=1)
     #
