@@ -7,6 +7,7 @@
 @time: 2023-06-04 20:19
 @description: 参数替换
 """
+import json
 import re, sys, logging, datetime, uuid, random, string, jsonpath
 from faker import Faker
 
@@ -87,21 +88,22 @@ class RegroupData:
         param_list = param.split(";")  # 拆分取值需求 ${relevance(fileContent)};path=filelist[0].md5
         value = self.replace_value(param_list[0])
         try:
-            path = None
+            # path = None
             if len(param_list) >= 2:
                 for pa in param_list[1:]:
                     pa_list = pa.split("=")
                     if pa_list[0] == 'path':  # 获取字典中的特定值
-                        value = value.replace("\\", '/')
                         path = '$.' + pa_list[1]
+                        value = jsonpath.jsonpath(json.loads(value.replace("\\", '/')), path)[0]
                     if pa_list[0] == 'cal':   #计算
-                        value = value + pa_list[1]
-            str_data = eval(value)
-            if path:
-                str_data = jsonpath.jsonpath(str_data, path)[0]
+                        value = eval(str(value) + pa_list[1])
+            # str_data = eval(value)
+            # if path:
+            #     str_data = jsonpath.jsonpath(str_data, path)[0]
         except:
-            str_data = value
-        return str_data
+            raise Exception("参数取值失败，参数名：%s" % param)
+            # str_data = value
+        return value
 
     @staticmethod
     def get_enc_value(param):
@@ -289,108 +291,165 @@ class RegroupData:
         :param data_str: 原始字符串
         :return:
         """
-        var_list = re.findall(r"\$\{(.*?)\}", str_data)  # 变量替换
-        eval_list = re.findall(r"\$Eval\((.*?)\)", str_data)  # 格式转换
-        enc_list = re.findall(r"\$Enc\((.*?)\)", str_data)  # 加密
-        time_list = re.findall(r"\$GetTime\((.*?)\)", str_data)  # 时间
-        uuid_list = re.findall(r"\$GetUuid\((.*?)\)", str_data)  # UUID
-        int_list = re.findall(r"\$GetRandInt\((.*?)\)", str_data)  # 随机整数
-        str_list = re.findall(r"\$GetRandStr\((.*?)\)", str_data)  # 随机字符串
-        name_list = re.findall(r"\$GetRandName\((.*?)\)", str_data)  # 随机姓名
-        phone_list = re.findall(r"\$GetRandPhone\((.*?)\)", str_data)  # 随机手机号
-        email_list = re.findall(r"\$GetRandEmail\((.*?)\)", str_data)  # 随机邮箱
-        choice_list = re.findall(r"\$GetRandChoice\((.*?)\)", str_data)  # 随机选择
+        type_methos_1 = {'\$Eval\((.*?)\)': [self.eval_data]  # 格式转换
+                         }
 
-        if len(choice_list):
-            for i in choice_list:
-                value = self.get_rand_choice(i)
-                if '$GetRandChoice(' + i + ')' == str_data:
-                    return value
-                pattern = re.compile(r'\$GetRandChoice\(' + i + r'\)')
-                str_data = re.sub(pattern, str(value), str_data, count=1)
+        type_method_2 = {'\$GetRandChoice\((.*?)\)': [self.get_rand_choice],  # 随机选择
+                        '\$GetRandName\((.*?)\)': [self.fakedata, 'name'],  # 随机姓名
+                        '\$GetRandPhone\((.*?)\)': [self.fakedata, 'phone'],  # 随机手机号
+                        '\$GetRandEmail\((.*?)\)': [self.fakedata, 'email'],  # 随机邮箱
+                        '\$GetRandStr\((.*?)\)': [self.get_rand_str],  # 随机字符串
+                        '\$GetRandInt\((.*?)\)': [self.get_rand_int],  # 随机整数
+                        '\$GetUuid\((.*?)\)': [self.get_uuid],  # UUID
+                        '\$GetTime\((.*?)\)': [self.get_time],  # 时间
+                        '\$Enc\((.*?)\)': [self.get_enc_value],  # 加密
+                        '\$\{(.*?)\}': [self.get_value],  # 变量替换
+                        }
 
-        if len(name_list):
-            for i in name_list:
-                value = self.fakedata('name')
-                if '$GetRandName(' + i + ')' == str_data:
-                    return value
-                pattern = re.compile(r'\$GetRandName\(' + i + r'\)')
-                str_data = re.sub(pattern, str(value), str_data, count=1)
+        for expre1, method1 in type_methos_1.items():
+            param_list1 = re.findall(expre1, str_data)
+            if len(param_list1):
+                for param1 in param_list1:
+                    value = method1[0](param1)
+                    if expre1 == '\$Eval\((.*?)\)':
+                        if str_data[0:6] == '$Eval(' and str_data[-1:] == ')':
+                            return value
+                        else:
+                            rep_data = '$Eval(' + param1 + ')'
+                            str_data = str_data.replace(rep_data, str(value), 1)
+                            return str_data
 
-        if len(phone_list):
-            for i in phone_list:
-                value = self.fakedata('phone')
-                if '$GetRandPhone(' + i + ')' == str_data:
-                    return value
-                pattern = re.compile(r'\$GetRandPhone\(' + i + r'\)')
-                str_data = re.sub(pattern, str(value), str_data, count=1)
+        for expre, method in type_method_2.items():
+            param_list = re.findall(expre, str_data)
+            if len(param_list):
+                for param in param_list:
+                    # 获取参数值
+                    if len(method) == 1:
+                        value = method[0](param)
+                    else:
+                        value = method[0](method[1])
+                    # 重组表达式
+                    expre_ori = expre.replace("(.*?)", param).replace('\\', '')
+                    expre_par = expre.replace("(.*?)", param)
 
-        if len(email_list):
-            for i in email_list:
-                value = self.fakedata('email')
-                if '$GetRandEmail(' + i + ')' == str_data:
-                    return value
-                pattern = re.compile(r'\$GetRandEmail\(' + i + r'\)')
-                str_data = re.sub(pattern, str(value), str_data, count=1)
-
-        if len(str_list):
-            for i in str_list:
-                value = self.get_rand_str(i)
-                if '$GetRandStr(' + i + ')' == str_data:
-                    return value
-                pattern = re.compile(r'\$GetRandStr\(' + i + r'\)')
-                str_data = re.sub(pattern, str(value), str_data, count=1)
-
-        if len(int_list):
-            for i in int_list:
-                value = self.get_rand_int(i)
-                if '$GetRandInt(' + i + ')' == str_data:
-                    return value
-                pattern = re.compile(r'\$GetRandInt\(' + i + r'\)')
-                str_data = re.sub(pattern, str(value), str_data, count=1)
-
-        if len(uuid_list):
-            for i in uuid_list:
-                pattern = re.compile(r'\$GetUuid\(' + i + r'\)')
-                value = self.get_uuid(i)
-                if 'GetUuid(' + i + ')' == str_data:
-                    return value
-                str_data = re.sub(pattern, str(value), str_data, count=1)
-
-        if len(eval_list):
-            for i in eval_list:
-                value = self.eval_data(i)
-                if str_data[0:6] == '$Eval(' and str_data[-1:] == ')':  #当前值需要转换类型
-                    return value
-                else:  #返回字符串
-                    rep_data = '$Eval(' + i + ')'
-                    str_data = str_data.replace(rep_data, str(value), 1)
-                    return str_data
-
-        if var_list:
-            for var in var_list:
-                pattern = re.compile(r'\$\{' + var + r'\}')
-                value = self.get_value(var)
-                if '${' + var + '}' == str_data:
-                    return value
-                str_data = re.sub(pattern, str(value), str_data, count=1)
-
-        if len(enc_list):
-            for i in enc_list:
-                pattern = re.compile(r'\$Enc\(' + i + r'\)')
-                value = self.get_enc_value(i)
-                if '$Enc(' + i + ')' == str_data:
-                    return value
-                str_data = re.sub(pattern, str(value), str_data, count=1)
-
-        if len(time_list):
-            for i in time_list:
-                value = self.get_time(i)
-                if '$GetTime(' + i + ')' == str_data:
-                    return value
-                if '+' in i:   #日期向后偏移时 +字符转换
-                    i = i.replace('+', '\+')
-                pattern = re.compile(r'\$GetTime\(' + i + r'\)')
-                str_data = re.sub(pattern, str(value), str_data, count=1)
+                    if expre_ori == str_data:   #返回原始类型
+                        return value
+                    if expre == '\$GetTime\((.*?)\)' and '+' in param:   #日期向后偏移时 +字符转换
+                        expre_par = expre_par.replace('+', '\+')
+                    pattern = re.compile(expre_par)
+                    str_data = re.sub(pattern, str(value), str_data, count=1)
+                    print(str_data)
 
         return str_data
+
+    # def replace_value(self, str_data):
+    #     """
+    #     参数值替换
+    #     :param data_str: 原始字符串
+    #     :return:
+    #     """
+    #     var_list = re.findall(r"\$\{(.*?)\}", str_data)  # 变量替换
+    #     eval_list = re.findall(r"\$Eval\((.*?)\)", str_data)  # 格式转换
+    #     enc_list = re.findall(r"\$Enc\((.*?)\)", str_data)  # 加密
+    #     time_list = re.findall(r"\$GetTime\((.*?)\)", str_data)  # 时间
+    #     uuid_list = re.findall(r"\$GetUuid\((.*?)\)", str_data)  # UUID
+    #     int_list = re.findall(r"\$GetRandInt\((.*?)\)", str_data)  # 随机整数
+    #     str_list = re.findall(r"\$GetRandStr\((.*?)\)", str_data)  # 随机字符串
+    #     name_list = re.findall(r"\$GetRandName\((.*?)\)", str_data)  # 随机姓名
+    #     phone_list = re.findall(r"\$GetRandPhone\((.*?)\)", str_data)  # 随机手机号
+    #     email_list = re.findall(r"\$GetRandEmail\((.*?)\)", str_data)  # 随机邮箱
+    #     choice_list = re.findall(r"\$GetRandChoice\((.*?)\)", str_data)  # 随机选择
+    #
+    #     if len(choice_list):
+    #         for i in choice_list:
+    #             value = self.get_rand_choice(i)
+    #             if '$GetRandChoice(' + i + ')' == str_data:
+    #                 return value
+    #             pattern = re.compile(r'\$GetRandChoice\(' + i + r'\)')
+    #             str_data = re.sub(pattern, str(value), str_data, count=1)
+    #
+    #     if len(name_list):
+    #         for i in name_list:
+    #             value = self.fakedata('name')
+    #             if '$GetRandName(' + i + ')' == str_data:
+    #                 return value
+    #             pattern = re.compile(r'\$GetRandName\(' + i + r'\)')
+    #             str_data = re.sub(pattern, str(value), str_data, count=1)
+    #
+    #     if len(phone_list):
+    #         for i in phone_list:
+    #             value = self.fakedata('phone')
+    #             if '$GetRandPhone(' + i + ')' == str_data:
+    #                 return value
+    #             pattern = re.compile(r'\$GetRandPhone\(' + i + r'\)')
+    #             str_data = re.sub(pattern, str(value), str_data, count=1)
+    #
+    #     if len(email_list):
+    #         for i in email_list:
+    #             value = self.fakedata('email')
+    #             if '$GetRandEmail(' + i + ')' == str_data:
+    #                 return value
+    #             pattern = re.compile(r'\$GetRandEmail\(' + i + r'\)')
+    #             str_data = re.sub(pattern, str(value), str_data, count=1)
+    #
+    #     if len(str_list):
+    #         for i in str_list:
+    #             value = self.get_rand_str(i)
+    #             if '$GetRandStr(' + i + ')' == str_data:
+    #                 return value
+    #             pattern = re.compile(r'\$GetRandStr\(' + i + r'\)')
+    #             str_data = re.sub(pattern, str(value), str_data, count=1)
+    #
+    #     if len(int_list):
+    #         for i in int_list:
+    #             value = self.get_rand_int(i)
+    #             if '$GetRandInt(' + i + ')' == str_data:
+    #                 return value
+    #             pattern = re.compile(r'\$GetRandInt\(' + i + r'\)')
+    #             str_data = re.sub(pattern, str(value), str_data, count=1)
+    #
+    #     if len(uuid_list):
+    #         for i in uuid_list:
+    #             pattern = re.compile(r'\$GetUuid\(' + i + r'\)')
+    #             value = self.get_uuid(i)
+    #             if 'GetUuid(' + i + ')' == str_data:
+    #                 return value
+    #             str_data = re.sub(pattern, str(value), str_data, count=1)
+    #
+    #     if len(eval_list):
+    #         for i in eval_list:
+    #             value = self.eval_data(i)
+    #             if str_data[0:6] == '$Eval(' and str_data[-1:] == ')':  #当前值需要转换类型
+    #                 return value
+    #             else:  #返回字符串
+    #                 rep_data = '$Eval(' + i + ')'
+    #                 str_data = str_data.replace(rep_data, str(value), 1)
+    #                 return str_data
+    #
+    #     if var_list:
+    #         for var in var_list:
+    #             pattern = re.compile(r'\$\{' + var + r'\}')
+    #             value = self.get_value(var)
+    #             if '${' + var + '}' == str_data:
+    #                 return value
+    #             str_data = re.sub(pattern, str(value), str_data, count=1)
+    #
+    #     if len(enc_list):
+    #         for i in enc_list:
+    #             pattern = re.compile(r'\$Enc\(' + i + r'\)')
+    #             value = self.get_enc_value(i)
+    #             if '$Enc(' + i + ')' == str_data:
+    #                 return value
+    #             str_data = re.sub(pattern, str(value), str_data, count=1)
+    #
+    #     if len(time_list):
+    #         for i in time_list:
+    #             value = self.get_time(i)
+    #             if '$GetTime(' + i + ')' == str_data:
+    #                 return value
+    #             if '+' in i:   #日期向后偏移时 +字符转换
+    #                 i = i.replace('+', '\+')
+    #             pattern = re.compile(r'\$GetTime\(' + i + r'\)')
+    #             str_data = re.sub(pattern, str(value), str_data, count=1)
+    #
+    #     return str_data
