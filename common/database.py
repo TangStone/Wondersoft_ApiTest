@@ -11,14 +11,11 @@ import logging, jsonpath, redis
 import pymysql
 import pymysql.cursors
 from warnings import filterwarnings
-from common.basefunc import config_dict
-
 # 忽略 Mysql 告警信息
 filterwarnings("ignore", category=pymysql.Warning)
+from confluent_kafka import Consumer, TopicPartition, admin
 
-# from common import handleyaml
-# from config import *
-# config_dict = handleyaml.YamlHandle(CONFIG_DIR).read_yaml()
+from common.basefunc import config_dict
 
 class MysqlConn:
     """
@@ -36,7 +33,7 @@ class MysqlConn:
             # 创建游标
             self.cur = self.conn.cursor(cursor=pymysql.cursors.DictCursor)
         except Exception as e:
-            raise Exception("数据库连接失败：" + str(e))
+            raise Exception("Mysql数据库连接失败：" + str(e))
 
     def __del__(self):
         try:
@@ -86,6 +83,61 @@ class RedisConn:
 
     def __del__(self):
         self.conn.close()
+
+
+class KafkaConn:
+    """
+    封装Kafka常用方法。
+    """
+
+    def __init__(self):
+        try:
+            # 初始化consumer
+            kafka_conf = config_dict['kafka']
+            # kafka_conf = {"bootstrap-servers": "192.168.148.174:9094"}
+            try:
+                kafka_client = admin.AdminClient({'bootstrap.servers': kafka_conf['bootstrap-servers']})
+                kafka_client.list_topics(timeout=10)
+            except Exception as e:
+                raise Exception("Kafka连接失败：" + str(e))
+            self.consumer = Consumer({
+                'bootstrap.servers': kafka_conf['bootstrap-servers'],  # kafka服务器地址
+                'group.id': 'mygroup',
+                'auto.offset.reset': 'latest',
+            })
+        except Exception as e:
+            raise Exception("Kafka初始化consumer失败：" + str(e))
+
+    def kafka_get_msg(self, topic):
+        """
+        获取kafka消息
+        :param topic: topic
+        :return:
+        """
+        try:
+            # 获取topic的分区
+            partitions = self.consumer.list_topics('user-password-update').topics['user-password-update'].partitions.keys()
+            last_offset = 0
+            msg = None
+            for p in partitions:
+                tp = TopicPartition(topic, p)  # 获取topic的分区
+                # 获取当前分区最新的offset
+                last_par_offset = self.consumer.get_watermark_offsets(tp)[1]
+                if last_par_offset > last_offset:   # 获取最新的offset
+                    last_offset = last_par_offset
+                    tp.offset = last_offset - 1
+                    self.consumer.assign([tp])
+                    msg = self.consumer.consume(1)[0].value().decode('utf-8')
+            return msg
+        except Exception as e:
+            raise Exception("kafka获取消息失败：" + str(e))
+
+    def __del__(self):
+        try:
+            # 关闭consumer
+            self.consumer.close()
+        except Exception as e:
+            raise Exception("kafka关闭consumer失败：" + str(e))
 
 
 class HandleDB(MysqlConn):

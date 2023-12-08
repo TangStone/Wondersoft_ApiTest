@@ -72,8 +72,8 @@ def assert_db(hope_res):
                 run_code = f"""redis_conn.conn.{cmd_list[0]}({para})"""    # 拼接执行代码
                 cmd_data = eval(run_code)  # 执行代码
                 with allure.step("redis校验"):
-                    for param in dbcheck_data['result']:
-                        if 'path' in param.keys():        # 存在 path 时，使用 jsonpath 校验
+                    if 'result' in dbcheck_data.keys():  # 存在 result 时，使用 jsonpath 校验
+                        for param in dbcheck_data['result']:
                             cmd_value = jsonpath.jsonpath(json.loads(cmd_data), param['path'])
                             value = param['value']
                             try:
@@ -89,11 +89,37 @@ def assert_db(hope_res):
                             except AssertionError:
                                 logging.error("redis断言未通过, 期望返回值:%s, 实际返回值：%s", value, cmd_value[0])
                                 raise
-                        else:    # 不存在 path 时，直接使用 value 校验
-                            allure.attach(name="操作命令", body=str(dbcheck_data['cmd']))
-                            allure.attach(name="期望返回值", body=str(value))
-                            allure.attach(name='实际返回值', body=str(cmd_data))
-                            assert str(cmd_data) == str(value)
+                    else:  # 不存在 result 时，直接使用 value 校验
+                        allure.attach(name="操作命令", body=str(dbcheck_data['cmd']))
+                        allure.attach(name="期望返回值", body=str(dbcheck_data['value']))
+                        allure.attach(name='实际返回值', body=str(cmd_data))
+                        assert str(cmd_data) == str(dbcheck_data['value'])
+            elif db_type == 'kafka':    # kafka 数据库校验
+                kafka_msg = database.KafkaConn().kafka_get_msg(dbcheck_data['topic'])   # 获取kafka最后一条消息
+                with allure.step("kafka校验"):
+                    if 'result' in dbcheck_data.keys(): # 存在 result 时，使用 jsonpath 校验
+                        for param in dbcheck_data['result']:
+                            kafka_value = jsonpath.jsonpath(json.loads(kafka_msg), param['path'])
+                            value = param['value']
+                            try:
+                                allure.attach(name="查询topic", body=str(dbcheck_data['topic']))
+                                allure.attach(name="期望返回值", body=str(value))
+                                if kafka_value:
+                                    allure.attach(name='实际返回值', body=str(kafka_value[0]))
+                                    assert str(value) == str(kafka_value[0])
+                                    logging.info("kafka断言通过, 期望结果:%s, 实际结果:%s", value, kafka_value[0])
+                                else:
+                                    allure.attach(name='实际返回值', body=str(kafka_value))
+                                    raise AssertionError("该topic未查询出任何数据:" + str(kafka_value))
+                            except AssertionError:
+                                logging.error("kafka断言未通过, 期望返回值:%s, 实际返回值：%s", value, kafka_value[0])
+                                raise
+                    else: # 不存在 result 时，直接使用 value 校验
+                        allure.attach(name="查询topic", body=str(dbcheck_data['topic']))
+                        allure.attach(name="期望返回值", body=str(dbcheck_data['value']))
+                        allure.attach(name='实际返回值', body=str(kafka_msg))
+                        assert str(kafka_msg) == str(dbcheck_data['value'])
+
             else:
                 raise Exception("当前暂不支持此种数据库类型：" + str(db_type))
 
