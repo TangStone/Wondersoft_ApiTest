@@ -119,6 +119,8 @@ class RegroupData:
                 if pa_list[0] == 'type':  # 获取字典中的特定值
                     if pa_list[1] == 'base64':
                         data = encryption.enc_base64(param_list[0])
+                    elif pa_list[1] == 'sha1':
+                        data = encryption.enc_sha1(param_list[0])
                     else:
                         raise Exception("暂不支持此种加密方式：" + pa_list[1])
                 else:

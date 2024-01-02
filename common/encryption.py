@@ -7,7 +7,7 @@
 @time: 2023-06-09 16:08
 @description: 加密
 """
-import base64, logging
+import base64, logging, hashlib
 from Crypto.PublicKey import RSA
 from Crypto.Cipher import PKCS1_v1_5
 
@@ -41,3 +41,14 @@ def enc_base64(message):
     """
     result = base64.b64encode(message.encode("utf-8")).decode()
     return result
+
+
+def enc_sha1(message):
+    """
+    sha1加密
+    :param message: 需要加密的字符串
+    :return:
+    """
+    sha1_obj = hashlib.sha1()
+    sha1_obj.update(message.encode('utf-8'))
+    return sha1_obj.hexdigest()
