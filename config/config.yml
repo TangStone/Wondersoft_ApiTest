@@ -6,6 +6,7 @@ base_url: https://192.168.148.174:31000
 
 #全局登录接口
 logincase: login_01
+aaa: 222
 
 # 数据库类型
 db_type: mysql
