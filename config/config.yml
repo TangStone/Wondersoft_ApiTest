@@ -8,7 +8,7 @@ base_url: https://192.168.148.174:31000
 logincase: login_01
 
 # 数据库类型
-db_type: mysql
+# db_type: mysql
 # 数据库相关配置
 mysql_db:
   host: 192.168.148.174
