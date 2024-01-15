@@ -47,9 +47,9 @@ def assert_db(hope_res):
                     sql_date = database.MysqlConn().mysql_query(db_sql)
                     with allure.step("数据库校验"):
                         for param in dbcheck_data['result']:
-                            sql_value = jsonpath.jsonpath(sql_date, param['path'])
-                            value = param['value']
                             try:
+                                sql_value = jsonpath.jsonpath(sql_date, param['path'])
+                                value = param['value']
                                 allure.attach(name="查询sql", body=str(db_sql))
                                 allure.attach(name="期望返回值", body=str(value))
                                 if sql_value:
@@ -74,9 +74,10 @@ def assert_db(hope_res):
                 with allure.step("redis校验"):
                     if 'result' in dbcheck_data.keys():  # 存在 result 时，使用 jsonpath 校验
                         for param in dbcheck_data['result']:
-                            cmd_value = jsonpath.jsonpath(json.loads(cmd_data), param['path'])
-                            value = param['value']
                             try:
+                                cmd_value = jsonpath.jsonpath(json.loads(cmd_data), param['path'])
+                                value = param['value']
+
                                 allure.attach(name="操作命令", body=str(dbcheck_data['cmd']))
                                 allure.attach(name="期望返回值", body=str(value))
                                 if cmd_value:
@@ -99,9 +100,10 @@ def assert_db(hope_res):
                 with allure.step("kafka校验"):
                     if 'result' in dbcheck_data.keys(): # 存在 result 时，使用 jsonpath 校验
                         for param in dbcheck_data['result']:
-                            kafka_value = jsonpath.jsonpath(json.loads(kafka_msg), param['path'])
-                            value = param['value']
                             try:
+                                kafka_value = jsonpath.jsonpath(json.loads(kafka_msg), param['path'])
+                                value = param['value']
+
                                 allure.attach(name="查询topic", body=str(dbcheck_data['topic']))
                                 allure.attach(name="期望返回值", body=str(value))
                                 if kafka_value:
@@ -191,8 +193,12 @@ def assert_text(hope_res, real_res):
                 else:
                     raise TypeError("type方法错误")
             else:
-                logging.error("获取json值失败，请检查jsonpath")
-                raise ValueError('获取json值失败，请检查jsonpath')
+                with allure.step("json断言"):
+                    allure.attach(name="json期望结果", body=str(h_res))
+                    allure.attach(name='json实际实际结果', body="None")
+                    logging.error("获取json值失败，请检查jsonpath")
+                    assert False
+                # raise ValueError('获取json值失败，请检查jsonpath')
 
 def assert_code(hope_code, real_code):
     """
