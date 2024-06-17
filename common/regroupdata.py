@@ -10,6 +10,7 @@
 import json
 import re, sys, logging, datetime, uuid, random, string, jsonpath
 from faker import Faker
+from functools import reduce
 
 from config import *
 from common import exceptions
@@ -17,6 +18,7 @@ from common import encryption
 from common import handleyaml
 from common import handledict
 from common.basefunc import config_dict
+
 
 class RegroupData:
     """
@@ -28,33 +30,57 @@ class RegroupData:
         :param api_casedata: 接口用例信息
         :param temp_var_dict: 临时变量字典
         """
-        self.api_casedata = api_casedata    # 接口用例信息
-        self.global_var_dict = handleyaml.YamlHandle(EXTRACT_DIR).read_yaml()   #全局变量字典
+        self.api_casedata = api_casedata  # 接口用例信息
+        self.global_var_dict = handleyaml.YamlHandle(EXTRACT_DIR).read_yaml()  # 全局变量字典
         self.temp_var_dict = temp_var_dict  # 临时变量字典
-        self.env_var_dict = config_dict     # 环境变量字典
-        self.update_dict = {}               # 更新字典
+        self.env_var_dict = config_dict  # 环境变量字典
+        self.update_dict = {}  # 更新字典
         # logging.info("api_casedata:%s", self.api_casedata)
         # logging.info("global_var_dict:%s", self.global_var_dict)
         # logging.info("temp_var_dict:%s", self.temp_var_dict)
         # logging.info("env_var_dict:%s", self.env_var_dict)
 
-    def get_param_value(self, param):
+    def is_key_in_nested_dict(self, nested_dict, key):
         """
-        获取参数值
-        :param param: 取值参数
+        判断key是否在字典中
+        :param nested_dict: 字典
+        :param key: key
         :return:
         """
-        # 从临时变量字典中取值
-        if self.temp_var_dict and param in self.temp_var_dict.keys():
-            return self.temp_var_dict[param]
-        # 从全局变量中取值
-        elif self.global_var_dict and param in self.global_var_dict.keys():
-            return self.global_var_dict[param]
-        # 从环境变量中取值
-        elif self.env_var_dict and param in self.env_var_dict.keys():
-            return self.env_var_dict[param]
-        else:
-            raise Exception("参数取值失败，参数名：%s" % param)
+        if key in nested_dict:
+            return True
+        return any(self.is_key_in_nested_dict(v, key) for v in nested_dict.values() if isinstance(v, dict))
+
+    @staticmethod
+    def get_value_from_path(nested_dict, para_path):
+        """
+        根据参数路径从字典中取值
+        :param nested_dict: 字典
+        :param para_path: 参数路径：action.scanRandId_10
+        :return:
+        """
+        try:
+            return reduce(lambda d, key: d[key], para_path.split('.'), nested_dict)
+        except (KeyError, TypeError):
+            return None
+
+    def get_param_value(self, param_path):
+        """
+        获取参数值
+        :param param_path: 取值参数路径
+        :return:
+        """
+        logging.info(f"参数取值，参数路径：{param_path}")
+        getvaluedict_list = [self.temp_var_dict, self.global_var_dict, self.env_var_dict,
+                             self.api_casedata['request']['data']]
+        value = None
+        for i in getvaluedict_list:
+            if i and self.is_key_in_nested_dict(i, param_path.split('.')[-1]):
+                value = self.get_value_from_path(i, param_path)
+                if value:
+                    return value
+        if not value:
+            raise Exception("参数取值失败，参数路径：%s" % param_path)
 
     def get_value(self, param):
         """
@@ -63,7 +89,7 @@ class RegroupData:
         :return:
         """
         param_list = param.split(";")  # 拆分取值需求 ${data;update={"realName":"ceshi"}}
-        value = self.get_param_value(param_list[0])    # 获取参数值
+        value = self.get_param_value(param_list[0])  # 获取参数值
         if len(param_list) >= 2:
             for pa in param_list[1:]:
                 pa_list = pa.split("=")
@@ -77,7 +103,6 @@ class RegroupData:
                 else:
                     raise Exception("暂不支持此扩展" + pa)
         return value
-
 
     def eval_data(self, param):
         """
@@ -95,7 +120,7 @@ class RegroupData:
                     if pa_list[0] == 'path':  # 获取字典中的特定值
                         path = '$.' + pa_list[1]
                         value = jsonpath.jsonpath(json.loads(value.replace("\\", '/')), path)[0]
-                    if pa_list[0] == 'cal':   #计算
+                    if pa_list[0] == 'cal':  # 计算
                         value = eval(str(value) + pa_list[1])
             # str_data = eval(value)
             # if path:
@@ -125,7 +150,7 @@ class RegroupData:
                         raise Exception("暂不支持此种加密方式：" + pa_list[1])
                 else:
                     raise Exception("暂不支持此扩展" + pa)
-        else:   #默认使用RSA加密+base64加密
+        else:  # 默认使用RSA加密+base64加密
             data = encryption.encryption(param)
         return data
 
@@ -136,32 +161,32 @@ class RegroupData:
         :param str: format='%Y-%m-%d %H:%M:%S'
         :return:
         """
-        param_list = param.split(';')   #获取多个配置项
-        time_str = datetime.datetime.now()   #获取当前时间
-        format = None     #时间格式
-        timestamp_num = 13  #时间戳位数
+        param_list = param.split(';')  # 获取多个配置项
+        time_str = datetime.datetime.now()  # 获取当前时间
+        format = None  # 时间格式
+        timestamp_num = 13  # 时间戳位数
         for param in param_list:
-            pa_list = param.split('=')  #拆分配置项
-            if pa_list[0] == 'format':   #时间格式
+            pa_list = param.split('=')  # 拆分配置项
+            if pa_list[0] == 'format':  # 时间格式
                 format = pa_list[1]
-            if pa_list[0] == 'tds_num':   #时间戳位数
+            if pa_list[0] == 'tds_num':  # 时间戳位数
                 timestamp_num = int(pa_list[1])
-            if pa_list[0] == 'cal':   #时间偏移
+            if pa_list[0] == 'cal':  # 时间偏移
                 cal_list = pa_list[1].split(',')
                 for cal in cal_list:
                     num = int(cal[2:])
                     cal_dict = {'w': 'weeks', 'd': 'days', 'h': 'hours', 'm': 'minutes'}
-                    if cal[1] == '+': #向后偏移
+                    if cal[1] == '+':  # 向后偏移
                         if cal[0] in cal_dict.keys():
                             time_str += datetime.timedelta(**{cal_dict[cal[0]]: num})
                         else:
                             raise Exception("暂不支持此种时间偏移：" + pa_list[1])
-                    elif cal[1] == '-': #向前偏移
+                    elif cal[1] == '-':  # 向前偏移
                         if cal[0] in cal_dict.keys():
                             time_str -= datetime.timedelta(**{cal_dict[cal[0]]: num})
                         else:
                             raise Exception("暂不支持此种时间偏移：" + pa_list[1])
-        if format:   #时间格式转换
+        if format:  # 时间格式转换
             time_str = time_str.strftime(format)
         else:  # 不存在时间格式，返回时间戳
             time_str = str(round(time_str.timestamp() * 1000))[0:timestamp_num]
@@ -238,11 +263,11 @@ class RegroupData:
         """
         # 若存在updatedata，先重组updatedata
         if 'updatedata' in self.api_casedata['request'].keys():
-            sign, rawDict = self.regroup_dict(self.api_casedata['request']['updatedata'])    #重组updatedata
+            sign, rawDict = self.regroup_dict(self.api_casedata['request']['updatedata'])  # 重组updatedata
             if sign == 'success':
                 # self.api_casedata['request']['updatedata'] = rawDict  #更新updatedata
                 self.update_dict = rawDict
-                self.api_casedata['request'].pop('updatedata')   #删除updatedata
+                self.api_casedata['request'].pop('updatedata')  # 删除updatedata
             else:
                 return sign, rawDict
         sign, rawDict = self.regroup_dict(self.api_casedata)
@@ -255,9 +280,9 @@ class RegroupData:
         :return:
         """
         try:
-            sign = 'success'   #标识参数
+            sign = 'success'  # 标识参数
             if isinstance(rawDict, dict):
-                for dict_key in rawDict:    #遍历字典
+                for dict_key in rawDict:  # 遍历字典
                     sign, tem_rawDict = self.regroup_dict(rawDict[dict_key])  # 递归处理
                     if sign == 'success':
                         rawDict[dict_key] = tem_rawDict
@@ -297,16 +322,16 @@ class RegroupData:
                          }
 
         type_method_2 = {'\$GetRandChoice\((.*?)\)': [self.get_rand_choice],  # 随机选择
-                        '\$GetRandName\((.*?)\)': [self.fakedata, 'name'],  # 随机姓名
-                        '\$GetRandPhone\((.*?)\)': [self.fakedata, 'phone'],  # 随机手机号
-                        '\$GetRandEmail\((.*?)\)': [self.fakedata, 'email'],  # 随机邮箱
-                        '\$GetRandStr\((.*?)\)': [self.get_rand_str],  # 随机字符串
-                        '\$GetRandInt\((.*?)\)': [self.get_rand_int],  # 随机整数
-                        '\$GetUuid\((.*?)\)': [self.get_uuid],  # UUID
-                        '\$GetTime\((.*?)\)': [self.get_time],  # 时间
-                        '\$Enc\((.*?)\)': [self.get_enc_value],  # 加密
-                        '\$\{(.*?)\}': [self.get_value],  # 变量替换
-                        }
+                         '\$GetRandName\((.*?)\)': [self.fakedata, 'name'],  # 随机姓名
+                         '\$GetRandPhone\((.*?)\)': [self.fakedata, 'phone'],  # 随机手机号
+                         '\$GetRandEmail\((.*?)\)': [self.fakedata, 'email'],  # 随机邮箱
+                         '\$GetRandStr\((.*?)\)': [self.get_rand_str],  # 随机字符串
+                         '\$GetRandInt\((.*?)\)': [self.get_rand_int],  # 随机整数
+                         '\$GetUuid\((.*?)\)': [self.get_uuid],  # UUID
+                         '\$GetTime\((.*?)\)': [self.get_time],  # 时间
+                         '\$Enc\((.*?)\)': [self.get_enc_value],  # 加密
+                         '\$\{(.*?)\}': [self.get_value],  # 变量替换
+                         }
 
         for expre1, method1 in type_methos_1.items():
             param_list1 = re.findall(expre1, str_data)
@@ -334,9 +359,9 @@ class RegroupData:
                     expre_ori = expre.replace("(.*?)", param).replace('\\', '')
                     expre_par = expre.replace("(.*?)", param)
 
-                    if expre_ori == str_data:   #返回原始类型
+                    if expre_ori == str_data:  # 返回原始类型
                         return value
-                    if expre == '\$GetTime\((.*?)\)' and '+' in param:   #日期向后偏移时 +字符转换
+                    if expre == '\$GetTime\((.*?)\)' and '+' in param:  # 日期向后偏移时 +字符转换
                         expre_par = expre_par.replace('+', '\+')
                     pattern = re.compile(expre_par)
                     str_data = re.sub(pattern, str(value), str_data, count=1)
